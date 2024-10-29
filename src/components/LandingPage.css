@@ -1,0 +1,81 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Caveat:wght@400;700&family=Lobster&family=Monoton&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,700&family=Work+Sans:ital,wght@0,400;0,700;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+.landing-pg-bg{
+    background-image: url('https://res.cloudinary.com/dzysiltcv/image/upload/v1728970138/velx/img_now_1_ylqdy9.png'); /*https://res.cloudinary.com/dzysiltcv/image/upload/v1728965387/landing_page_BG_mmyqz0.jpg
+    https://img.freepik.com/premium-vector/workers-building-houses-with-cranes-construction-sites_353206-3.jpg
+    https://img.lovepik.com/background/20211021/large/lovepik-the-scene-of-urban-construction-background-image_400149199.jpg
+    https://wallpapercave.com/wp/wp8414151.png*/
+    height:90vh;
+    width: 100vw;
+   background-size: cover; 
+  }
+  
+  .landingpage-hero{
+    color: #FBBC05;
+    font-family: "Caveat";
+    font-size: 5em;
+    font-weight: 900;
+  }
+  
+  .landingpage-para{
+    color: #FBBC05;
+    font-family: "Caveat";
+    font-size: 3em;
+    font-weight: 900;
+  }
+  
+  .button-style{
+    font-weight: 700;
+    font-size: 1.1em;
+    border-width: 3px;
+    border-radius: 20px;
+  }
+  
+  body{
+    background-color: #f9fbfe;
+  }
+  
+  .page-heading{
+    font-family: "Caveat";
+    font-size: 3em;
+    font-weight: 700;
+  }
+  
+  .services-card{
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    /* box-shadow: 30px 30px 60px rgba(0,0,0,0.2); */
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -10px 30px 0px inset;
+    /* transition: transform 0.3s ease-in-out;
+    transform: scale(1); */
+    background-color: #4285F4;
+    cursor: pointer;
+    color: #f9fbfe;
+    /* position: relative; */
+  
+    
+  }
+  
+  /*box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  
+  
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; //stock*/
+  
+  .services-icon{
+    font-size: 4em;
+    
+  }
+  
+  .card-heading{
+    font-family: 'Poppins', sans-serif;
+    
+  }
+  .card-decsription{
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+  }

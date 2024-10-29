@@ -1,0 +1,2402 @@
+AlfEachProjectCard.jsx
+
+
+import React from 'react'
+import './AlfProjects.css'
+import { faPersonDigging } from '@fortawesome/free-solid-svg-icons'
+import { Button } from "react-bootstrap"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+
+
+const AlfEachProjectCard = ({id, projectName, CityName, supervisorName, projectStartDate, isCompleted, togggleCardStatus, deleteCard}) => {
+    
+
+
+
+    return (
+    <>
+        <div className="col-12 col-md-6 mt-3">
+            <a>
+            </a>
+            <div className='project-card p-4'>
+                <div style={{display:"flex", gap:"1em"}}>
+                    <FontAwesomeIcon icon={faPersonDigging} style={{fontSize:"3em"}}/>
+                    <h1>{projectName}</h1>
+                </div>
+                    <p>City: {CityName}</p>
+                    <p>Supervisor : {supervisorName}</p>
+                    <p>Start Date: {projectStartDate}</p>
+                    <hr></hr>
+                    <div>
+                        <Button onClick={() => deleteCard(id)}>Remove</Button>
+                        {isCompleted? (<Button className='ml-3 btn btn-danger' onClick={() => togggleCardStatus(id)}>Mark UnCompleted</Button>):(<Button className='ml-3' onClick={() => togggleCardStatus(id)}>Mark Completed</Button>)}
+                        {/* <Button className='ml-3' onClick={() => togggleCardStatus(id)}>Mark Completed</Button> */}
+                        {isCompleted? (<p style={{display:"inline", fontSize:"1.3em"}} className='ml-3 text-success'>completed</p>):(<p style={{display:"inline", fontSize:"1.3em"}} className='ml-3 text-danger'>OnGoing</p>)}
+                        {/* <p style={{display:"inline", fontSize:"1.3em"}} className={`ml-3 ${isCompleted ? "text-success" : "text-danger"}`}>OnGoing</p> */}
+                    </div>
+                        {/* <FontAwesomeIcon icon={faWarehouse} className='services-icon mt-3 mb-3' /> */}
+            </div>
+        </div>
+    </>
+  )
+}
+
+export default AlfEachProjectCard
+
+
+
+
+
+
+========================================================================
+AlfProjects.jsx
+
+
+// to add client name and city in the cadrd
+import React, { useEffect, useRef } from 'react'
+import {Navbar, Nav, Button, Dropdown, NavDropdown, closeButton} from "react-bootstrap"
+import { FormControl, Form } from 'react-bootstrap'
+import './AlfProjects.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPersonDigging, faPlus } from '@fortawesome/free-solid-svg-icons'
+// import Select from "react-select"
+import Select from "react-select"
+
+
+
+import { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import AlfEachProjectCard from './AlfEachProjectCard'
+import AlfNavbar from './AlfNavbar'
+
+
+const AlfProjects = () => {
+    const superVisorNames = [
+        { label: 'supervisor - 1', value: 'supervisor - 1' },
+        { label: 'supervisor - 2', value: 'supervisor - 2' },
+        { label: 'supervisor - 3', value: 'supervisor - 3' },
+        { label: 'supervisor - 4', value: 'supervisor - 4' },
+        { label: 'supervisor - 5', value: 'supervisor - 5' },
+        { label: 'supervisor - 6', value: 'supervisor - 6' }
+    ];
+    //navigation starts here
+    
+
+    // navigation ends here
+
+    const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
+  // to get date
+  function getDate(){
+    const today = new Date.now();
+    const month = today.getMonth() + 1;
+    const day = today.getDate;
+    const year = today.getFullYear();
+    return `${month} ${day} ${year}`;
+   }
+
+
+//   const [projectCardDetails, SetProjectCardDetails] = useState(localStorage.getItem('projectCardDetails')?JSON.parse(localStorage.getItem('projectCardDetails')):[]);
+const [projectCardDetails, SetProjectCardDetails] = useState(localStorage.getItem('projectDetails')? JSON.parse(localStorage.getItem('projectDetails')):[]);
+
+
+// update local storage
+useEffect(() => {
+    localStorage.setItem('projectDetails', JSON.stringify(projectCardDetails));
+}, [projectCardDetails])
+
+
+const projectNameIpRef = useRef();
+const projectCityIpRef = useRef();
+const projectSupervisorIpRef = useRef();
+
+
+const addProjectCard = () => {
+    const ipProjectName = projectNameIpRef.current.value.trim();
+    const ipProjectCity = projectCityIpRef.current.value.trim();
+    const ipSupervsorName = projectSupervisorIpRef.current.value.trim();
+
+    if (ipProjectCity==="" || ipProjectName === "" || ipSupervsorName === "") {
+        return null;
+    }
+    const newProjectCard = {
+        id: Date.now(),
+        projectName: ipProjectName,
+        projectCity: ipProjectCity,
+        projectSupervisor: ipSupervsorName,
+        // projectStartDate: getDate(),
+        isCompleted: false,
+    }
+
+    SetProjectCardDetails((prev) => [...prev, newProjectCard]);
+    projectNameIpRef.current.value = ""
+    projectCityIpRef.current.value = "";
+    projectSupervisorIpRef.current.value = "";
+    handleClose();
+
+};
+
+
+const togggleCardStatus = (id) => {
+    SetProjectCardDetails((prev) =>{
+        return prev.map((card) => {
+            if(id === card.id) {
+                return {...card, isCompleted:!card.isCompleted}
+                // card.isCompleted =!card.isCompleted;
+            }
+            return card;
+        })
+    })
+}
+
+
+//TO DELETE CARD
+const deleteCard = (id) => {
+    SetProjectCardDetails((prev) => {
+        return prev.filter((card) => card.id!== id);
+    })
+}
+
+
+
+
+
+
+
+
+
+
+        
+
+return (
+    <>
+        <AlfNavbar/>
+
+      
+
+        <div className='container-fluid body-bg-color'>
+            <div className="row">
+                <div className="col-12 text-center">
+                    <h1>Projects</h1>
+                </div>
+
+                <div className="col-9 search-box" style={{display:"flex"}}>
+                        <FormControl type="text" placeholder="Search" className="mr-sm-2" /> 
+                </div>
+
+                <div className='col-1'>
+                    <Button>Search</Button>
+                </div>
+
+                <div className='col-12 col-lg-2'>
+                    <Button className='' variant="primary" onClick={handleShow}><FontAwesomeIcon icon={faPlus}/> Create New Project</Button>
+                </div>
+
+
+                {/* <div className='col-12'>
+                    <h2>OnGoing Projects</h2>
+                </div> */}
+
+                
+                    {projectCardDetails.length === 0? (<p>No On Going Projects</p>) : (
+                        projectCardDetails.map((eachCardDetails, index) => {
+                            return <AlfEachProjectCard 
+                            id={eachCardDetails.id}
+                            projectName={eachCardDetails.projectName} 
+                            CityName={eachCardDetails.projectCity} 
+                            supervisorName={eachCardDetails.projectSupervisor}
+                            projectStartDate = {eachCardDetails.projectStartDate}
+                            isCompleted  = {eachCardDetails.isCompleted}
+                            key={index} 
+                            togggleCardStatus = {togggleCardStatus}
+                            deleteCard = {deleteCard}
+                            />
+                        })
+                    )}
+                {/* <AlfEachProjectCard projectName={"Project Name"} CityNam={"City Name"} supervisorName={"Name"} projectStartDate={getDate}/> */}
+                
+                
+
+                <div className="col-6">
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                        <Modal.Title>Creating new Project</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <label htmlFor='projectNameIp' className='mr-3'>Project Name</label>
+                            <input ref={projectNameIpRef} type="text" name="" id="projectNameIp" placeholder='Enter Project Name Here' className='w-100 mb-4'/>
+
+                            <label htmlFor='projectCityIp' className='mr-3'>City</label>
+                            <input ref={projectCityIpRef} type="text" name="" id="projectCityIp" placeholder='Enter City Here' className='w-100 mb-4'/>
+
+                            {/* <Dropdown className='d-inline m-2'>
+                                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                    Select Supervisor
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu>
+                                    <Dropdown.Item ref={projectSupervisorIpRef} href="" value="supervisor - 1">supervisor - 1</Dropdown.Item>
+                                    <Dropdown.Item ref={projectSupervisorIpRef} href="" value="supervisor - 2">supervisor - 2</Dropdown.Item>
+                                    <Dropdown.Item ref={projectSupervisorIpRef} href="" value="supervisor - 3">supervisor - 3</Dropdown.Item>
+                                    <Dropdown.Item ref={projectSupervisorIpRef} href="" value="supervisor - 4">supervisor - 4</Dropdown.Item>
+                                </Dropdown.Menu>
+                                </Dropdown> */}
+
+                            <label htmlFor='projectSupervisorIp' className='mr-3'>Supervisor Name</label>
+                            <input ref={projectSupervisorIpRef} type="text" name="" id="projectSupervisorIp" placeholder='Enter Supervisor Here' className='w-100 mb-4'/>
+                            
+                            <label htmlFor=''>Select Supervisor</label>
+                            <Select
+                                options={superVisorNames}
+                            />
+                        </Modal.Body>
+                        <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={addProjectCard}>
+                            Creat Project
+                        </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>
+            </div>
+        </div>
+    </>
+  )
+}
+
+export default AlfProjects
+
+
+// [
+//     {
+//         id : 1,
+//         projectName: "Project - 1",
+//         projectCity: "Trichy",
+//         projectSupervisor: "Mohammed",
+//         //projectStartDate: getDate(),
+//         isCompleted: true,
+
+//     },
+//     {
+//         id : 2,
+//         projectName: "Project - 2",
+//         projectCity: "perambalur",
+//         projectSupervisor: "faizal",
+//         //projectStartDate: getDate(),
+//         isCompleted: true,
+
+//     }
+// ]
+
+
+
+
+
+
+========================================================================
+AlfProjects.jsx (V2)
+
+
+import React, { useEffect, useRef } from 'react';
+import { Navbar, Nav, Button, Dropdown, NavDropdown, FormControl, Form } from "react-bootstrap";
+import './AlfProjects.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPersonDigging, faPlus } from '@fortawesome/free-solid-svg-icons';
+import Select from "react-select";
+
+import { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import AlfEachProjectCard from './AlfEachProjectCard';
+import AlfNavbar from './AlfNavbar';
+
+const AlfProjects = () => {
+    const superVisorNames = [
+        { label: 'supervisor - 1', value: 'supervisor - 1' },
+        { label: 'supervisor - 2', value: 'supervisor - 2' },
+        { label: 'supervisor - 3', value: 'supervisor - 3' },
+        { label: 'supervisor - 4', value: 'supervisor - 4' },
+        { label: 'supervisor - 5', value: 'supervisor - 5' },
+        { label: 'supervisor - 6', value: 'supervisor - 6' }
+    ];
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    // Get the current date
+    function getDate() {
+        const today = new Date();
+        const month = today.getMonth() + 1;
+        const day = today.getDate();
+        const year = today.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+
+    const [projectCardDetails, SetProjectCardDetails] = useState(localStorage.getItem('projectDetails') ? JSON.parse(localStorage.getItem('projectDetails')) : []);
+
+    // Update local storage when projectCardDetails changes
+    useEffect(() => {
+        localStorage.setItem('projectDetails', JSON.stringify(projectCardDetails));
+    }, [projectCardDetails]);
+
+    const projectNameIpRef = useRef();
+    const projectCityIpRef = useRef();
+    const projectSupervisorIpRef = useRef();
+
+    const addProjectCard = () => {
+        const ipProjectName = projectNameIpRef.current.value.trim();
+        const ipProjectCity = projectCityIpRef.current.value.trim();
+        const ipSupervsorName = projectSupervisorIpRef.current.value.trim();
+
+        if (ipProjectCity === "" || ipProjectName === "" || ipSupervsorName === "") {
+            return null;
+        }
+        const newProjectCard = {
+            id: Date.now(),
+            projectName: ipProjectName,
+            projectCity: ipProjectCity,
+            projectSupervisor: ipSupervsorName,
+            projectStartDate: getDate(),
+            isCompleted: false,
+        };
+
+        SetProjectCardDetails((prev) => [...prev, newProjectCard]);
+        projectNameIpRef.current.value = "";
+        projectCityIpRef.current.value = "";
+        projectSupervisorIpRef.current.value = "";
+        handleClose();
+    };
+
+    const togggleCardStatus = (id) => {
+        SetProjectCardDetails((prev) => {
+            return prev.map((card) => {
+                if (id === card.id) {
+                    return { ...card, isCompleted: !card.isCompleted };
+                }
+                return card;
+            });
+        });
+    };
+
+    const deleteCard = (id) => {
+        SetProjectCardDetails((prev) => {
+            return prev.filter((card) => card.id !== id);
+        });
+    };
+
+    return (
+        <>
+            <AlfNavbar />
+            <div className='container-fluid body-bg-color'>
+                <div className="row">
+                    <div className="col-12 text-center">
+                        <h1>Projects</h1>
+                    </div>
+
+                    <div className="col-9 search-box" style={{ display: "flex" }}>
+                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                    </div>
+
+                    <div className='col-1'>
+                        <Button>Search</Button>
+                    </div>
+
+                    <div className='col-12 col-lg-2'>
+                        <Button variant="primary" onClick={handleShow}><FontAwesomeIcon icon={faPlus} /> Create New Project</Button>
+                    </div>
+
+                    {projectCardDetails.length === 0 ? (
+                        <p>No On Going Projects</p>
+                    ) : (
+                        projectCardDetails.map((eachCardDetails, index) => {
+                            return <AlfEachProjectCard
+                                id={eachCardDetails.id}
+                                projectName={eachCardDetails.projectName}
+                                projectCity={eachCardDetails.projectCity}
+                                supervisorName={eachCardDetails.projectSupervisor}
+                                projectStartDate={eachCardDetails.projectStartDate}
+                                isCompleted={eachCardDetails.isCompleted}
+                                key={index}
+                                togggleCardStatus={togggleCardStatus}
+                                deleteCard={deleteCard}
+                            />
+                        })
+                    )}
+
+                    <div className="col-6">
+                        <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Creating new Project</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <label htmlFor='projectNameIp' className='mr-3'>Project Name</label>
+                                <input ref={projectNameIpRef} type="text" id="projectNameIp" placeholder='Enter Project Name Here' className='w-100 mb-4' />
+
+                                <label htmlFor='projectCityIp' className='mr-3'>City</label>
+                                <input ref={projectCityIpRef} type="text" id="projectCityIp" placeholder='Enter City Here' className='w-100 mb-4' />
+
+                                <label htmlFor='projectSupervisorIp' className='mr-3'>Supervisor Name</label>
+                                <input ref={projectSupervisorIpRef} type="text" id="projectSupervisorIp" placeholder='Enter Supervisor Here' className='w-100 mb-4' />
+
+                                <label htmlFor=''>Select Supervisor</label>
+                                <Select options={superVisorNames} />
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Close
+                                </Button>
+                                <Button variant="primary" onClick={addProjectCard}>
+                                    Create Project
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
+
+export default AlfProjects;
+
+
+==========================================================================
+AlfEachProjectCard.jsx
+
+
+import React from 'react';
+import './AlfProjects.css';
+import { faPersonDigging } from '@fortawesome/free-solid-svg-icons';
+import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const AlfEachProjectCard = ({ id, projectName, projectCity, supervisorName, projectStartDate, isCompleted, togggleCardStatus, deleteCard }) => {
+    return (
+        <div className="col-12 col-md-6 mt-3">
+            <div className='project-card p-4'>
+                <div style={{ display: "flex", gap: "1em" }}>
+                    <FontAwesomeIcon icon={faPersonDigging} style={{ fontSize: "3em" }} />
+                    <h1>{projectName}</h1>
+                </div>
+                <p>City: {projectCity}</p>
+                <p>Supervisor: {supervisorName}</p>
+                <p>Start Date: {projectStartDate}</p>
+                <hr />
+                <div>
+                    <Button onClick={() => deleteCard(id)}>Remove</Button>
+                    {isCompleted ? (
+                        <Button className='ml-3 btn btn-danger' onClick={() => togggleCardStatus(id)}>Mark UnCompleted</Button>
+                    ) : (
+                        <Button className='ml-3' onClick={() => togggleCardStatus(id)}>Mark Completed</Button>
+                    )}
+                    {isCompleted ? (
+                        <p style={{ display: "inline", fontSize: "1.3em" }} className='ml-3 text-success'>Completed</p>
+                    ) : (
+                        <p style={{ display: "inline", fontSize: "1.3em" }} className='ml-3 text-danger'>OnGoing</p>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default AlfEachProjectCard;
+=============================== the above codes are not needed =================================================================
+
+
+
+
+AlfEachAttendance.jsx
+
+import React from 'react'
+import { Button, Dropdown, NavDropdown, Modal } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {  faIdCardClip } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react'
+import './AlfAttendance.css'
+
+
+
+
+
+const AlfEachAttendance = ({id, name, salaryPerShift, isPresent, shiftWorked, totalPay, salaryDate,}) => {
+
+        //PREDSENT BUTTON DISABLE
+  const [isDisabled, setIsDisabled] = useState(false);
+  const handleClick = () => {
+    setIsDisabled(true);
+  };
+
+
+  const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+
+        // const [selectShift, setselectShift] = useState(null); // New state for selected supervisor   
+    const shiftOptions = [
+        { label: '0.5 Shift', value: 0.5 },
+        { label: '1 Shift', value: 1},
+        { label: '1.5 Shift', value: 1.5 },
+        { label: '2 Shift', value: 2 },
+    ];
+  return (
+    
+    <>
+      <div className='col-12 col-md-6 mt-3'>
+                <div className='employee-card-style p-4'>
+                  <h3><FontAwesomeIcon icon={faIdCardClip} className='mr-3'/>{name}</h3> 
+                  <div>
+                    <Dropdown className='d-inline m-2'>
+                      <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        Shift
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <Dropdown.Item href="">0.5 Shift</Dropdown.Item>
+                        <Dropdown.Item href="">1 Shift</Dropdown.Item>
+                        <Dropdown.Item href="">1.5 Shift</Dropdown.Item>
+                        <Dropdown.Item href="">2 Shift</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+
+                            {/* <Select
+                                    options={shiftOptions}
+                                    value={selectShift}
+                                    onChange={(selectedOption) => setselectShift(selectedOption)}
+                                    placeholder="Select Supervisor"
+                                    className='w-100 mb-4'
+                                /> */}
+
+                      <Button className='btn btn-success m-2' onClick={handleClick} disabled={isDisabled}>
+                      {isDisabled ? "Marked" : "Present"}
+                      </Button>
+                      {/* <Button className='btn btn-danger m-2'>Absent</Button> */}
+                      <Button className='m-2' onClick={handleShow}>Edit Salary</Button>
+                      <h4 className='text-success'>salary : {totalPay}</h4>
+                  </div>
+                </div>
+              </div>
+
+
+              <Modal show={show} onHide={handleClose}>
+                            <Modal.Header>
+                                <Modal.Title>Edit Salary Per Shift</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <label htmlFor='ipSalaryId'>Enter the Salary</label> 
+                                <input type="text" name="" id="ipSalaryId" />
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>Close</Button>
+                                <Button variant="primary">Change</Button>
+                            </Modal.Footer>
+                        </Modal>
+    </>
+  )
+}
+
+export default AlfEachAttendance
+
+
+
+
+
+=================================================
+velxerp\src\components\AlfAttendance.jsx
+
+import React from 'react'
+import AlfNavbar from './AlfNavbar'
+import { FormControl, Form, Button, Dropdown, NavDropdown, Modal } from 'react-bootstrap'
+import { useState } from 'react'
+import './AlfAttendance.css'
+import AlfEachAttendance from './AlfEachAttendance'
+
+
+const AlfAttendance = () => {
+  //FORMATING DATE
+  /* const currentDate = new Date(Date.now());
+
+  // // Format the date and time
+  // const formattedDate = currentDate.toLocaleDateString('en-US'); // e.g., "10/17/2024"
+  // const formattedTime = currentDate.toLocaleTimeString('en-US'); // e.g., "2:45:12 PM"
+  */
+  const currentDate = new Date(Date.now());
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`; 
+  //FORMATING DATE ENDS
+
+
+
+    // const shiftValues = [
+    //   {label :"0.5 Shift", value:0.5},
+    //   {label :"1.0 Shift", value:1},
+    //   {label :"1.5 Shift", value:1.5},
+    //   {label :"2 Shift", value:2},
+    // ]
+
+
+    const userAttendanceDetails = [
+      {
+        id: 101,
+        name:"Mohammed",
+        salaryPerShift: 700,
+        isPresent : false,
+        shiftWorked: 0,
+        totalPay: 0,
+        salaryDate:formattedDate,
+
+      },
+      {
+        id:102,
+        name:"Faizal",
+        salaryPerShift: 700,
+        isPresent : false,
+        shiftWorked: 0,
+        totalPay: 0,
+        salaryDate:formattedDate,
+
+      }
+    ]
+
+
+
+
+
+
+
+  
+
+
+
+  
+
+
+  //EMPLOYEE NAMES
+  // const [employeeNames, SetEmployeeNames] = useState(["Faisal", "Ahamad", "nithin", "ashwin", "faizal"]);
+  return (
+    <>
+      <AlfNavbar/>
+
+      {/* <button onClick={handleClick} disabled={isDisabled}>
+        {isDisabled ? "Button Disabled" : "Click Me"}
+      </button> */}
+      {/* <h2>Formatted Date: {formattedDate}</h2> */}
+      {/* <h2>Formatted Time: {formattedTime}</h2> */}
+      
+      <div className='container-fluid'>
+        <div className="row">
+          <div className="col-12">
+            <h1 className='text-center'>Mark Your Attendance Here</h1>
+          </div>
+
+          <div className='col-12 text-center'>
+            <h3>{formattedDate}</h3>
+          </div>
+
+          <div className="col-12" style={{display:"flex", gap:"10px"}}>
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" /> 
+            <Button>Search</Button>
+          </div>
+
+          
+
+
+
+          {userAttendanceDetails.length === 0 ? (
+            <p>No Employees</p>
+          ) : (
+            userAttendanceDetails.map((eachEmployee, index) => (
+              <AlfEachAttendance
+                key={index}
+                id={eachEmployee.id}
+                name={eachEmployee.name}
+                salaryPerShift={eachEmployee.salaryPerShift}
+                isPresent={eachEmployee.isPresent}
+                shiftWorked={eachEmployee.shiftWorked}
+                totalPay={eachEmployee.totalPay}
+                salaryDate={eachEmployee.salaryDate}
+              />
+            ))
+          )}
+        </div>
+      </div>
+
+
+      
+    </>
+  )
+}
+
+export default AlfAttendance
+
+
+
+
+
+// <div className='col-12 col-md-6 mt-3'>
+//             <div className='employee-card-style p-4'>
+//               <h3><FontAwesomeIcon icon={faIdCardClip} className='mr-3'/>{}</h3> 
+//               <div>
+//                 <Dropdown className='d-inline m-2'>
+//                   <Dropdown.Toggle variant="success" id="dropdown-basic">
+//                     Shift
+//                   </Dropdown.Toggle>
+
+//                   <Dropdown.Menu>
+//                     <Dropdown.Item href="">0.5 Shift</Dropdown.Item>
+//                     <Dropdown.Item href="">1 Shift</Dropdown.Item>
+//                     <Dropdown.Item href="">1.5 Shift</Dropdown.Item>
+//                     <Dropdown.Item href="">2 Shift</Dropdown.Item>
+//                   </Dropdown.Menu>
+//                 </Dropdown>
+
+//                   <Button className='btn btn-success m-2' onClick={handleClick} disabled={isDisabled}>
+//                   {isDisabled ? "Marked" : "Present"}
+//                   </Button>
+//                   {/* <Button className='btn btn-danger m-2'>Absent</Button> */}
+//                   <Button className='m-2'>Edit Salary</Button>
+//                   <h4 className='text-success'>1,000.00</h4>
+//               </div>
+//             </div>
+//           </div>
+
+=============================== the above codes are not needed =================================================================
+
+
+
+---------------------------- ATTENDANCE PAGE START --------------------------------
+velxerp\src\components\AlfAttendance.jsx
+
+
+
+
+//=============================================================== 3)
+
+// import React, { useState } from 'react';
+// import AlfNavbar from './AlfNavbar';
+// import { FormControl, Button, Form } from 'react-bootstrap';
+// import DatePicker from 'react-datepicker'; // You may need to install react-datepicker
+// import 'react-datepicker/dist/react-datepicker.css';
+// import './AlfAttendance.css';
+// import AlfEachAttendance from './AlfEachAttendance';
+
+// const AlfAttendance = () => {
+//   const [selectedDate, setSelectedDate] = useState(new Date()); // Default to today's date
+//   const [searchQuery, setSearchQuery] = useState('');
+  
+//   const formattedDate = selectedDate.toLocaleDateString('en-GB').replace(/\//g, '-');
+
+//   const [userAttendanceDetails, setUserAttendanceDetails] = useState([
+//     {
+//       id: 101,
+//       name: "Mohammed",
+//       salaryPerShift: 700,
+//       isPresent: false,
+//       shiftWorked: 0,
+//       totalPay: 0,
+//       salaryDate: formattedDate,
+//     },
+//     {
+//       id: 102,
+//       name: "Faizal",
+//       salaryPerShift: 700,
+//       isPresent: false,
+//       shiftWorked: 0,
+//       totalPay: 0,
+//       salaryDate: formattedDate,
+//     }
+//   ]);
+
+//   // Update salary date for each employee based on selected date
+//   const updatedUserAttendanceDetails = userAttendanceDetails.map((employee) => ({
+//     ...employee,
+//     salaryDate: formattedDate
+//   }));
+
+//   const filteredEmployees = updatedUserAttendanceDetails.filter((employee) =>
+//     employee.name.toLowerCase().includes(searchQuery.toLowerCase())
+//   );
+
+//   return (
+//     <>
+//       <AlfNavbar />
+//       <div className='container-fluid'>
+//         <div className="row">
+//           <div className="col-12 text-center">
+//             <h1>Mark Your Attendance Here</h1>
+
+//             {/* Date Picker */}
+//             <div className="date-picker-container">
+//               <h3>Select Date: </h3>
+//               <DatePicker
+//                 selected={selectedDate}
+//                 onChange={(date) => setSelectedDate(date)}
+//                 dateFormat="dd-MM-yyyy"
+//                 className="date-picker"
+//                 maxDate={new Date()} // Prevents selecting future dates
+//               />
+//             </div>
+
+//             <h3>{formattedDate}</h3>
+//           </div>
+
+//           {/* Search and Clear Button */}
+//           <div className="col-12 d-flex gap-2">
+//             <FormControl
+//               type="text"
+//               placeholder="Search by employee name"
+//               value={searchQuery}
+//               onChange={(e) => setSearchQuery(e.target.value)}
+//             />
+//             <Button onClick={() => setSearchQuery('')}>Clear</Button>
+//           </div>
+
+//           {/* Attendance Cards */}
+//           {filteredEmployees.length === 0 ? (
+//             <p>No Employees Found</p>
+//           ) : (
+//             filteredEmployees.map((eachEmployee, index) => (
+//               <AlfEachAttendance
+//                 key={index}
+//                 employee={eachEmployee}
+//                 setUserAttendanceDetails={setUserAttendanceDetails}
+//               />
+//             ))
+//           )}
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default AlfAttendance;
+
+//=============================================================== 2)
+
+
+
+
+// import React, { useState } from 'react';
+// import AlfNavbar from './AlfNavbar';
+// import { FormControl, Button } from 'react-bootstrap';
+// import './AlfAttendance.css';
+// import AlfEachAttendance from './AlfEachAttendance';
+
+// const AlfAttendance = () => {
+//   const currentDate = new Date();
+//   const formattedDate = currentDate.toLocaleDateString('en-GB').replace(/\//g, '-');
+
+//   const [userAttendanceDetails, setUserAttendanceDetails] = useState([
+//     {
+//       id: 101,
+//       name: "Mohammed",
+//       salaryPerShift: 700,
+//       isPresent: false,
+//       shiftWorked: 0,
+//       totalPay: 0,
+//       salaryDate: formattedDate,
+//     },
+//     {
+//       id: 102,
+//       name: "Faizal",
+//       salaryPerShift: 700,
+//       isPresent: false,
+//       shiftWorked: 0,
+//       totalPay: 0,
+//       salaryDate: formattedDate,
+//     }
+//   ]);
+
+//   const [searchQuery, setSearchQuery] = useState('');
+
+//   // Filter employees based on the search query
+//   const filteredEmployees = userAttendanceDetails.filter((employee) =>
+//     employee.name.toLowerCase().includes(searchQuery.toLowerCase())
+//   );
+
+//   return (
+//     <>
+//       <AlfNavbar />
+//       <div className='container-fluid'>
+//         <div className="row">
+//           <div className="col-12 text-center">
+//             <h1>Mark Your Attendance Here</h1>
+//             <h3>{formattedDate}</h3>
+//           </div>
+
+//           <div className="col-12 d-flex gap-2">
+//             <FormControl
+//               type="text"
+//               placeholder="Search by employee name"
+//               value={searchQuery}
+//               onChange={(e) => setSearchQuery(e.target.value)}
+//             />
+//             <Button onClick={() => setSearchQuery('')}>Clear</Button>
+//           </div>
+
+//           {filteredEmployees.length === 0 ? (
+//             <p>No Employees Found</p>
+//           ) : (
+//             filteredEmployees.map((eachEmployee, index) => (
+//               <AlfEachAttendance
+//                 key={index}
+//                 employee={eachEmployee}
+//                 setUserAttendanceDetails={setUserAttendanceDetails}
+//               />
+//             ))
+//           )}
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default AlfAttendance;
+
+
+
+//=============================================================== 1)
+
+
+// import React, { useState } from 'react';
+// import AlfNavbar from './AlfNavbar';
+// import { FormControl, Button } from 'react-bootstrap';
+// import './AlfAttendance.css';
+// import AlfEachAttendance from './AlfEachAttendance';
+
+// const AlfAttendance = () => {
+//   const currentDate = new Date();
+//   const formattedDate = currentDate.toLocaleDateString('en-GB').replace(/\//g, '-');
+
+//   const [userAttendanceDetails, setUserAttendanceDetails] = useState([
+//     {
+//       id: 101,
+//       name: "Mohammed",
+//       salaryPerShift: 700,
+//       isPresent: false,
+//       shiftWorked: 0,
+//       totalPay: 0,
+//       salaryDate: formattedDate,
+//     },
+//     {
+//       id: 102,
+//       name: "Faizal",
+//       salaryPerShift: 700,
+//       isPresent: false,
+//       shiftWorked: 0,
+//       totalPay: 0,
+//       salaryDate: formattedDate,
+//     }
+//   ]);
+
+//   return (
+//     <>
+//       <AlfNavbar />
+//       <div className='container-fluid'>
+//         <div className="row">
+//           <div className="col-12 text-center">
+//             <h1>Mark Your Attendance Here</h1>
+//             <h3>{formattedDate}</h3>
+//           </div>
+
+//           <div className="col-12 d-flex gap-2">
+//             <FormControl type="text" placeholder="Search" />
+//             <Button>Search</Button>
+//           </div>
+
+//           {userAttendanceDetails.length === 0 ? (
+//             <p>No Employees</p>
+//           ) : (
+//             userAttendanceDetails.map((eachEmployee, index) => (
+//               <AlfEachAttendance
+//                 key={index}
+//                 employee={eachEmployee}
+//                 setUserAttendanceDetails={setUserAttendanceDetails}
+//               />
+//             ))
+//           )}
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default AlfAttendance;
+
+
+
+velxerp\src\components\AlfEachAttendance.jsx
+
+// //=============================================================== 3)
+
+// import React, { useState } from 'react';
+// import { Button, Dropdown, Modal, FormControl } from 'react-bootstrap';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faIdCardClip } from '@fortawesome/free-solid-svg-icons';
+// import './AlfAttendance.css';
+
+// const AlfEachAttendance = ({ employee, setUserAttendanceDetails }) => {
+//   const { id, name, salaryPerShift, totalPay } = employee;
+
+//   const [isDisabled, setIsDisabled] = useState(false);
+//   const [showModal, setShowModal] = useState(false);
+//   const [newSalary, setNewSalary] = useState(salaryPerShift);
+//   const [selectedShift, setSelectedShift] = useState(1);
+
+//   // Handle Present Button
+//   const handlePresent = () => {
+//     const updatedPay = newSalary * selectedShift;
+//     updateEmployee({ totalPay: updatedPay });
+//     setIsDisabled(true);
+//   };
+
+//   // Handle updating salary per shift in modal
+//   const handleSaveSalary = () => {
+//     updateEmployee({ salaryPerShift: newSalary });
+//     setShowModal(false);
+//   };
+
+//   // Update employee details in parent state
+//   const updateEmployee = (updates) => {
+//     setUserAttendanceDetails((prevDetails) =>
+//       prevDetails.map((emp) =>
+//         emp.id === id ? { ...emp, ...updates } : emp
+//       )
+//     );
+//   };
+
+//   return (
+//     <>
+//       <div className='col-12 col-md-6 mt-3'>
+//         <div className='employee-card-style p-4'>
+//           <h3>
+//             <FontAwesomeIcon icon={faIdCardClip} className='mr-3' />
+//             {name}
+//           </h3>
+//           <div>
+//             <Dropdown className='d-inline m-2'>
+//               <Dropdown.Toggle variant="success">
+//                 Shift
+//               </Dropdown.Toggle>
+//               <Dropdown.Menu>
+//                 {[0.5, 1, 1.5, 2].map((shiftValue, index) => (
+//                   <Dropdown.Item
+//                     key={index}
+//                     onClick={() => setSelectedShift(shiftValue)}
+//                   >
+//                     {shiftValue} Shift
+//                   </Dropdown.Item>
+//                 ))}
+//               </Dropdown.Menu>
+//             </Dropdown>
+
+//             <Button
+//               className='btn btn-success m-2'
+//               onClick={handlePresent}
+//               disabled={isDisabled}
+//             >
+//               {isDisabled ? "Marked" : "Present"}
+//             </Button>
+//             <Button className='m-2' onClick={() => setShowModal(true)}>
+//               Edit Salary
+//             </Button>
+//             <h4 className='text-success'>Salary: {totalPay}</h4>
+//           </div>
+//         </div>
+//       </div>
+
+//       <Modal show={showModal} onHide={() => setShowModal(false)}>
+//         <Modal.Header>
+//           <Modal.Title>Edit Salary Per Shift</Modal.Title>
+//         </Modal.Header>
+//         <Modal.Body>
+//           <FormControl
+//             type="number"
+//             value={newSalary}
+//             onChange={(e) => setNewSalary(Number(e.target.value))}
+//             placeholder="Enter new salary per shift"
+//           />
+//         </Modal.Body>
+//         <Modal.Footer>
+//           <Button variant="secondary" onClick={() => setShowModal(false)}>Close</Button>
+//           <Button variant="primary" onClick={handleSaveSalary}>Save</Button>
+//         </Modal.Footer>
+//       </Modal>
+//     </>
+//   );
+// };
+
+// export default AlfEachAttendance;
+---------------------------- ATTENDANCE PAGE END --------------------------------
+
+
+---------------------------- PROJECT PAGE START --------------------------------
+velxerp\src\components\AlfProjects.jsx
+
+
+//================================================================================================ 6) enable clear filter
+// import React, { useEffect, useRef, useState } from 'react';
+// import { Navbar, Nav, Button, Dropdown, NavDropdown, FormControl, Form } from 'react-bootstrap';
+// import './AlfProjects.css';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faPersonDigging, faPlus } from '@fortawesome/free-solid-svg-icons';
+// import Select from "react-select";
+// import Modal from 'react-bootstrap/Modal';
+// import AlfEachProjectCard from './AlfEachProjectCard';
+// import AlfNavbar from './AlfNavbar';
+
+// const AlfProjects = () => {
+//     const superVisorNames = [
+//         { label: 'supervisor - 1', value: 'supervisor - 1' },
+//         { label: 'supervisor - 2', value: 'supervisor - 2' },
+//         { label: 'supervisor - 3', value: 'supervisor - 3' },
+//         { label: 'supervisor - 4', value: 'supervisor - 4' },
+//         { label: 'supervisor - 5', value: 'supervisor - 5' },
+//         { label: 'supervisor - 6', value: 'supervisor - 6' }
+//     ];
+
+//     const [show, setShow] = useState(false);
+//     const [selectedSupervisor, setSelectedSupervisor] = useState(null);
+//     const [selectedCity, setSelectedCity] = useState(null);
+//     const [searchQuery, setSearchQuery] = useState("");
+
+//     const handleClose = () => setShow(false);
+//     const handleShow = () => setShow(true);
+
+//     function getDate() {
+//         const today = new Date();
+//         return `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+//     }
+
+//     const [projectCardDetails, SetProjectCardDetails] = useState(
+//         localStorage.getItem('projectDetails') ? JSON.parse(localStorage.getItem('projectDetails')) : []
+//     );
+
+//     useEffect(() => {
+//         localStorage.setItem('projectDetails', JSON.stringify(projectCardDetails));
+//     }, [projectCardDetails]);
+
+//     const projectNameIpRef = useRef();
+//     const clientNameIpRef = useRef(); 
+
+//     const addProjectCard = () => {
+//         const ipProjectName = projectNameIpRef.current.value.trim();
+//         const ipClientName = clientNameIpRef.current.value.trim();
+        
+//         if (ipProjectName === "" || !selectedSupervisor || !selectedCity) {
+//             return null;
+//         }
+
+//         const newProjectCard = {
+//             id: Date.now(),
+//             projectName: ipProjectName,
+//             projectCity: selectedCity.label,
+//             projectStartDate: getDate(),
+//             projectSupervisor: selectedSupervisor.label,
+//             clientName: ipClientName,
+//             isCompleted: false,
+//         };
+
+//         SetProjectCardDetails((prev) => [newProjectCard, ...prev]);
+
+//         projectNameIpRef.current.value = "";
+//         setSelectedSupervisor(null);
+//         setSelectedCity(null);
+//         handleClose();
+//     };
+
+//     const togggleCardStatus = (id) => {
+//         SetProjectCardDetails((prev) =>
+//             prev.map((card) => (card.id === id ? { ...card, isCompleted: !card.isCompleted } : card))
+//         );
+//     };
+
+//     const deleteCard = (id) => {
+//         SetProjectCardDetails((prev) => prev.filter((card) => card.id !== id));
+//     };
+
+//     const handleSearch = (e) => setSearchQuery(e.target.value.toLowerCase());
+//     const clearSupervisorFilter = () => setSelectedSupervisor(null);
+//     const clearCityFilter = () => setSelectedCity(null);
+
+//     const cities = [
+//         ...new Set(projectCardDetails.map((project) => ({ label: project.projectCity, value: project.projectCity })))
+//     ];
+
+//     const filteredProjects = projectCardDetails.filter((project) => {
+//         const matchesSearch = project.projectName.toLowerCase().includes(searchQuery);
+//         const matchesSupervisor = selectedSupervisor ? project.projectSupervisor === selectedSupervisor.label : true;
+//         const matchesCity = selectedCity ? project.projectCity === selectedCity.label : true;
+//         return matchesSearch && matchesSupervisor && matchesCity;
+//     });
+
+//     return (
+//         <>
+//             <AlfNavbar />
+//             <div className='container-fluid body-bg-color'>
+//                 <div className="row">
+//                     <div className="col-12 text-center">
+//                         <h1>Projects</h1>
+//                     </div>
+
+//                     <div className="col-9 search-box" style={{ display: "flex" }}>
+//                         <FormControl type="text" placeholder="Search by Project Name" onChange={handleSearch} />
+//                     </div>
+
+//                     <div className='col-1'>
+//                         <Button onClick={handleSearch}>Search</Button>
+//                     </div>
+
+//                     <div className='col-12 col-lg-2'>
+//                         <Button variant="primary" onClick={handleShow}>
+//                             <FontAwesomeIcon icon={faPlus} /> Create New Project
+//                         </Button>
+//                     </div>
+
+//                     <div className="col-6">
+//                         <Select
+//                             options={superVisorNames}
+//                             value={selectedSupervisor}
+//                             onChange={(option) => setSelectedSupervisor(option)}
+//                             placeholder="Filter by Supervisor"
+//                             isClearable={true}
+//                         />
+//                     </div>
+//                     <div className="col-6">
+//                         <Select
+//                             options={cities}
+//                             value={selectedCity}
+//                             onChange={(option) => setSelectedCity(option)}
+//                             placeholder="Filter by City"
+//                             isClearable={true}
+//                         />
+//                     </div>
+
+//                     {filteredProjects.length === 0 ? (
+//                         <p>No On Going Projects</p>
+//                     ) : (
+//                         filteredProjects.map((eachCardDetails) => (
+//                             <AlfEachProjectCard
+//                                 key={eachCardDetails.id}
+//                                 {...eachCardDetails}
+//                                 togggleCardStatus={togggleCardStatus}
+//                                 deleteCard={deleteCard}
+//                             />
+//                         ))
+//                     )}
+
+//                     <Modal show={show} onHide={handleClose}>
+//                         <Modal.Header>
+//                             <Modal.Title>Creating new Project</Modal.Title>
+//                         </Modal.Header>
+//                         <Modal.Body>
+//                             <label>Project Name</label>
+//                             <input ref={projectNameIpRef} type="text" placeholder='Enter Project Name Here' className='w-100 mb-4' />
+
+                            
+
+//                             <label>Client Name</label>
+//                             <input ref={clientNameIpRef} type="text" placeholder='Enter Client Name' className='w-100 mb-4'/>
+
+//                             <label>Select Supervisor</label>
+//                             <Select
+//                                 options={superVisorNames}
+//                                 value={selectedSupervisor}
+//                                 onChange={(option) => setSelectedSupervisor(option)}
+//                                 placeholder="Select Supervisor"
+//                                 className='w-100 mb-4'
+//                                 isClearable={true}
+//                             />
+
+//                             <label>Select City</label>
+//                             <Select
+//                                 options={cities}
+//                                 value={selectedCity}
+//                                 onChange={(option) => setSelectedCity(option)}
+//                                 placeholder="Select City"
+//                                 className='w-100 mb-4'
+//                                 isClearable={true}
+//                             />
+//                         </Modal.Body>
+//                         <Modal.Footer>
+//                             <Button variant="secondary" onClick={handleClose}>Close</Button>
+//                             <Button variant="primary" onClick={addProjectCard}>Create Project</Button>
+//                         </Modal.Footer>
+//                     </Modal>
+//                 </div>
+//             </div>
+//         </>
+//     );
+// };
+
+// export default AlfProjects;
+
+
+//================================================================================================ 5) enable clear filter
+// import React, { useEffect, useRef, useState } from 'react';
+// import { Navbar, Nav, Button, FormControl, Form } from 'react-bootstrap';
+// import './AlfProjects.css';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faPersonDigging, faPlus } from '@fortawesome/free-solid-svg-icons';
+// import Select from "react-select";
+// import Modal from 'react-bootstrap/Modal';
+// import AlfEachProjectCard from './AlfEachProjectCard';
+// import AlfNavbar from './AlfNavbar';
+
+// const AlfProjects = () => {
+//     const superVisorNames = [
+//         { label: 'supervisor - 1', value: 'supervisor - 1' },
+//         { label: 'supervisor - 2', value: 'supervisor - 2' },
+//         { label: 'supervisor - 3', value: 'supervisor - 3' },
+//         { label: 'supervisor - 4', value: 'supervisor - 4' },
+//         { label: 'supervisor - 5', value: 'supervisor - 5' },
+//         { label: 'supervisor - 6', value: 'supervisor - 6' }
+//     ];
+
+//     const [show, setShow] = useState(false);
+//     const [selectedSupervisor, setSelectedSupervisor] = useState(null);
+//     const [selectedCity, setSelectedCity] = useState(null);
+//     const [searchTerm, setSearchTerm] = useState(''); 
+//     const [filterSupervisor, setFilterSupervisor] = useState(null); 
+//     const [filterCity, setFilterCity] = useState(null); 
+
+//     const handleClose = () => setShow(false);
+//     const handleShow = () => setShow(true);
+
+//     function getDate() {
+//         const today = new Date();
+//         const month = today.getMonth() + 1;
+//         const day = today.getDate();
+//         const year = today.getFullYear();
+//         return `${month}/${day}/${year}`;
+//     }
+
+//     const [projectCardDetails, SetProjectCardDetails] = useState(
+//         localStorage.getItem('projectDetails') ? JSON.parse(localStorage.getItem('projectDetails')) : []
+//     );
+
+//     // Extract unique cities from project details
+//     const cityOptions = Array.from(
+//         new Set(projectCardDetails.map(project => project.projectCity))
+//     ).map(city => ({ label: city, value: city }));
+
+//     useEffect(() => {
+//         localStorage.setItem('projectDetails', JSON.stringify(projectCardDetails));
+//     }, [projectCardDetails]);
+
+//     const projectNameIpRef = useRef();
+//     const clientNameIpRef = useRef();
+
+//     const addProjectCard = () => {
+//         const ipProjectName = projectNameIpRef.current.value.trim();
+//         const ipClientName = clientNameIpRef.current.value.trim();
+        
+//         if (ipProjectName === "" || !selectedSupervisor || !selectedCity) {
+//             return null;
+//         }
+
+//         const newProjectCard = {
+//             id: Date.now(),
+//             projectName: ipProjectName,
+//             projectCity: selectedCity.label,
+//             projectStartDate: getDate(),
+//             projectSupervisor: selectedSupervisor.label,
+//             clientName: ipClientName,
+//             isCompleted: false,
+//         };
+
+//         SetProjectCardDetails((prev) => [...prev, newProjectCard]);
+//         projectNameIpRef.current.value = "";
+//         setSelectedSupervisor(null);
+//         setSelectedCity(null);
+//         handleClose();
+//     };
+
+//     const togggleCardStatus = (id) => {
+//         SetProjectCardDetails((prev) => {
+//             return prev.map((card) => {
+//                 if (id === card.id) {
+//                     return { ...card, isCompleted: !card.isCompleted };
+//                 }
+//                 return card;
+//             });
+//         });
+//     };
+
+//     const deleteCard = (id) => {
+//         SetProjectCardDetails((prev) => {
+//             return prev.filter((card) => card.id !== id);
+//         });
+//     };
+
+//     const filteredProjectCards = projectCardDetails.filter((project) => {
+//         const matchesSearch = project.projectName.toLowerCase().includes(searchTerm.toLowerCase());
+//         const matchesSupervisor = filterSupervisor ? project.projectSupervisor === filterSupervisor.label : true;
+//         const matchesCity = filterCity ? project.projectCity === filterCity.label : true;
+//         return matchesSearch && matchesSupervisor && matchesCity;
+//     });
+
+//     return (
+//         <>
+//             <AlfNavbar />
+//             <div className='container-fluid body-bg-color'>
+//                 <div className="row">
+//                     <div className="col-12 text-center">
+//                         <h1>Projects</h1>
+//                     </div>
+
+//                     {/* Search Input */}
+//                     <div className="col-9 search-box" style={{ display: "flex" }}>
+//                         <FormControl
+//                             type="text"
+//                             placeholder="Search by Project Name"
+//                             className="mr-sm-2"
+//                             onChange={(e) => setSearchTerm(e.target.value)}
+//                         />
+//                     </div>
+//                     <div className='col-1'>
+//                         <Button>Search</Button>
+//                     </div>
+//                     {/* Create New Project Button */}
+//                     <div className='col-12 col-lg-2'>
+//                         <Button variant="primary" onClick={handleShow}>
+//                             <FontAwesomeIcon icon={faPlus} /> Create New Project
+//                         </Button>
+//                     </div>
+
+//                     {/* Supervisor Filter Dropdown */}
+//                     <div className="col-6 mt-3">
+//                         <Select
+//                             options={superVisorNames}
+//                             value={filterSupervisor}
+//                             onChange={(selectedOption) => setFilterSupervisor(selectedOption)}
+//                             placeholder="Filter by Supervisor"
+//                             isClearable
+//                         />
+//                     </div>
+
+//                     {/* City Filter Dropdown 
+//                     col-lg-2 mb-3*/}
+//                     <div className="col-6 mt-3">
+//                         <Select
+//                             options={cityOptions}
+//                             value={filterCity}
+//                             onChange={(selectedOption) => setFilterCity(selectedOption)}
+//                             placeholder="Filter by City"
+//                             isClearable
+//                         />
+//                     </div>
+
+                    
+
+//                     {/* Display Project Cards */}
+//                     {filteredProjectCards.length === 0 ? (
+//                         <p>No Ongoing Projects</p>
+//                     ) : (
+//                         filteredProjectCards.map((eachCardDetails, index) => (
+//                             <AlfEachProjectCard
+//                                 key={index}
+//                                 id={eachCardDetails.id}
+//                                 projectName={eachCardDetails.projectName}
+//                                 CityName={eachCardDetails.projectCity}
+//                                 supervisorName={eachCardDetails.projectSupervisor}
+//                                 projectStartDate={eachCardDetails.projectStartDate}
+//                                 clientName={eachCardDetails.clientName}
+//                                 isCompleted={eachCardDetails.isCompleted}
+//                                 togggleCardStatus={togggleCardStatus}
+//                                 deleteCard={deleteCard}
+//                             />
+//                         ))
+//                     )}
+
+//                     {/* Modal for Creating New Project */}
+//                     <div className="col-6">
+//                         <Modal show={show} onHide={handleClose}>
+//                             <Modal.Header>
+//                                 <Modal.Title>Creating new Project</Modal.Title>
+//                             </Modal.Header>
+//                             <Modal.Body>
+//                                 <label htmlFor='projectNameIp' className='mr-3'>Project Name</label>
+//                                 <input ref={projectNameIpRef} type="text" id="projectNameIp" placeholder='Enter Project Name Here' className='w-100 mb-4' />
+
+//                                 <label htmlFor='clientNameIpId' className='mr-3'>Client Name</label>
+//                                 <input ref={clientNameIpRef} type="text" id="clientNameIpId" placeholder='Enter Client Name' className='w-100 mb-4'/>
+
+//                                 <label htmlFor='supervisorSelect' className='mr-3'>Select Supervisor</label>
+//                                 <Select
+//                                     options={superVisorNames}
+//                                     value={selectedSupervisor}
+//                                     onChange={(selectedOption) => setSelectedSupervisor(selectedOption)}
+//                                     placeholder="Select Supervisor"
+//                                     className='w-100 mb-4'
+//                                 />
+
+//                                 <label htmlFor='citySelect' className='mr-3'>Select City</label>
+//                                 <Select
+//                                     options={cityOptions}
+//                                     value={selectedCity}
+//                                     onChange={(selectedOption) => setSelectedCity(selectedOption)}
+//                                     placeholder="Select City"
+//                                     className='w-100 mb-4'
+//                                 />
+//                             </Modal.Body>
+//                             <Modal.Footer>
+//                                 <Button variant="secondary" onClick={handleClose}>Close</Button>
+//                                 <Button variant="primary" onClick={addProjectCard}>Create Project</Button>
+//                             </Modal.Footer>
+//                         </Modal>
+//                     </div>
+                    
+//                 </div>
+//             </div>
+//         </>
+//     );
+// };
+
+// export default AlfProjects;
+
+
+//================================================================================================ 4) enable city filter
+// import React, { useEffect, useRef, useState } from 'react';
+// import { Navbar, Nav, Button, FormControl, Form } from 'react-bootstrap';
+// import './AlfProjects.css';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faPersonDigging, faPlus } from '@fortawesome/free-solid-svg-icons';
+// import Select from "react-select";
+// import Modal from 'react-bootstrap/Modal';
+// import AlfEachProjectCard from './AlfEachProjectCard';
+// import AlfNavbar from './AlfNavbar';
+
+// const AlfProjects = () => {
+//     const superVisorNames = [
+//         { label: 'supervisor - 1', value: 'supervisor - 1' },
+//         { label: 'supervisor - 2', value: 'supervisor - 2' },
+//         { label: 'supervisor - 3', value: 'supervisor - 3' },
+//         { label: 'supervisor - 4', value: 'supervisor - 4' },
+//         { label: 'supervisor - 5', value: 'supervisor - 5' },
+//         { label: 'supervisor - 6', value: 'supervisor - 6' }
+//     ];
+
+//     const [show, setShow] = useState(false);
+//     const [selectedSupervisor, setSelectedSupervisor] = useState(null);
+//     const [selectedCity, setSelectedCity] = useState(null);
+//     const [searchTerm, setSearchTerm] = useState(''); 
+//     const [filterSupervisor, setFilterSupervisor] = useState(null); 
+//     const [filterCity, setFilterCity] = useState(null); 
+
+//     const handleClose = () => setShow(false);
+//     const handleShow = () => setShow(true);
+
+//     function getDate() {
+//         const today = new Date();
+//         const month = today.getMonth() + 1;
+//         const day = today.getDate();
+//         const year = today.getFullYear();
+//         return `${month}/${day}/${year}`;
+//     }
+
+//     const [projectCardDetails, SetProjectCardDetails] = useState(
+//         localStorage.getItem('projectDetails') ? JSON.parse(localStorage.getItem('projectDetails')) : []
+//     );
+
+//     // Extract unique cities from project details
+//     const cityOptions = Array.from(
+//         new Set(projectCardDetails.map(project => project.projectCity))
+//     ).map(city => ({ label: city, value: city }));
+
+//     useEffect(() => {
+//         localStorage.setItem('projectDetails', JSON.stringify(projectCardDetails));
+//     }, [projectCardDetails]);
+
+//     const projectNameIpRef = useRef();
+//     const clientNameIpRef = useRef();
+
+//     const addProjectCard = () => {
+//         const ipProjectName = projectNameIpRef.current.value.trim();
+//         const ipClientName = clientNameIpRef.current.value.trim();
+        
+//         if (ipProjectName === "" || !selectedSupervisor || !selectedCity) {
+//             return null;
+//         }
+
+//         const newProjectCard = {
+//             id: Date.now(),
+//             projectName: ipProjectName,
+//             projectCity: selectedCity.label,
+//             projectStartDate: getDate(),
+//             projectSupervisor: selectedSupervisor.label,
+//             clientName: ipClientName,
+//             isCompleted: false,
+//         };
+
+//         SetProjectCardDetails((prev) => [...prev, newProjectCard]);
+//         projectNameIpRef.current.value = "";
+//         setSelectedSupervisor(null);
+//         setSelectedCity(null);
+//         handleClose();
+//     };
+
+//     const togggleCardStatus = (id) => {
+//         SetProjectCardDetails((prev) => {
+//             return prev.map((card) => {
+//                 if (id === card.id) {
+//                     return { ...card, isCompleted: !card.isCompleted };
+//                 }
+//                 return card;
+//             });
+//         });
+//     };
+
+//     const deleteCard = (id) => {
+//         SetProjectCardDetails((prev) => {
+//             return prev.filter((card) => card.id !== id);
+//         });
+//     };
+
+//     const filteredProjectCards = projectCardDetails.filter((project) => {
+//         const matchesSearch = project.projectName.toLowerCase().includes(searchTerm.toLowerCase());
+//         const matchesSupervisor = filterSupervisor ? project.projectSupervisor === filterSupervisor.label : true;
+//         const matchesCity = filterCity ? project.projectCity === filterCity.label : true;
+//         return matchesSearch && matchesSupervisor && matchesCity;
+//     });
+
+//     return (
+//         <>
+//             <AlfNavbar />
+//             <div className='container-fluid body-bg-color'>
+//                 <div className="row">
+//                     <div className="col-12 text-center">
+//                         <h1>Projects</h1>
+//                     </div>
+
+//                     {/* Search Input */}
+//                     <div className="col-9 search-box" style={{ display: "flex" }}>
+//                         <FormControl
+//                             type="text"
+//                             placeholder="Search by Project Name"
+//                             className="mr-sm-2"
+//                             onChange={(e) => setSearchTerm(e.target.value)}
+//                         />
+//                     </div>
+//                     <div className='col-1'>
+//                         <Button>Search</Button>
+//                     </div>
+
+//                     {/* Supervisor Filter Dropdown */}
+//                     <div className="col-6 col-lg-2 mb-3">
+//                         <Select
+//                             options={superVisorNames}
+//                             value={filterSupervisor}
+//                             onChange={(selectedOption) => setFilterSupervisor(selectedOption)}
+//                             placeholder="Filter by Supervisor"
+//                         />
+//                     </div>
+
+//                     {/* City Filter Dropdown */}
+//                     <div className="col-6 col-lg-2 mb-3">
+//                         <Select
+//                             options={cityOptions}
+//                             value={filterCity}
+//                             onChange={(selectedOption) => setFilterCity(selectedOption)}
+//                             placeholder="Filter by City"
+//                         />
+//                     </div>
+
+//                     {/* Create New Project Button */}
+//                     <div className='col-12 col-lg-2'>
+//                         <Button variant="primary" onClick={handleShow}>
+//                             <FontAwesomeIcon icon={faPlus} /> Create New Project
+//                         </Button>
+//                     </div>
+
+//                     {/* Display Project Cards */}
+//                     {filteredProjectCards.length === 0 ? (
+//                         <p>No Ongoing Projects</p>
+//                     ) : (
+//                         filteredProjectCards.map((eachCardDetails, index) => (
+//                             <AlfEachProjectCard
+//                                 key={index}
+//                                 id={eachCardDetails.id}
+//                                 projectName={eachCardDetails.projectName}
+//                                 CityName={eachCardDetails.projectCity}
+//                                 supervisorName={eachCardDetails.projectSupervisor}
+//                                 projectStartDate={eachCardDetails.projectStartDate}
+//                                 clientName={eachCardDetails.clientName}
+//                                 isCompleted={eachCardDetails.isCompleted}
+//                                 togggleCardStatus={togggleCardStatus}
+//                                 deleteCard={deleteCard}
+//                             />
+//                         ))
+//                     )}
+
+//                     {/* Modal for Creating New Project */}
+//                     <div className="col-6">
+//                         <Modal show={show} onHide={handleClose}>
+//                             <Modal.Header>
+//                                 <Modal.Title>Creating new Project</Modal.Title>
+//                             </Modal.Header>
+//                             <Modal.Body>
+//                                 <label htmlFor='projectNameIp' className='mr-3'>Project Name</label>
+//                                 <input ref={projectNameIpRef} type="text" id="projectNameIp" placeholder='Enter Project Name Here' className='w-100 mb-4' />
+
+//                                 <label htmlFor='clientNameIpId' className='mr-3'>Client Name</label>
+//                                 <input ref={clientNameIpRef} type="text" id="clientNameIpId" placeholder='Enter Client Name' className='w-100 mb-4'/>
+
+//                                 <label htmlFor='supervisorSelect' className='mr-3'>Select Supervisor</label>
+//                                 <Select
+//                                     options={superVisorNames}
+//                                     value={selectedSupervisor}
+//                                     onChange={(selectedOption) => setSelectedSupervisor(selectedOption)}
+//                                     placeholder="Select Supervisor"
+//                                     className='w-100 mb-4'
+//                                 />
+
+//                                 <label htmlFor='citySelect' className='mr-3'>Select City</label>
+//                                 <Select
+//                                     options={cityOptions}
+//                                     value={selectedCity}
+//                                     onChange={(selectedOption) => setSelectedCity(selectedOption)}
+//                                     placeholder="Select City"
+//                                     className='w-100 mb-4'
+//                                 />
+//                             </Modal.Body>
+//                             <Modal.Footer>
+//                                 <Button variant="secondary" onClick={handleClose}>Close</Button>
+//                                 <Button variant="primary" onClick={addProjectCard}>Create Project</Button>
+//                             </Modal.Footer>
+//                         </Modal>
+//                     </div>
+                    
+//                 </div>
+//             </div>
+//         </>
+//     );
+// };
+
+// export default AlfProjects;
+
+
+//================================================================================================ 3) enable supervisor filter
+// import React, { useEffect, useRef, useState } from 'react';
+// import { Navbar, Nav, Button, FormControl, Form } from 'react-bootstrap';
+// import './AlfProjects.css';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faPersonDigging, faPlus } from '@fortawesome/free-solid-svg-icons';
+// import Select from "react-select";
+// import Modal from 'react-bootstrap/Modal';
+// import AlfEachProjectCard from './AlfEachProjectCard';
+// import AlfNavbar from './AlfNavbar';
+
+// const AlfProjects = () => {
+//     const superVisorNames = [
+//         { label: 'supervisor - 1', value: 'supervisor - 1' },
+//         { label: 'supervisor - 2', value: 'supervisor - 2' },
+//         { label: 'supervisor - 3', value: 'supervisor - 3' },
+//         { label: 'supervisor - 4', value: 'supervisor - 4' },
+//         { label: 'supervisor - 5', value: 'supervisor - 5' },
+//         { label: 'supervisor - 6', value: 'supervisor - 6' }
+//     ];
+
+//     const [show, setShow] = useState(false);
+//     const [selectedSupervisor, setSelectedSupervisor] = useState(null);
+//     const [searchTerm, setSearchTerm] = useState(''); // State for search term
+//     const [filterSupervisor, setFilterSupervisor] = useState(null); // State for supervisor filter
+
+//     const handleClose = () => setShow(false);
+//     const handleShow = () => setShow(true);
+
+//     // To get the current date
+//     function getDate() {
+//         const today = new Date();
+//         const month = today.getMonth() + 1;
+//         const day = today.getDate();
+//         const year = today.getFullYear();
+//         return `${month}/${day}/${year}`;
+//     }
+
+//     const [projectCardDetails, SetProjectCardDetails] = useState(
+//         localStorage.getItem('projectDetails') ? JSON.parse(localStorage.getItem('projectDetails')) : []
+//     );
+
+//     // Update local storage
+//     useEffect(() => {
+//         localStorage.setItem('projectDetails', JSON.stringify(projectCardDetails));
+//     }, [projectCardDetails]);
+
+//     const projectNameIpRef = useRef();
+//     const projectCityIpRef = useRef();
+//     const clientNameIpRef = useRef(); 
+
+//     const addProjectCard = () => {
+//         const ipProjectName = projectNameIpRef.current.value.trim();
+//         const ipProjectCity = projectCityIpRef.current.value.trim();
+//         const ipClientName = clientNameIpRef.current.value.trim();
+        
+//         if (ipProjectCity === "" || ipProjectName === "" || !selectedSupervisor) {
+//             return null;
+//         }
+
+//         const newProjectCard = {
+//             id: Date.now(),
+//             projectName: ipProjectName,
+//             projectCity: ipProjectCity,
+//             projectStartDate: getDate(),
+//             projectSupervisor: selectedSupervisor.label,
+//             clientName: ipClientName,
+//             isCompleted: false,
+//         };
+
+//         SetProjectCardDetails((prev) => [...prev, newProjectCard]);
+//         projectNameIpRef.current.value = "";
+//         projectCityIpRef.current.value = "";
+//         setSelectedSupervisor(null);
+//         handleClose();
+//     };
+
+//     const togggleCardStatus = (id) => {
+//         SetProjectCardDetails((prev) => {
+//             return prev.map((card) => {
+//                 if (id === card.id) {
+//                     return { ...card, isCompleted: !card.isCompleted };
+//                 }
+//                 return card;
+//             });
+//         });
+//     };
+
+//     const deleteCard = (id) => {
+//         SetProjectCardDetails((prev) => {
+//             return prev.filter((card) => card.id !== id);
+//         });
+//     };
+
+//     // Filter projects based on search term and selected supervisor
+//     const filteredProjectCards = projectCardDetails.filter((project) => {
+//         const matchesSearch = project.projectName.toLowerCase().includes(searchTerm.toLowerCase());
+//         const matchesSupervisor = filterSupervisor ? project.projectSupervisor === filterSupervisor.label : true;
+//         return matchesSearch && matchesSupervisor;
+//     });
+
+//     return (
+//         <>
+//             <AlfNavbar />
+//             <div className='container-fluid body-bg-color'>
+//                 <div className="row">
+//                     <div className="col-12 text-center">
+//                         <h1>Projects</h1>
+//                     </div>
+
+//                     {/* Search Input */}
+//                     <div className="col-9 search-box" style={{ display: "flex" }}>
+//                         <FormControl
+//                             type="text"
+//                             placeholder="Search by Project Name"
+//                             className="mr-sm-2"
+//                             onChange={(e) => setSearchTerm(e.target.value)}
+//                         />
+//                     </div>
+//                     <div className='col-1'>
+//                         <Button>Search</Button>
+//                     </div>
+
+
+//                     {/* Create New Project Button */}
+//                     <div className='col-12 col-lg-2'>
+//                         <Button variant="primary" onClick={handleShow}>
+//                             <FontAwesomeIcon icon={faPlus} /> Create New Project
+//                         </Button>
+//                     </div>
+
+//                     {/* Supervisor Filter Dropdown */}
+//                     <div className="col-12">
+//                         <Select
+//                             options={superVisorNames}
+//                             value={filterSupervisor}
+//                             onChange={(selectedOption) => setFilterSupervisor(selectedOption)}
+//                             placeholder="Filter by Supervisor"
+//                         />
+//                     </div>
+
+//                     {/* Display Project Cards */}
+//                     {filteredProjectCards.length === 0 ? (
+//                         <p>No Ongoing Projects</p>
+//                     ) : (
+//                         filteredProjectCards.map((eachCardDetails, index) => (
+//                             <AlfEachProjectCard
+//                                 key={index}
+//                                 id={eachCardDetails.id}
+//                                 projectName={eachCardDetails.projectName}
+//                                 CityName={eachCardDetails.projectCity}
+//                                 supervisorName={eachCardDetails.projectSupervisor}
+//                                 projectStartDate={eachCardDetails.projectStartDate}
+//                                 clientName={eachCardDetails.clientName}
+//                                 isCompleted={eachCardDetails.isCompleted}
+//                                 togggleCardStatus={togggleCardStatus}
+//                                 deleteCard={deleteCard}
+//                             />
+//                         ))
+//                     )}
+
+//                     {/* Modal for Creating New Project */}
+//                     <div className="col-6">
+//                         <Modal show={show} onHide={handleClose}>
+//                             <Modal.Header>
+//                                 <Modal.Title>Creating new Project</Modal.Title>
+//                             </Modal.Header>
+//                             <Modal.Body>
+//                                 <label htmlFor='projectNameIp' className='mr-3'>Project Name</label>
+//                                 <input ref={projectNameIpRef} type="text" id="projectNameIp" placeholder='Enter Project Name Here' className='w-100 mb-4' />
+
+//                                 <label htmlFor='projectCityIp' className='mr-3'>City</label>
+//                                 <input ref={projectCityIpRef} type="text" id="projectCityIp" placeholder='Enter City Here' className='w-100 mb-4' />
+
+//                                 <label htmlFor='clientNameIpId' className='mr-3'>Client Name</label>
+//                                 <input ref={clientNameIpRef} type="text" id="clientNameIpId" placeholder='Enter Client Name' className='w-100 mb-4'/>
+
+//                                 <label htmlFor='supervisorSelect' className='mr-3'>Select Supervisor</label>
+//                                 <Select
+//                                     options={superVisorNames}
+//                                     value={selectedSupervisor}
+//                                     onChange={(selectedOption) => setSelectedSupervisor(selectedOption)}
+//                                     placeholder="Select Supervisor"
+//                                     className='w-100 mb-4'
+//                                 />
+//                             </Modal.Body>
+//                             <Modal.Footer>
+//                                 <Button variant="secondary" onClick={handleClose}>Close</Button>
+//                                 <Button variant="primary" onClick={addProjectCard}>Create Project</Button>
+//                             </Modal.Footer>
+//                         </Modal>
+//                     </div>
+                    
+//                 </div>
+//             </div>
+//         </>
+//     );
+// };
+
+// export default AlfProjects;
+
+
+
+//================================================================================================ 2) enable search
+
+
+// import React, { useEffect, useRef, useState } from 'react';
+// import { Navbar, Nav, Button, Dropdown, NavDropdown, FormControl, Form } from 'react-bootstrap';
+// import './AlfProjects.css';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faPersonDigging, faPlus } from '@fortawesome/free-solid-svg-icons';
+// import Select from "react-select";
+// import Modal from 'react-bootstrap/Modal';
+// import AlfEachProjectCard from './AlfEachProjectCard';
+// import AlfNavbar from './AlfNavbar';
+
+// const AlfProjects = () => {
+//     const superVisorNames = [
+//         { label: 'supervisor - 1', value: 'supervisor - 1' },
+//         { label: 'supervisor - 2', value: 'supervisor - 2' },
+//         { label: 'supervisor - 3', value: 'supervisor - 3' },
+//         { label: 'supervisor - 4', value: 'supervisor - 4' },
+//         { label: 'supervisor - 5', value: 'supervisor - 5' },
+//         { label: 'supervisor - 6', value: 'supervisor - 6' }
+//     ];
+
+//     const [show, setShow] = useState(false);
+//     const [selectedSupervisor, setSelectedSupervisor] = useState(null);
+//     const [searchTerm, setSearchTerm] = useState(""); // New state for search term
+
+//     const handleClose = () => setShow(false);
+//     const handleShow = () => setShow(true);
+
+//     // To get the current date
+//     function getDate() {
+//         const today = new Date();
+//         const month = today.getMonth() + 1;
+//         const day = today.getDate();
+//         const year = today.getFullYear();
+//         return `${month}/${day}/${year}`;
+//     }
+
+//     const [projectCardDetails, setProjectCardDetails] = useState(
+//         localStorage.getItem('projectDetails') ? JSON.parse(localStorage.getItem('projectDetails')) : []
+//     );
+
+//     // Update local storage
+//     useEffect(() => {
+//         localStorage.setItem('projectDetails', JSON.stringify(projectCardDetails));
+//     }, [projectCardDetails]);
+
+//     const projectNameIpRef = useRef();
+//     const projectCityIpRef = useRef();
+//     const clientNameIpRef = useRef(); 
+
+//     const addProjectCard = () => {
+//         const ipProjectName = projectNameIpRef.current.value.trim();
+//         const ipProjectCity = projectCityIpRef.current.value.trim();
+//         const ipClientName = clientNameIpRef.current.value.trim();
+        
+//         if (ipProjectCity === "" || ipProjectName === "" || !selectedSupervisor) {
+//             return null;
+//         }
+
+//         const newProjectCard = {
+//             id: Date.now(),
+//             projectName: ipProjectName,
+//             projectCity: ipProjectCity,
+//             projectStartDate: getDate(),
+//             projectSupervisor: selectedSupervisor.label,
+//             clientName: ipClientName,
+//             isCompleted: false,
+//         };
+
+//         setProjectCardDetails((prev) => [...prev, newProjectCard]);
+//         projectNameIpRef.current.value = "";
+//         projectCityIpRef.current.value = "";
+//         setSelectedSupervisor(null);
+//         handleClose();
+//     };
+
+//     const togggleCardStatus = (id) => {
+//         setProjectCardDetails((prev) => {
+//             return prev.map((card) => {
+//                 if (id === card.id) {
+//                     return { ...card, isCompleted: !card.isCompleted };
+//                 }
+//                 return card;
+//             });
+//         });
+//     };
+
+//     const deleteCard = (id) => {
+//         setProjectCardDetails((prev) => {
+//             return prev.filter((card) => card.id !== id);
+//         });
+//     };
+
+//     // Filtered project cards based on the search term
+//     const filteredProjectCards = projectCardDetails.filter((card) =>
+//         card.projectName.toLowerCase().includes(searchTerm.toLowerCase())
+//     );
+
+//     return (
+//         <>
+//             <AlfNavbar />
+//             <div className='container-fluid body-bg-color'>
+//                 <div className="row">
+//                     <div className="col-12 text-center">
+//                         <h1>Projects</h1>
+//                     </div>
+
+//                     <div className="col-9 search-box" style={{ display: "flex" }}>
+//                         <FormControl
+//                             type="text"
+//                             placeholder="Search by Project Name"
+//                             className="mr-sm-2"
+//                             value={searchTerm}
+//                             onChange={(e) => setSearchTerm(e.target.value)} // Update search term on input change
+//                         />
+//                     </div>
+
+//                     <div className='col-1'>
+//                         <Button onClick={() => setSearchTerm(searchTerm)}>Search</Button> {/* Trigger search */}
+//                     </div>
+
+//                     <div className='col-12 col-lg-2'>
+//                         <Button variant="primary" onClick={handleShow}>
+//                             <FontAwesomeIcon icon={faPlus} /> Create New Project
+//                         </Button>
+//                     </div>
+
+//                     {filteredProjectCards.length === 0 ? (
+//                         <p>No Matching Projects</p>
+//                     ) : (
+//                         filteredProjectCards.map((eachCardDetails, index) => (
+//                             <AlfEachProjectCard
+//                                 key={index}
+//                                 id={eachCardDetails.id}
+//                                 projectName={eachCardDetails.projectName}
+//                                 CityName={eachCardDetails.projectCity}
+//                                 supervisorName={eachCardDetails.projectSupervisor}
+//                                 projectStartDate={eachCardDetails.projectStartDate}
+//                                 clientName={eachCardDetails.clientName}
+//                                 isCompleted={eachCardDetails.isCompleted}
+//                                 togggleCardStatus={togggleCardStatus}
+//                                 deleteCard={deleteCard}
+//                             />
+//                         ))
+//                     )}
+
+//                     <div className="col-6">
+//                         <Modal show={show} onHide={handleClose}>
+//                             <Modal.Header>
+//                                 <Modal.Title>Creating new Project</Modal.Title>
+//                             </Modal.Header>
+//                             <Modal.Body>
+//                                 <label htmlFor='projectNameIp' className='mr-3'>Project Name</label>
+//                                 <input ref={projectNameIpRef} type="text" id="projectNameIp" placeholder='Enter Project Name Here' className='w-100 mb-4' />
+
+//                                 <label htmlFor='projectCityIp' className='mr-3'>City</label>
+//                                 <input ref={projectCityIpRef} type="text" id="projectCityIp" placeholder='Enter City Here' className='w-100 mb-4' />
+
+//                                 <label htmlFor='clientNameIpId' className='mr-3'>Client Name</label>
+//                                 <input ref={clientNameIpRef} type="text" id="clientNameIpId" placeholder='Enter Client Name' className='w-100 mb-4'/>
+
+//                                 <label htmlFor='supervisorSelect' className='mr-3'>Select Supervisor</label>
+//                                 <Select
+//                                     options={superVisorNames}
+//                                     value={selectedSupervisor}
+//                                     onChange={(selectedOption) => setSelectedSupervisor(selectedOption)}
+//                                     placeholder="Select Supervisor"
+//                                     className='w-100 mb-4'
+//                                 />
+//                             </Modal.Body>
+//                             <Modal.Footer>
+//                                 <Button variant="secondary" onClick={handleClose}>Close</Button>
+//                                 <Button variant="primary" onClick={addProjectCard}>Create Project</Button>
+//                             </Modal.Footer>
+//                         </Modal>
+                        
+//                     </div>
+                    
+//                 </div>
+//             </div>
+//         </>
+//     );
+// };
+
+// export default AlfProjects;
+
+//================================================================================================ 1)
+
+// import React, { useEffect, useRef, useState } from 'react';
+// import { Navbar, Nav, Button, Dropdown, NavDropdown, FormControl, Form } from 'react-bootstrap';
+// import './AlfProjects.css';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faPersonDigging, faPlus } from '@fortawesome/free-solid-svg-icons';
+// import Select from "react-select";
+// import Modal from 'react-bootstrap/Modal';
+// import AlfEachProjectCard from './AlfEachProjectCard';
+// import AlfNavbar from './AlfNavbar';
+
+// const AlfProjects = () => {
+//     const superVisorNames = [
+//         { label: 'supervisor - 1', value: 'supervisor - 1' },
+//         { label: 'supervisor - 2', value: 'supervisor - 2' },
+//         { label: 'supervisor - 3', value: 'supervisor - 3' },
+//         { label: 'supervisor - 4', value: 'supervisor - 4' },
+//         { label: 'supervisor - 5', value: 'supervisor - 5' },
+//         { label: 'supervisor - 6', value: 'supervisor - 6' }
+//     ];
+
+//     const [show, setShow] = useState(false);
+//     const [selectedSupervisor, setSelectedSupervisor] = useState(null); // New state for selected supervisor
+
+//     const handleClose = () => setShow(false);
+//     const handleShow = () => setShow(true);
+
+//     // To get the current date
+//     function getDate() {
+//         const today = new Date();
+//         const month = today.getMonth() + 1;
+//         const day = today.getDate();
+//         const year = today.getFullYear();
+//         return `${month}/${day}/${year}`;
+//     }
+
+//     const [projectCardDetails, SetProjectCardDetails] = useState(
+//         localStorage.getItem('projectDetails') ? JSON.parse(localStorage.getItem('projectDetails')) : []
+//     );
+
+//     // Update local storage
+//     useEffect(() => {
+//         localStorage.setItem('projectDetails', JSON.stringify(projectCardDetails));
+//     }, [projectCardDetails]);
+
+//     const projectNameIpRef = useRef();
+//     const projectCityIpRef = useRef();
+//     const clientNameIpRef = useRef(); 
+
+//     const addProjectCard = () => {
+//         const ipProjectName = projectNameIpRef.current.value.trim();
+//         const ipProjectCity = projectCityIpRef.current.value.trim();
+//         const ipClientName = clientNameIpRef.current.value.trim();
+        
+//         if (ipProjectCity === "" || ipProjectName === "" || !selectedSupervisor) {
+//             return null;
+//         }
+
+//         const newProjectCard = {
+//             id: Date.now(),
+//             projectName: ipProjectName,
+//             projectCity: ipProjectCity,
+//             projectStartDate: getDate(), // Get current date
+//             projectSupervisor: selectedSupervisor.label, // Set supervisor name from dropdown
+//             clientName: ipClientName, // Set client name from input field
+//             isCompleted: false,
+//         };
+
+//         SetProjectCardDetails((prev) => [...prev, newProjectCard]);
+//         projectNameIpRef.current.value = "";
+//         projectCityIpRef.current.value = "";
+//         setSelectedSupervisor(null); // Reset supervisor selection
+//         handleClose();
+//     };
+
+//     const togggleCardStatus = (id) => {
+//         SetProjectCardDetails((prev) => {
+//             return prev.map((card) => {
+//                 if (id === card.id) {
+//                     return { ...card, isCompleted: !card.isCompleted };
+//                 }
+//                 return card;
+//             });
+//         });
+//     };
+
+//     const deleteCard = (id) => {
+//         SetProjectCardDetails((prev) => {
+//             return prev.filter((card) => card.id !== id);
+//         });
+//     };
+
+//     return (
+//         <>
+//             <AlfNavbar />
+//             <div className='container-fluid body-bg-color'>
+//                 <div className="row">
+//                     <div className="col-12 text-center">
+//                         <h1>Projects</h1>
+//                     </div>
+
+//                     <div className="col-9 search-box" style={{ display: "flex" }}>
+//                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+//                     </div>
+
+//                     <div className='col-1'>
+//                         <Button>Search</Button>
+//                     </div>
+
+//                     <div className='col-12 col-lg-2'>
+//                         <Button variant="primary" onClick={handleShow}>
+//                             <FontAwesomeIcon icon={faPlus} /> Create New Project
+//                         </Button>
+//                     </div>
+
+//                     {projectCardDetails.length === 0 ? (
+//                         <p>No On Going Projects</p>
+//                     ) : (
+//                         projectCardDetails.map((eachCardDetails, index) => (
+//                             <AlfEachProjectCard
+//                                 key={index}
+//                                 id={eachCardDetails.id}
+//                                 projectName={eachCardDetails.projectName}
+//                                 CityName={eachCardDetails.projectCity}
+//                                 supervisorName={eachCardDetails.projectSupervisor}
+//                                 projectStartDate={eachCardDetails.projectStartDate}
+//                                 clientName={eachCardDetails.clientName}
+//                                 isCompleted={eachCardDetails.isCompleted}
+//                                 togggleCardStatus={togggleCardStatus}
+//                                 deleteCard={deleteCard}
+//                             />
+//                         ))
+//                     )}
+
+//                     <div className="col-6">
+//                         <Modal show={show} onHide={handleClose}>
+//                             <Modal.Header>
+//                                 <Modal.Title>Creating new Project</Modal.Title>
+//                             </Modal.Header>
+//                             <Modal.Body>
+//                                 <label htmlFor='projectNameIp' className='mr-3'>Project Name</label>
+//                                 <input ref={projectNameIpRef} type="text" id="projectNameIp" placeholder='Enter Project Name Here' className='w-100 mb-4' />
+
+//                                 <label htmlFor='projectCityIp' className='mr-3'>City</label>
+//                                 <input ref={projectCityIpRef} type="text" id="projectCityIp" placeholder='Enter City Here' className='w-100 mb-4' />
+
+//                                 <label htmlFor='clientNameIpId' className='mr-3'>Client Name</label>
+//                                 <input ref={clientNameIpRef} type="text" id="clientNameIpId" placeholder='Enter Client Name' className='w-100 mb-4'/>
+
+//                                 <label htmlFor='supervisorSelect' className='mr-3'>Select Supervisor</label>
+//                                 <Select
+//                                     options={superVisorNames}
+//                                     value={selectedSupervisor}
+//                                     onChange={(selectedOption) => setSelectedSupervisor(selectedOption)}
+//                                     placeholder="Select Supervisor"
+//                                     className='w-100 mb-4'
+//                                 />
+//                             </Modal.Body>
+//                             <Modal.Footer>
+//                                 <Button variant="secondary" onClick={handleClose}>Close</Button>
+//                                 <Button variant="primary" onClick={addProjectCard}>Create Project</Button>
+//                             </Modal.Footer>
+//                         </Modal>
+                        
+//                     </div>
+                    
+//                 </div>
+//             </div>
+//         </>
+//     );
+// };
+
+// export default AlfProjects;
+
+
+velxerp\src\components\AlfEachProjectCard.jsx
+//================================================================================================ 6) enable clear filter
+// import React from 'react';
+// import './AlfProjects.css';
+// import { faPersonDigging } from '@fortawesome/free-solid-svg-icons';
+// import { Button } from "react-bootstrap";
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+// const AlfEachProjectCard = ({ id, projectName, CityName, supervisorName, projectStartDate, isCompleted, togggleCardStatus, deleteCard, clientName }) => {
+//     return (
+//         <>
+//             <div className="col-12 col-md-6 mt-3">
+//                 <div className='project-card p-4'>
+//                     <div style={{ display: "flex", gap: "1em" }}>
+//                         <FontAwesomeIcon icon={faPersonDigging} style={{ fontSize: "3em" }} />
+//                         <h1>{projectName}</h1>
+//                     </div>
+//                     <p>City: {CityName}</p>
+//                     <p>Supervisor: {supervisorName}</p>
+//                     <p>Start Date: {projectStartDate}</p>
+//                     <p>Client: {clientName}</p>
+//                     <hr />
+//                     <div>
+//                         <Button onClick={() => deleteCard(id)}>Remove</Button>
+//                         {isCompleted ? (
+//                             <Button className='ml-3 btn btn-danger' onClick={() => togggleCardStatus(id)}>Mark UnCompleted</Button>
+//                         ) : (
+//                             <Button className='ml-3' onClick={() => togggleCardStatus(id)}>Mark Completed</Button>
+//                         )}
+//                         {isCompleted ? (
+//                             <p style={{ display: "inline", fontSize: "1.3em" }} className='ml-3 text-success'>Completed</p>
+//                         ) : (
+//                             <p style={{ display: "inline", fontSize: "1.3em" }} className='ml-3 text-danger'>OnGoing</p>
+//                         )}
+//                     </div>
+//                 </div>
+//             </div>
+//         </>
+//     );
+// };
+
+// export default AlfEachProjectCard;
+
+
+---------------------------- PROJECT PAGE END --------------------------------
+
