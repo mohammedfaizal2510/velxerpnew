@@ -2400,3 +2400,748 @@ velxerp\src\components\AlfEachProjectCard.jsx
 
 ---------------------------- PROJECT PAGE END --------------------------------
 
+---------------------------- SIDE NAV PAGE START --------------------------------
+
+
+//============= 4) good functioning
+// import React, { useState } from "react";
+// import "@trendmicro/react-sidenav/dist/react-sidenav.css";
+// import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faEnvelope, faListCheck, faScrewdriverWrench, faUsers, faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+// import { useNavigate } from 'react-router-dom';
+
+// const TrySideNav = () => {
+//   const [isVisible, setIsVisible] = useState(true);
+//   const navigate = useNavigate();
+
+//   const handleNavigate = (path) => {
+//     navigate(path);
+//   };
+
+//   const handleLogout = () => {
+//     // Add your logout logic here
+//     console.log("Logging out...");
+//     navigate('/login');
+//   };
+
+//   return (
+//     <div style={{ position: 'fixed', top: 0, left: 0, height: '100vh', zIndex: 1000 }}>
+
+    
+//       <SideNav expanded={isVisible} style={{ height: '100%' }}>
+//         <SideNav.Toggle onClick={() => setIsVisible(!isVisible)} />
+//         <SideNav.Nav defaultSelected="projects">
+//           <NavItem eventKey="projects" onClick={() => handleNavigate('/projects/dashboard')}>
+//             <NavIcon>
+//               <FontAwesomeIcon icon={faListCheck} style={{ fontSize: "1.75em" }} />
+//             </NavIcon>
+//             <NavText>Projects</NavText>
+//           </NavItem>
+//           <NavItem eventKey="employees" onClick={() => handleNavigate('/projects/Employees')}>
+//             <NavIcon>
+//               <FontAwesomeIcon icon={faUsers} style={{ fontSize: "1.75em" }} />
+//             </NavIcon>
+//             <NavText>Employees</NavText>
+//           </NavItem>
+//           <NavItem eventKey="inventory" onClick={() => handleNavigate('/projects/inventory')}>
+//             <NavIcon>
+//               <FontAwesomeIcon icon={faScrewdriverWrench} style={{ fontSize: "1.75em" }} />
+//             </NavIcon>
+//             <NavText>Inventory</NavText>
+//           </NavItem>
+//           <NavItem eventKey="inbox" onClick={() => handleNavigate('/projects/inbox')}>
+//             <NavIcon>
+//               <FontAwesomeIcon icon={faEnvelope} style={{ fontSize: "1.75em" }} />
+//             </NavIcon>
+//             <NavText>Inbox</NavText>
+//           </NavItem>
+
+        
+
+//           {/* <NavItem eventKey="profile" onClick={() => handleNavigate('/user/profile')}>
+//             <NavIcon>
+//               <FontAwesomeIcon icon={faUser} style={{ fontSize: "1.75em" }} />
+//             </NavIcon>
+//             <NavText>User Profile</NavText>
+//           </NavItem> */}
+//           <NavItem eventKey="logout" onClick={handleLogout}>
+//             <NavIcon>
+//               <FontAwesomeIcon icon={faSignOutAlt} style={{ fontSize: "1.75em" }} />
+//             </NavIcon>
+//             <NavText>Logout</NavText>
+//           </NavItem>
+//         </SideNav.Nav>
+//       </SideNav>
+//     </div>
+//   );
+// };
+
+// export default TrySideNav;
+
+
+//========================3) navigate complete =========================
+// import React, { useState } from "react";
+// import "@trendmicro/react-sidenav/dist/react-sidenav.css";
+// import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faEnvelope, faListCheck, faScrewdriverWrench, faUsers } from '@fortawesome/free-solid-svg-icons';
+// import { useNavigate } from 'react-router-dom';
+
+// const TrySideNav = () => {
+//   const [isVisible, setIsVisible] = useState(true);
+//   const navigate = useNavigate();
+
+//   const handleNavigate = (path) => {
+//     navigate(path);
+//   };
+
+//   return (
+//     <SideNav expanded={isVisible}>
+//       <SideNav.Toggle onClick={() => setIsVisible(!isVisible)} />
+//       <SideNav.Nav defaultSelected="projects">
+//         <NavItem eventKey="projects" onClick={() => navigate('/projects/dashboard')}>
+//           <NavIcon>
+//             <FontAwesomeIcon icon={faListCheck} style={{ fontSize: "1.75em" }} />
+//           </NavIcon>
+//           <NavText>Projects</NavText>
+//         </NavItem>
+//         <NavItem eventKey="employees" onClick={() => handleNavigate('/projects/Employees')}>
+//           <NavIcon>
+//             <FontAwesomeIcon icon={faUsers} style={{ fontSize: "1.75em" }} />
+//           </NavIcon>
+//           <NavText>Employees</NavText>
+//         </NavItem>
+//         <NavItem eventKey="inventory" onClick={() => navigate('/projects/inventry')}>
+//           <NavIcon>
+//             <FontAwesomeIcon icon={faScrewdriverWrench} style={{ fontSize: "1.75em" }} />
+//           </NavIcon>
+//           <NavText>Inventory</NavText>
+//         </NavItem>
+//         <NavItem eventKey="inbox" onClick={() => navigate('/projects/inbox')}>
+//           <NavIcon>
+//             <FontAwesomeIcon icon={faEnvelope} style={{ fontSize: "1.75em" }} />
+//           </NavIcon>
+//           <NavText>Inbox</NavText>
+//         </NavItem>
+//       </SideNav.Nav>
+//     </SideNav>
+//   );
+// };
+
+// export default TrySideNav;
+
+
+//======================== 2) react-router-dom
+// import React from "react";
+// import "@trendmicro/react-sidenav/dist/react-sidenav.css";
+// import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faEnvelope, faListCheck, faScrewdriverWrench, faUsers } from '@fortawesome/free-solid-svg-icons';
+// import { withRouter } from 'react-router-dom';
+
+// class TrySideNav extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       isVisible: true
+//     };
+//   }
+
+//   handleNavigate = (path) => {
+//     this.props.history.push(path);
+//   }
+
+//   render() {
+//     return (
+//       <SideNav expanded={this.state.isVisible}>
+//         <SideNav.Toggle
+//           onClick={() => {
+//             this.setState({ isVisible: !this.state.isVisible });
+//           }}
+//         />
+//         <SideNav.Nav defaultSelected="projects">
+//           <NavItem eventKey="projects">
+//             <NavIcon>
+//               <FontAwesomeIcon icon={faListCheck} style={{ fontSize: "1.75em" }}/>
+//             </NavIcon>
+//             <NavText>Projects</NavText>
+//           </NavItem>
+//           <NavItem eventKey="employees" onClick={() => this.handleNavigate('/projects/Employees')}>
+//             <NavIcon>
+//               <FontAwesomeIcon icon={faUsers} style={{ fontSize: "1.75em" }}/>
+//             </NavIcon>
+//             <NavText>Employees</NavText>
+//           </NavItem>
+//           <NavItem eventKey="inventory">
+//             <NavIcon>
+//               <FontAwesomeIcon icon={faScrewdriverWrench} style={{ fontSize: "1.75em" }}/>
+//             </NavIcon>
+//             <NavText>Inventory</NavText>
+//           </NavItem>
+//           <NavItem eventKey="inbox">
+//             <NavIcon>
+//               <FontAwesomeIcon icon={faEnvelope} style={{ fontSize: "1.75em" }}/>
+//             </NavIcon>
+//             <NavText>Inbox</NavText>
+//           </NavItem>
+//         </SideNav.Nav>
+//       </SideNav>
+//     );
+//   }
+// }
+
+// export default withRouter(TrySideNav);
+
+//=================================== 1) 
+// import React from "react";
+// import "@trendmicro/react-sidenav/dist/react-sidenav.css";
+// import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faEnvelope, faListCheck, faPersonDigging, faPlus, faScrewdriverWrench, faUsers } from '@fortawesome/free-solid-svg-icons';
+// import { useNavigate } from 'react-router-dom'
+
+// // import SideNav, {
+// //   Toggle,
+// //   Nav,
+// //   NavItem,
+// //   NavIcon,
+// //   NavText
+// // } from "@trendmicro/react-sidenav";
+// const navigate = useNavigate();
+
+// class TrySideNav extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       isVisible: true
+//     };
+//   }
+
+//   render() {
+    
+//     return (
+      
+//       <SideNav expanded={this.state.isVisible}>
+//         <SideNav.Toggle
+//           onClick={() => {
+//             this.setState({ isVisible: !this.state.isVisible });
+//           }}
+//         />
+//         <SideNav.Nav defaultSelected="projects">
+//           <NavItem eventKey="projects" >
+//             <NavIcon>
+//               <FontAwesomeIcon icon={faListCheck} style={{ fontSize: "1.75em" }}/>
+//             </NavIcon>
+//             <NavText>Projects</NavText>
+//           </NavItem>
+//           <NavItem eventKey="placed orders" onClick={() => navigate('/projects/Employees')}>
+//             <NavIcon>
+//             <FontAwesomeIcon icon={faUsers} style={{ fontSize: "1.75em" }}/>
+//             </NavIcon>
+//             <NavText>Employees</NavText>
+//           </NavItem>
+//           <NavItem eventKey="inventry ">
+//             <NavIcon>
+//             <FontAwesomeIcon icon={faScrewdriverWrench} style={{ fontSize: "1.75em" }}/>
+//             </NavIcon>
+//             <NavText>Inventry</NavText>
+//           </NavItem>
+//           <NavItem eventKey="inbox">
+//             <NavIcon>
+//             <FontAwesomeIcon icon={faEnvelope} style={{ fontSize: "1.75em" }}/>
+//             </NavIcon>
+//             <NavText>Inbox</NavText>
+//           </NavItem>
+//         </SideNav.Nav>
+//       </SideNav>
+//     );
+//   }
+// }
+
+// export default TrySideNav;
+
+
+
+---------------------------- SIDE NAV PAGE END --------------------------------
+
+
+---------------------------- EMPLOYEE LIST START --------------------------------
+AlfEmployeesList.jsx
+
+
+//======================= 3) filters
+// import React, { useState } from 'react';
+// import AlfNavbar from './AlfNavbar';
+// import { Button, FormControl, Dropdown } from 'react-bootstrap';
+// import './AlfAttendance.css';
+// import AlfEachEmployeeList from './AlfEachEmployeeList';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faPlus } from '@fortawesome/free-solid-svg-icons';
+// import Modal from 'react-bootstrap/Modal';
+
+// const AlfEmployeesList = () => {
+//   const [show, setShow] = useState(false);
+//   const [searchName, setSearchName] = useState('');
+//   const [searchPhone, setSearchPhone] = useState('');
+//   const [selectedDesignation, setSelectedDesignation] = useState('');
+//   const [sortOrder, setSortOrder] = useState('');
+
+//   const handleClose = () => setShow(false);
+//   const handleShow = () => setShow(true);
+
+//   const employeeDetails = [
+//     { id: 101, name: 'John Doe', designation: 'Labour', salaryPerShift: 700, phoneNumber: '1234567890' },
+//     { id: 102, name: 'Jane Smith', designation: 'Electrician', salaryPerShift: 800, phoneNumber: '1258796403' },
+//     { id: 103, name: 'Alice Brown', designation: 'Plumber', salaryPerShift: 750, phoneNumber: '5369785214' },
+//     { id: 104, name: 'Mike Johnson', designation: 'Supervisor', salaryPerShift: 900, phoneNumber: '7894523654' },
+//     { id: 105, name: 'Emily Davis', designation: 'Plumber', salaryPerShift: 700, phoneNumber: '7895612348' },
+
+//   ];
+
+//   // Filtering employees based on search inputs and dropdown selections
+//   const filteredEmployees = employeeDetails
+//     .filter(employee =>
+//       employee.name.toLowerCase().includes(searchName.toLowerCase()) &&
+//       employee.phoneNumber.includes(searchPhone) &&
+//       (selectedDesignation ? employee.designation === selectedDesignation : true)
+//     )
+//     .sort((a, b) => {
+//       if (sortOrder === 'asc') return a.salaryPerShift - b.salaryPerShift;
+//       if (sortOrder === 'desc') return b.salaryPerShift - a.salaryPerShift;
+//       return 0;
+//     });
+
+//   // Get unique designations for dropdown
+//   const uniqueDesignations = [...new Set(employeeDetails.map(emp => emp.designation))];
+
+//   return (
+//     <div>
+//       <AlfNavbar />
+//       <div className='container-fluid'>
+//         <div className='row'>
+//           <div className='col-12 text-center'>
+//             <h1>List of All Employees</h1>
+//           </div>
+
+//           {/* Search by Name */}
+//           <div className='col-12 col-md-3'>
+//             <FormControl
+//               type='text'
+//               placeholder='Search by Name'
+//               value={searchName}
+//               onChange={(e) => setSearchName(e.target.value)}
+//             />
+//           </div>
+
+//           {/* Search by Phone Number */}
+//           <div className='col-12 col-md-3'>
+//             <FormControl
+//               type='text'
+//               placeholder='Search by Phone Number'
+//               value={searchPhone}
+//               onChange={(e) => setSearchPhone(e.target.value)}
+//             />
+//           </div>
+
+//           {/* Filter by Designation */}
+//           <div className='col-12 col-md-2'>
+//             <Dropdown>
+//               <Dropdown.Toggle variant='primary'>
+//                 {selectedDesignation || 'Filter by Designation'}
+//               </Dropdown.Toggle>
+//               <Dropdown.Menu>
+//                 <Dropdown.Item onClick={() => setSelectedDesignation('')}>All</Dropdown.Item>
+//                 {uniqueDesignations.map((designation, index) => (
+//                   <Dropdown.Item key={index} onClick={() => setSelectedDesignation(designation)}>
+//                     {designation}
+//                   </Dropdown.Item>
+//                 ))}
+//               </Dropdown.Menu>
+//             </Dropdown>
+//           </div>
+
+//           {/* Sort by Salary */}
+//           <div className='col-12 col-md-2'>
+//             <Dropdown>
+//               <Dropdown.Toggle variant='primary'>Sort by Salary</Dropdown.Toggle>
+//               <Dropdown.Menu>
+//                 <Dropdown.Item onClick={() => setSortOrder('asc')}>Ascending</Dropdown.Item>
+//                 <Dropdown.Item onClick={() => setSortOrder('desc')}>Descending</Dropdown.Item>
+//               </Dropdown.Menu>
+//             </Dropdown>
+//           </div>
+
+//           {/* Modal to create a new employee */}
+//           <div className='col-12 col-md-2'>
+//             <Button variant='primary' onClick={handleShow}>
+//               <FontAwesomeIcon icon={faPlus} /> Create New Employee
+//             </Button>
+//           </div>
+//         </div>
+//       </div>
+
+//           {/* Table displaying employee data */}
+//           <div className='col-12 employee-card-style mt-4'>
+//             <table>
+//               <thead>
+//                 <tr>
+//                   <th>ID</th>
+//                   <th>Name</th>
+//                   <th>Designation</th>
+//                   <th>Salary Per Shift</th>
+//                   <th>Phone Number</th>
+//                 </tr>
+//               </thead>
+//               <tbody>
+//                 {filteredEmployees.map((employee) => (
+//                   <tr key={employee.id}>
+//                     <AlfEachEmployeeList
+//                       empId={employee.id}
+//                       empName={employee.name}
+//                       empDesignation={employee.designation}
+//                       empSalaryPerShift={employee.salaryPerShift}
+//                       empPhNo={employee.phoneNumber}
+//                     />
+//                   </tr>
+//                 ))}
+//               </tbody>
+//             </table>
+//           </div>
+
+          
+
+//       {/* Modal for creating a new employee */}
+//       <Modal show={show} onHide={handleClose}>
+//         <Modal.Header closeButton>
+//           <Modal.Title>Create New Employee</Modal.Title>
+//         </Modal.Header>
+//         <Modal.Body>
+//           <label>Enter Name</label>
+//           {/* Additional fields for creating a new employee can be added here */}
+//         </Modal.Body>
+//         <Modal.Footer>
+//           <Button variant='secondary' onClick={handleClose}>
+//             Close
+//           </Button>
+//           <Button variant='primary' onClick={handleClose}>
+//             Save Changes
+//           </Button>
+//         </Modal.Footer>
+//       </Modal>
+//     </div>
+//   );
+// };
+
+// export default AlfEmployeesList;
+
+
+// ================ 2) table style
+
+// import React, { useState } from 'react';
+// import AlfNavbar from './AlfNavbar';
+// import { Button, FormControl, Modal } from 'react-bootstrap';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faPlus } from '@fortawesome/free-solid-svg-icons';
+// import AlfEachEmployeeList from './AlfEachEmployeeList';
+// import './AlfAttendance.css';
+
+// const AlfEmployeesList = () => {
+//     const [show, setShow] = useState(false);
+//     const handleClose = () => setShow(false);
+//     const handleShow = () => setShow(true);
+
+//     const employeeDetails = [
+//         {
+//             id: 101,
+//             name: 'name 1',
+//             designation: 'labour',
+//             salaryPerShift: 700,
+//             phoneNumber: '1234567890'
+//         },
+//         {
+//             id: 102,
+//             name: 'name 2',
+//             designation: 'electrician',
+//             salaryPerShift: 700,
+//             phoneNumber: '1258796403'
+//         },
+//         {
+//             id: 103,
+//             name: 'name 3',
+//             designation: 'plumber',
+//             salaryPerShift: 700,
+//             phoneNumber: '5369785214'
+//         },
+//         {
+//             id: 104,
+//             name: 'name 4',
+//             designation: 'supervisor',
+//             salaryPerShift: 700,
+//             phoneNumber: '7894523654'
+//         },
+//         {
+//             id: 105,
+//             name: 'name 5',
+//             designation: 'plumber',
+//             salaryPerShift: 700,
+//             phoneNumber: '7895612348'
+//         }
+//     ];
+
+//     return (
+//         <div>
+//             <AlfNavbar />
+//             <div className='container-fluid'>
+//                 <div className="row">
+//                     <div className="col-12 text-center">
+//                         <h1>List Of All Employees</h1>
+//                     </div>
+
+//                     <div className="col-9 search-box" style={{ display: "flex" }}>
+//                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+//                     </div>
+
+//                     <div className='col-1'>
+//                         <Button>Search</Button>
+//                     </div>
+
+//                     <div className='col-12 col-lg-2'>
+//                         <Button variant="primary" onClick={handleShow}>
+//                             <FontAwesomeIcon icon={faPlus} /> Create New Employee
+//                         </Button>
+//                     </div>
+
+//                     <div className='col-12 employee-card-style'>
+//                         <table>
+//                             <thead>
+//                                 <tr>
+//                                     <th>ID</th>
+//                                     <th>Name</th>
+//                                     <th>Designation</th>
+//                                     <th>Salary Per Shift</th>
+//                                     <th>Phone Number</th>
+//                                 </tr>
+//                             </thead>
+//                             <tbody>
+//                                 {employeeDetails.map(employee => (
+//                                     <tr key={employee.id}>
+//                                         <AlfEachEmployeeList
+//                                             empId={employee.id}
+//                                             empName={employee.name}
+//                                             empDesignation={employee.designation}
+//                                             empSalaryPerShift={employee.salaryPerShift}
+//                                             empPhNo={employee.phoneNumber}
+//                                         />
+//                                     </tr>
+//                                 ))}
+//                             </tbody>
+//                         </table>
+//                     </div>
+
+//                     <div className="col-6">
+//                         <Modal show={show} onHide={handleClose}>
+//                             <Modal.Header closeButton>
+//                                 <Modal.Title>Modal heading</Modal.Title>
+//                             </Modal.Header>
+//                             <Modal.Body>
+//                                 <label>Enter Name</label>
+//                             </Modal.Body>
+//                             <Modal.Footer>
+//                                 <Button variant="secondary" onClick={handleClose}>
+//                                     Close
+//                                 </Button>
+//                                 <Button variant="primary" onClick={handleClose}>
+//                                     Save Changes
+//                                 </Button>
+//                             </Modal.Footer>
+//                         </Modal>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default AlfEmployeesList;
+
+
+// import React from 'react'
+// import AlfNavbar from './AlfNavbar'
+// import { Navbar, Nav, Button, Dropdown, NavDropdown, FormControl, Form } from 'react-bootstrap';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faPlus } from '@fortawesome/free-solid-svg-icons';
+// import Modal from 'react-bootstrap/Modal';
+// import { useState } from 'react';
+// import './AlfAttendance.css'
+
+
+// const AlfEmployeesList = () => {
+//     const [show, setShow] = useState(false);
+
+//   const handleClose = () => setShow(false);
+//   const handleShow = () => setShow(true);
+
+
+//     // const availabeResignations = [
+//     //     { label: 'resignation - 1', value: 'resignation - 1' },
+//     //     { label: 'resignation - 2', value: 'resignation - 2' },
+//     //     { label: 'resignation - 3', value: 'resignation - 3' },
+//     //     { label: 'resignation - 4', value: 'resignation - 4' },
+//     //     { label: 'resignation - 5', value: 'resignation - 5' },
+//     //     { label: 'resignation - 6', value: 'resignation - 6' }
+//     // ];
+
+//     // const employeeDetails = [
+//     //     {
+//     //         id: Date.now(),
+//     //         name: 'John Doe',
+//     //         designation: 'Software Engineer',
+//     //         salaryPerShift : 700,
+//     //         phoneNumber: '1234567890'
+//     //     }
+//     //     // supervisor
+//     //     // labour
+//     //     // engineer
+//     //     // masson
+//     //     // electrition
+//     //     // plumber
+//     // ]
+
+//      const employeeDetails = [
+//         {
+//             id: 101,
+//             name: 'name 1',
+//             designation: 'labour',
+//             salaryPerShift : 700,
+//             phoneNumber: '1234567890'
+//         },
+//         {
+//             id: 102,
+//             name: 'name 2',
+//             designation: 'electrition',
+//             salaryPerShift : 700,
+//             phoneNumber: '1258796403'
+//         },
+//         {
+//             id: 103,
+//             name: 'name 3',
+//             designation: 'plumber',
+//             salaryPerShift : 700,
+//             phoneNumber: '5369785214'
+//         },
+//         {
+//             id: 104 ,
+//             name: 'name 4',
+//             designation: 'supevisor',
+//             salaryPerShift : 700,
+//             phoneNumber: '7894523654'
+//         },
+//         {
+//             id: 105,
+//             name: 'name 5',
+//             designation: 'plumber',
+//             salaryPerShift : 700,
+//             phoneNumber: '7895612348'
+//         }
+//      ]
+
+    
+
+
+
+//   return (
+//     <div>
+//         <AlfNavbar/>
+//         <div className='container-fluid'>
+//             <div className="row">
+//                 <div className="col-12 text-center">
+//                     <h1>List Of All Employees</h1>
+//                 </div>
+
+//                 <div className="col-9 search-box" style={{ display: "flex" }}>
+//                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+//                 </div>
+
+//                 <div className='col-1'>
+//                         <Button>Search</Button>
+//                 </div>
+
+//                 <div className='col-12 col-lg-2'>
+//                     <Button variant="primary" onClick={handleShow}>
+//                         <FontAwesomeIcon icon={faPlus} /> Create New Employee
+//                     </Button>
+//                 </div>
+
+
+//                 {/* <div className='col-12 employee-card-style'>
+//                     <h1>Employee Id : {employeeDetails[0].id}</h1>
+//                     <h1>Employee Name : {employeeDetails[0].name}</h1>
+//                     <h1>Employee Designation : {employeeDetails[0].designation}</h1>
+//                     <h1>Salary Per Shift : {employeeDetails[0].salaryPerShift}</h1>
+//                     <h1>Phone Number : {employeeDetails[0].phoneNumber}</h1>
+//                     <Button variant="primary">Edit</Button>
+//                     <Button variant="danger">Resign</Button>
+//                     <Button variant="success">Attendance</Button>
+//                     <Button variant="info">Salary</Button>
+//                     <Button variant="warning">Leave</Button> 
+//                     <Button variant="danger">Delete</Button>
+                    
+//                 </div> */}
+
+
+//                 <div className='col-12 employee-card-style'>
+//                     <table>
+//                         <thead>
+//                             <tr>
+//                                 <th>ID</th>
+//                                 <th>Name</th>
+//                                 <th>Designation</th>
+//                                 <th>Salary Per Shift</th>
+//                                 <th>Phone Number</th>
+//                             </tr>
+//                         </thead>
+//                         <tbody>
+//                             <tr>
+//                             <AlfEmployeesList
+//                             empId = {employeeDetails[0].employeeId}
+//                             empName = {employeeDetails[0].name}
+//                             empDesignation = {employeeDetails[0].designation}
+//                             empSalaryPerShift = {employeeDetails[0].salaryPerShift}
+//                             empPhNo = {employeeDetails[0].phoneNumber}
+//                             />
+//                             </tr>
+//                         </tbody>
+//                     </table>
+//                 </div>
+
+//                 <div className="col-6">
+//                     <Modal show={show} onHide={handleClose}>
+//                         <Modal.Header closeButton>
+//                         <Modal.Title>Modal heading</Modal.Title>
+//                         </Modal.Header>
+//                         <Modal.Body>
+//                             <label>Enter Name</label>
+                            
+//                         </Modal.Body>
+//                         <Modal.Footer>
+//                         <Button variant="secondary" onClick={handleClose}>
+//                             Close
+//                         </Button>
+//                         <Button variant="primary" onClick={handleClose}>
+//                             Save Changes
+//                         </Button>
+//                         </Modal.Footer>
+//                     </Modal>
+//                 </div>
+//             </div>
+
+
+//         </div>
+        
+//     </div>
+//   )
+// }
+
+// export default AlfEmployeesList
+---------------------------- EMPLOYEE LIST END --------------------------------

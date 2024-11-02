@@ -23,3 +23,49 @@
     left: 50%;
     transform: translateX(-25%);  
 } */
+
+
+
+/* 
+.alfprojects-container {
+    display: flex;
+    height: 100vh;
+}
+
+.alfprojects-container .TrySideNav {
+    width: 250px; /* Adjust as necessary 
+    min-width: 250px;
+    background-color: #333; /* Match your theme 
+}
+
+.alfprojects-container .main-content {
+    flex: 1;
+    padding: 20px; /* Adjust for desired spacing 
+    overflow-y: auto; /* Ensure scroll if content is long 
+    background-color: #f8f9fa; /* Your main content background color 
+} */
+
+
+
+/* ============================= style for TrySideNav.jsx ==================== */
+
+.nav-text {
+    display: none;
+    position: absolute;
+    left: 60px; /* Adjust based on icon size */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    font-size: 14px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+  }
+  
+  .SideNav__navitem:hover .nav-text {
+    display: block;
+  }
+  

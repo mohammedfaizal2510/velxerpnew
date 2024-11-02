@@ -1,0 +1,19 @@
+.NavItem {
+  position: relative; /* Necessary for tooltip positioning */
+}
+
+.tooltip {
+  position: absolute;
+  top: 50%;
+  left: 110%;
+  transform: translateY(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 0.875em;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}

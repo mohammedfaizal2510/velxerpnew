@@ -9,6 +9,9 @@ import AlfInventry from './components/AlfInventry';
 import AlfAttendance from './components/AlfAttendance';
 import AlfEmployeesList from './components/AlfEmployeesList';
 import AlfInbox from './components/AlfInbox';
+import PinInventry from './components/PinInventry';
+import PinMaterialReques from './components/PinMaterialReques';
+
 
 function App() {
 
@@ -21,8 +24,12 @@ function App() {
         {/* <Route path='/inventry' element={<AlfInventry/>}/> */}
         <Route path='/projects'>
           <Route path='dashboard' element={<AlfProjects/>}></Route>
+          {/* <Route path='dashboard/try' element={<TryForInside/>}></Route> */}
+          <Route path='dashboard/attendance' element={<AlfAttendance/>}></Route>
+          <Route path='dashboard/resuestMaterial' element={<PinMaterialReques/>}></Route>
+          <Route path='dashboard/inventry' element={<PinInventry/>}></Route>
           <Route path='inventry' element={<AlfInventry/>}></Route>
-          <Route path='attendance' element={<AlfAttendance/>}></Route>
+          {/* <Route path='attendance' element={<AlfAttendance/>}></Route> */}
           <Route path='Employees' element={<AlfEmployeesList/>}></Route>
           <Route path='inbox' element={<AlfInbox/>}></Route>
         </Route>
@@ -35,6 +42,7 @@ function App() {
 }
 
 export default App
+// {/* <Route path='attendan' element={<Summa/>}></Route> */}
 //  {/* <NavBar/>
       
 //        <LogIn/>*/}

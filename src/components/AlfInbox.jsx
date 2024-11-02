@@ -1,8 +1,10 @@
 import React from 'react'
 import AlfNavbar from './AlfNavbar'
 import './AlfProjects.css'
-import { Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import AlfCardInbox from './AlfCardInbox';
+import TrySideNav from './TrySideNav';
+// import HoverButton from './HoverButton';
 
 const AlfInbox = () => {
 
@@ -30,36 +32,47 @@ const AlfInbox = () => {
     ]
   return (
     <>
-        <AlfNavbar/>
-        <div className='container-fluid'>
-            <div className='row'>
-                <div className='col-12 text-center'>
-                    <h1>Inbox</h1>
-                </div>
-
-                {requestDataset.length === 0 ? (
-                    <h2>No Requests Found</h2>
-                ) : (
-                    requestDataset.map((eachRequest, index) => (
-                        <AlfCardInbox
-                            key={index}
-                            id={eachRequest.id}
-                            subject={eachRequest.subject}
-                            from={eachRequest.from}
-                            role={eachRequest.role}
-                            site={eachRequest.site}
-                            date={eachRequest.date}
-                            isAccepted={eachRequest.isAccepted}
-
-                        />
-
-                    ))
-                )}
-
+        {/* <AlfNavbar/> */}
+        
+        <Container fluid>
+            <Row>
+                <Col xs={1}>
+                    <TrySideNav selectedKey="inbox"/>
+                </Col>
+                <Col xs={11}>
                 
-            </div>
-        </div>
+                    <div className='container-fluid'>
+                        <div className='row'>
+                            <div className='col-12 text-center'>
+                                <h1>Inbox</h1>
+                            </div>
+                            {/* <HoverButton/> */}
 
+                            {requestDataset.length === 0 ? (
+                                <h2>No Requests Found</h2>
+                            ) : (
+                                requestDataset.map((eachRequest, index) => (
+                                    <AlfCardInbox
+                                        key={index}
+                                        id={eachRequest.id}
+                                        subject={eachRequest.subject}
+                                        from={eachRequest.from}
+                                        role={eachRequest.role}
+                                        site={eachRequest.site}
+                                        date={eachRequest.date}
+                                        isAccepted={eachRequest.isAccepted}
+
+                                    />
+
+                                ))
+                            )}
+
+                            
+                        </div>
+                    </div>
+                </Col>
+            </Row>
+        </Container>
     </>
   )
 }

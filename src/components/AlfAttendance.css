@@ -13,3 +13,64 @@
     color: #4285F4;
     /* position: relative; */
 }
+
+
+/* Container for the employee table */
+.employee-card-style-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+}
+
+/* Table headers */
+.employee-card-style-table th {
+    background-color: #4285F4; /* Green background */
+    color: white; /* White text */
+    text-align: left;
+    padding: 12px 15px;
+    font-weight: bold;
+}
+
+/* Table data cells */
+.employee-card-style-table td {
+    padding: 12px 15px;
+    color: #333;
+    border-bottom: 1px solid #ddd; /* Subtle row borders */
+}
+
+/* Alternating row colors */
+.employee-card-style-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Hover effect for table rows */
+.employee-card-style-table tr:hover {
+    background-color: #e1f5fe;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Style for table container */
+.employee-card-style-table {
+    margin: 30px auto;
+    width: 90%;
+    max-width: 1200px;
+    overflow-x: auto;
+
+}
+
+/* Center the table heading */
+.employee-card-style-table h1 {
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+
+
+
+

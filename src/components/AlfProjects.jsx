@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Navbar, Nav, Button, Dropdown, NavDropdown, FormControl, Form } from 'react-bootstrap';
+import { Navbar, Nav, Button, Dropdown, NavDropdown, FormControl, Form, Container, Row, Col } from 'react-bootstrap';
 import './AlfProjects.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPersonDigging, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,8 @@ import Select from "react-select";
 import Modal from 'react-bootstrap/Modal';
 import AlfEachProjectCard from './AlfEachProjectCard';
 import AlfNavbar from './AlfNavbar';
+import TrySideNav from './TrySideNav';
+// import TrySideNav2 from './TrySideNav2';
 
 const AlfProjects = () => {
     const superVisorNames = [
@@ -97,98 +99,120 @@ const AlfProjects = () => {
 
     return (
         <>
-            <AlfNavbar />
-            <div className='container-fluid body-bg-color'>
-                <div className="row">
-                    <div className="col-12 text-center">
-                        <h1>Projects</h1>
-                    </div>
+            {/* <AlfNavbar /> */}
+            {/* <TrySideNav/>  */}
 
-                    <div className="col-9 search-box" style={{ display: "flex" }}>
-                        <FormControl type="text" placeholder="Search by Project Name" onChange={handleSearch} />
-                    </div>
 
-                    <div className='col-1'>
-                        <Button onClick={handleSearch}>Search</Button>
-                    </div>
+            {/* <div className='d-flex'>
+                <div className='alfprojects-container'>
+                    <TrySideNav/>
+                </div> 
+            </div> */}
+            <Container fluid>
+                <Row>
+                    <Col xs={1}>
+                    <TrySideNav selectedKey="projects"/>
+                    </Col>
+                    
+                    <Col xs={11}>
+                        <div className='container-fluid body-bg-color'>
+                            <div className="row">
+                                <div className="col-12 text-center">
+                                    <h1>Projects</h1>
+                                </div>
 
-                    <div className='col-12 col-lg-2'>
-                        <Button variant="primary" onClick={handleShow}>
-                            <FontAwesomeIcon icon={faPlus} /> Create New Project
-                        </Button>
-                    </div>
+                                <div className="col-9 search-box" style={{ display: "flex" }}>
+                                    <FormControl type="text" placeholder="Search by Project Name" onChange={handleSearch} />
+                                </div>
 
-                    <div className="col-6">
-                        <Select
-                            options={superVisorNames}
-                            value={selectedSupervisor}
-                            onChange={(option) => setSelectedSupervisor(option)}
-                            placeholder="Filter by Supervisor"
-                            isClearable={true}
-                        />
-                        {/* <Button variant="secondary" onClick={clearSupervisorFilter}>Clear Filter</Button> */}
-                    </div>
-                    <div className="col-6">
-                        <Select
-                            options={cities}
-                            value={selectedCity}
-                            onChange={(option) => setSelectedCity(option)}
-                            placeholder="Filter by City"
-                            isClearable={true}
-                        />
-                        {/* <Button variant="secondary" onClick={clearCityFilter}>Clear Filter</Button> */}
-                    </div>
+                                <div className='col-1'>
+                                    <Button onClick={handleSearch}>Search</Button>
+                                </div>
 
-                    {filteredProjects.length === 0 ? (
-                        <p>No On Going Projects</p>
-                    ) : (
-                        filteredProjects.map((eachCardDetails) => (
-                            <AlfEachProjectCard
-                                key={eachCardDetails.id}
-                                {...eachCardDetails}
-                                togggleCardStatus={togggleCardStatus}
-                                deleteCard={deleteCard}
-                            />
-                        ))
-                    )}
+                                <div className='col-12 col-lg-2'>
+                                    <Button variant="primary" onClick={handleShow}>
+                                        <FontAwesomeIcon icon={faPlus} /> Create New Project
+                                    </Button>
+                                </div>
 
-                    <Modal show={show} onHide={handleClose}>
-                        <Modal.Header>
-                            <Modal.Title>Creating new Project</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <label>Project Name</label>
-                            <input ref={projectNameIpRef} type="text" placeholder='Enter Project Name Here' className='w-100 mb-4' />
+                                <div className="col-6">
+                                    <Select
+                                        options={superVisorNames}
+                                        value={selectedSupervisor}
+                                        onChange={(option) => setSelectedSupervisor(option)}
+                                        placeholder="Filter by Supervisor"
+                                        isClearable={true}
+                                    />
+                                    {/* <Button variant="secondary" onClick={clearSupervisorFilter}>Clear Filter</Button> */}
+                                </div>
+                                <div className="col-6">
+                                    <Select
+                                        options={cities}
+                                        value={selectedCity}
+                                        onChange={(option) => setSelectedCity(option)}
+                                        placeholder="Filter by City"
+                                        isClearable={true}
+                                    />
+                                    {/* <Button variant="secondary" onClick={clearCityFilter}>Clear Filter</Button> */}
+                                </div>
 
-                            <label>Client Name</label>
-                            <input ref={clientNameIpRef} type="text" placeholder='Enter Client Name' className='w-100 mb-4'/>
+                                {filteredProjects.length === 0 ? (
+                                    <p>No On Going Projects</p>
+                                ) : (
+                                    filteredProjects.map((eachCardDetails) => (
+                                        <AlfEachProjectCard
+                                            key={eachCardDetails.id}
+                                            {...eachCardDetails}
+                                            togggleCardStatus={togggleCardStatus}
+                                            deleteCard={deleteCard}
+                                        />
+                                    ))
+                                )}
 
-                            <label>Select Supervisor</label>
-                            <Select
-                                options={superVisorNames}
-                                value={selectedSupervisor}
-                                onChange={(option) => setSelectedSupervisor(option)}
-                                placeholder="Select Supervisor"
-                                className='w-100 mb-4'
-                                isClearable={true}
-                            />
+                                <Modal show={show} onHide={handleClose}>
+                                    <Modal.Header>
+                                        <Modal.Title>Creating new Project</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        <label>Project Name</label>
+                                        <input ref={projectNameIpRef} type="text" placeholder='Enter Project Name Here' className='w-100 mb-4' />
 
-                            <label>Enter City</label>
-                            <input 
-                                type="text" 
-                                placeholder='Enter City Here' 
-                                className='w-100 mb-4' 
-                                value={inputCity} 
-                                onChange={(e) => setInputCity(e.target.value)} // Update inputCity on change
-                            />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>Close</Button>
-                            <Button variant="primary" onClick={addProjectCard}>Create Project</Button>
-                        </Modal.Footer>
-                    </Modal>
-                </div>
-            </div>
+                                        <label>Client Name</label>
+                                        <input ref={clientNameIpRef} type="text" placeholder='Enter Client Name' className='w-100 mb-4'/>
+
+                                        <label>Select Supervisor</label>
+                                        <Select
+                                            options={superVisorNames}
+                                            value={selectedSupervisor}
+                                            onChange={(option) => setSelectedSupervisor(option)}
+                                            placeholder="Select Supervisor"
+                                            className='w-100 mb-4'
+                                            isClearable={true}
+                                        />
+
+                                        <label>Enter City</label>
+                                        <input 
+                                            type="text" 
+                                            placeholder='Enter City Here' 
+                                            className='w-100 mb-4' 
+                                            value={inputCity} 
+                                            onChange={(e) => setInputCity(e.target.value)} // Update inputCity on change
+                                        />
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <Button variant="secondary" onClick={handleClose}>Close</Button>
+                                        <Button variant="primary" onClick={addProjectCard}>Create Project</Button>
+                                    </Modal.Footer>
+                                </Modal>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+                
+                
+
+            
         </>
     );
 };
