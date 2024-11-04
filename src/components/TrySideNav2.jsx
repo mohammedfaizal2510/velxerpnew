@@ -3,7 +3,7 @@
 import React from "react";
 import {Nav} from "react-bootstrap";
 import { withRouter } from "react-router";
-import './AlfProjects.css';
+import '../css/AlfProjects.css';
 
 
 const TrySideNav2 = props => {

@@ -5,7 +5,7 @@ import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faListCheck, faScrewdriverWrench, faUsers, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import './TrySideNav.css'; // Ensure this file is correctly linked
+import '../css/TrySideNav.css'; // Ensure this file is correctly linked
 
 const TrySideNav = ({ selectedKey }) => {
   const [isVisible, setIsVisible] = useState(false);

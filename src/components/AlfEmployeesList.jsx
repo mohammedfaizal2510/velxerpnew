@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import AlfNavbar from './AlfNavbar';
 import { Button, FormControl, Dropdown, Modal, Form, Container, Row, Col } from 'react-bootstrap';
-import './AlfAttendance.css';
+import '../css/AlfAttendance.css';
 import AlfEachEmployeeList from './AlfEachEmployeeList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';

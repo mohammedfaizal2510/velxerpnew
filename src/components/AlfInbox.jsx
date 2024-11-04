@@ -1,6 +1,6 @@
 import React from 'react'
 import AlfNavbar from './AlfNavbar'
-import './AlfProjects.css'
+import '../css/AlfProjects.css'
 import { Button, Col, Container, Row } from "react-bootstrap";
 import AlfCardInbox from './AlfCardInbox';
 import TrySideNav from './TrySideNav';

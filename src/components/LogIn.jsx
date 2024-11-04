@@ -1,7 +1,6 @@
 import React from 'react'
 import {Button} from "react-bootstrap"
-import './LogIn.css'
-import {Routes, Route, BrowserRouter, useNavigate} from 'react-router-dom';
+import "../css/LogIn.css"
 
 
 const LogIn = () => {

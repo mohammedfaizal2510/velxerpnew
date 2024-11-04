@@ -1,6 +1,6 @@
 import React from 'react'
 import {Navbar, Nav, Button} from "react-bootstrap"
-import './AlfProjects.css';
+import '../css/AlfProjects.css';
 
 const AlfCardInbox = ({id, subject, from, role, site, date, isAccepted}) => {
   return (

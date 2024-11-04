@@ -3,7 +3,7 @@ import React from 'react'
 import {Navbar, Nav, Button} from "react-bootstrap"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faSitemap, faCompassDrafting, faClipboardUser, faCreditCard, faScrewdriverWrench, faWarehouse, faListCheck} from '@fortawesome/free-solid-svg-icons'
-import './LandingPage.css'
+import '../css/LandingPage.css'
 import { useNavigate } from 'react-router-dom'
 // import NavBar from './NavBar'
 

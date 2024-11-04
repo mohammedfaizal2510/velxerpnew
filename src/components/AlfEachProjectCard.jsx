@@ -1,5 +1,5 @@
 import React from 'react';
-import './AlfProjects.css';
+import '../css/AlfProjects.css';
 import { faPersonDigging } from '@fortawesome/free-solid-svg-icons';
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Navbar, Nav, Button, Dropdown, NavDropdown, FormControl, Form, Container, Row, Col } from 'react-bootstrap';
-import './AlfProjects.css';
+import '../css/AlfProjects.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPersonDigging, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Select from "react-select";

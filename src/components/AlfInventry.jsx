@@ -1,6 +1,6 @@
 import React from 'react'
 import AlfNavbar from './AlfNavbar'
-import './AlfInventry.css'
+import '../css/AlfInventry.css'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import TrySideNav from './TrySideNav'
 
