@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom'
 
 const LandingPage = () => {
     const navigate = useNavigate();
+    const log=()=>{
+        navigate("/log-in")
+    }
   return (
     <>
     {/* className='d-flex flex-column justify-content-center'  
@@ -36,7 +39,7 @@ const LandingPage = () => {
             <h1 className='landingpage-hero'>All Your Construction Site tracking in one Place</h1>
             <h4 className='landingpage-para'>Simple, User Friendly, Yet Affordable </h4>
             <Button variant='success' className='mr-5 mt-5 p-3 button-style'>Get Our Services</Button>
-            <Button variant='success' className='mt-5 p-3 button-style'>Log In</Button>
+            <Button variant='success' className='mt-5 p-3 button-style' onClick={log}>Log In</Button>
         </div>
     </div>
 

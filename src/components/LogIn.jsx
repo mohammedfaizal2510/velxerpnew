@@ -1,10 +1,12 @@
 import React from 'react'
 import {Button} from "react-bootstrap"
 import "../css/LogIn.css"
-
-
+import { useNavigate } from 'react-router-dom'
 const LogIn = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
+    const log=()=>{
+        navigate("/projects/dashboard")
+    }
   return (
     <>
         <div className="login-container">
@@ -24,7 +26,7 @@ const LogIn = () => {
                     <input type="checkbox" id="remember-me"/>
                     <label for="remember-me">Remember Me</label>
                 </div> */}
-                <Button variant="success" className='p-3 pl-4 pr-4 w-100' style={{borderRadius:"20px"}}>LogIn</Button>
+                <Button variant="success" className='p-3 pl-4 pr-4 w-100' style={{borderRadius:"20px"}} onClick={log}>LogIn</Button>
                 <Button variant="success" className='p-3 pl-4 pr-4 w-100 mt-4' style={{borderRadius:"20px"}}>Forgot Password</Button>
                 {/* <button type="submit" className="login-btn mb-3">Login</button>
                 <button type="submit" className="login-btn">Forgot Password</button> */}
