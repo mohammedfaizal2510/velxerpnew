@@ -11,15 +11,15 @@ import AlfEmployeesList from './components/AlfEmployeesList';
 import AlfInbox from './components/AlfInbox';
 import PinInventry from './components/PinInventry';
 import PinMaterialReques from './components/PinMaterialReques';
-
+import Reg from './components/Reg'
 
 function App() {
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<LandingPage/>}/>
         <Route path='/log-in' element={<LogIn/>}/>
+        <Route path='/reg' element={<Reg/>}/>
         {/* <Route path='/projects' element={<AlfProjects/>}/> */}
         {/* <Route path='/inventry' element={<AlfInventry/>}/> */}
         <Route path='/projects'>
