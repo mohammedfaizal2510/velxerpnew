@@ -1,12 +1,13 @@
 import React from 'react';
 
-const AlfEachEmployeeList = ({ empId, empName, empDesignation, empSalaryPerShift, empPhNo }) => {
+const AlfEachEmployeeList = ({ empId, empName, empDesignation, empSalaryPerShift, empPhNo, totalSalary}) => {
     return (
         <>
             <td>{empId}</td>
             <td>{empName}</td>
             <td>{empDesignation}</td>
             <td>{empSalaryPerShift}</td>
+            <td>{totalSalary}</td>
             <td>{empPhNo}</td>
         </>
     );
