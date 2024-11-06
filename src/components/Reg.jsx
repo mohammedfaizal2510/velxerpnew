@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 import {Button} from "react-bootstrap"
 import "../css/LogIn.css"
@@ -5,16 +6,17 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 const LogIn = () => {
     const navigate = useNavigate();
-    const [una,setuna] = useState('');
+    const [uname,setuna] = useState('');
+    const [name,setna] = useState('');
     const [pass,setpass] = useState('');
     const log=()=>{
-        axios.get(`${import.meta.env.VITE_SER}log`,{headers:{una,pass}}).then(r=>{
+        axios.post(`${import.meta.env.VITE_SER}cre`,{name,uname,pass}).then(r=>{
             console.log(r.data);
             if (r.data) {
                 sessionStorage.setItem('auth',r.data._id)
                 navigate("/projects/dashboard")
             }else{
-                // incorrect Username password
+                // user not create
             }
         })
     }
@@ -26,7 +28,11 @@ const LogIn = () => {
             <img src="https://res.cloudinary.com/dzysiltcv/image/upload/v1728896383/Velx-logo_targ2r.png" alt="" className='w-25 mb-5'/>
             <form action="#">
                 <div className="input-box">
-                    <input type="text" value={una} onChange={e=>setuna(e.target.value)} required/>
+                    <input type="text" value={name} onChange={e=>setna(e.target.value)} required/>
+                    <label>Name</label>
+                </div>
+                <div className="input-box">
+                    <input type="text" value={uname} onChange={e=>setuna(e.target.value)} required/>
                     <label>Username</label>
                 </div>
                 <div className="input-box">
@@ -42,7 +48,7 @@ const LogIn = () => {
                 {/* <button type="submit" className="login-btn mb-3">Login</button>
                 <button type="submit" className="login-btn">Forgot Password</button> */}
                 <div className="register">
-                    <p>Don't have an account? <a href="./Reg">Register</a></p>
+                    <p>Don't have an account? <a href="./log-in">Register</a></p>
                 </div> 
             </form>
         </div>
