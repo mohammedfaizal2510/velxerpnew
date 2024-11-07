@@ -7,6 +7,7 @@ import '../css/AlfAttendance.css'
 import AlfEachAttendance from './AlfEachAttendance'
 import PinNavbar from './PinNavbar'
 import PinSideNav from './PinSideNav'
+import PinNavihation from './PinNavihation'
 
 const AlfAttendance = () => {
   const currentDate = new Date();
@@ -58,7 +59,8 @@ const AlfAttendance = () => {
             <PinSideNav selectedKey = "attendance"/>
           </Col>
           <Col xs={11}>
-          <div className='container-fluid'>
+          <PinNavihation />
+          <div className='container-fluid mt-5'>
             <div className="row">
               <div className="col-12 text-center">
                 <h1 className='mb-3'>Mark Your Attendance Here</h1>
