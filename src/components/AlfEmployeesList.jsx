@@ -372,31 +372,7 @@ const AlfEmployeesList = () => {
                 <Button variant="primary" onClick={handlePaySave}>Save Payment</Button>
               </Modal.Footer>
             </Modal>
-
-
-
-      {/* <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{isEditing? "Edit Employee" : "Create New Employee"}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId='formName'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter name'
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>Close</Button>
-          <Button variant='primary' onClick={handleClose}>save</Button>
-        </Modal.Footer>
-      </Modal> */}
+            
           </Col>
         </Row>
       </Container>
