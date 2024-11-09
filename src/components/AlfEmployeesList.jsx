@@ -1,5 +1,5 @@
 //===================================== 4) input modal
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AlfNavbar from './AlfNavbar';
 import { Button, FormControl, Dropdown, Modal, Form, Container, Row, Col } from 'react-bootstrap';
 import '../css/AlfAttendance.css';
@@ -14,13 +14,31 @@ const AlfEmployeesList = () => {
   const [searchPhone, setSearchPhone] = useState('');
   const [selectedDesignation, setSelectedDesignation] = useState('');
   const [sortOrder, setSortOrder] = useState('');
-  const [employeeDetails, setEmployeeDetails] = useState([
-    { id: 101, name: 'name 1', designation: 'Labour', salaryPerShift: 700, phoneNumber: '1234567890', totalSalary: 15000, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-    { id: 102, name: 'name 2', designation: 'Electrician', salaryPerShift: 800, phoneNumber: '1258796403', totalSalary: 0, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-    { id: 103, name: 'name 3', designation: 'Plumber', salaryPerShift: 750, phoneNumber: '5369785214', totalSalary: 7000, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-    { id: 104, name: 'name 4', designation: 'Supervisor', salaryPerShift: 900, phoneNumber: '7894523654', totalSalary: 0, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-    { id: 105, name: 'name 5', designation: 'Plumber', salaryPerShift: 700, phoneNumber: '7895612348', totalSalary: 10000, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-  ]);
+  const [employeeDetails, setEmployeeDetails] = useState(
+    JSON.parse(localStorage.getItem('employeeDetails')) || {}
+  );
+  // { id: 101, name: 'name 1', designation: 'Labour', salaryPerShift: 700, phoneNumber: '1234567890', totalSalary: 15000, doj:"", workingInSite:false,accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+  // { id: 102, name: 'name 2', designation: 'Electrician', salaryPerShift: 800, phoneNumber: '1258796403', totalSalary: 0,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+  // { id: 103, name: 'name 3', designation: 'Plumber', salaryPerShift: 750, phoneNumber: '5369785214', totalSalary: 7000,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+  // { id: 104, name: 'name 4', designation: 'Supervisor', salaryPerShift: 900, phoneNumber: '7894523654', totalSalary: 0,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+  // { id: 105, name: 'name 5', designation: 'Plumber', salaryPerShift: 700, phoneNumber: '7895612348', totalSalary: 10000,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+
+
+
+  // Load employee details from local storage when component mounts
+  useEffect(() => {
+    const storedEmployees = JSON.parse(localStorage.getItem('employeeDetails')) || [];
+    // if (storedEmployees) {
+      const sortedEmployees = storedEmployees.sort((a, b) => a.id - b.id);
+      setEmployeeDetails(sortedEmployees);
+    // }
+  }, []);
+  
+   // Save employee details to local storage whenever it changes
+   useEffect(() => {
+    localStorage.setItem('employeeDetails', JSON.stringify(employeeDetails));
+  }, [employeeDetails]);
+
 
   const [accessPrevAttendance, setaccessPrevAttendance] = useState(false);
   const [accessAddEmployee, setaccessAddEmployee] = useState(false);
@@ -85,17 +103,33 @@ const AlfEmployeesList = () => {
     setNewDesignation('');
     setNewSalary('');
     setNewPhone('');
+    setaccessPrevAttendance(false);
+    setaccessAddEmployee(false);
+    setaccessEditSalary(false);
+
+    setIsEditing(false);
+    setEditingEmployeeId(null);
+
   };
 
   // Add new employee to the list
   const handleSave = () => {
     if (isEditing){
       setEmployeeDetails(employeeDetails.map(emp => 
-        emp.id === editingEmployeeId? {...emp, name: newName, designation: newDesignation, salaryPerShift: Number(newSalary), phoneNumber: newPhone} : emp
+        emp.id === editingEmployeeId? {...emp,
+          name: newName,
+          designation: newDesignation,
+          salaryPerShift: Number(newSalary),
+          phoneNumber: newPhone,
+          accessPrevAttendance,
+          accessAddEmployee,
+          accessEditSalary
+        } : emp
       ));
     }
     else{
-      const newId = Math.max(...employeeDetails.map(emp => emp.id)) + 1;
+      const newId = employeeDetails.length > 0 ? Math.max(...employeeDetails.map(emp => emp.id)) + 1 : 101;
+      // const newId =  Math.max(...employeeDetails.map(emp => emp.id)) + 1;
       const newEmployee = {
         id: newId,
         name: newName,
@@ -120,6 +154,9 @@ const AlfEmployeesList = () => {
     setNewDesignation(employee.designation);
     setNewSalary(employee.salaryPerShift);
     setNewPhone(employee.phoneNumber);
+    setaccessPrevAttendance(employee.accessPrevAttendance);
+    setaccessAddEmployee(employee.accessAddEmployee);
+    setaccessEditSalary(employee.accessEditSalary);
     handleShow();
   };
 

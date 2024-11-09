@@ -12,6 +12,7 @@ import AlfInbox from './components/AlfInbox';
 import PinInventry from './components/PinInventry';
 import PinMaterialReques from './components/PinMaterialReques';
 import Reg from './components/Reg'
+import PinSalary from './components/PinSalary';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path='dashboard/attendance' element={<AlfAttendance/>}></Route>
           <Route path='dashboard/resuestMaterial' element={<PinMaterialReques/>}></Route>
           <Route path='dashboard/inventry' element={<PinInventry/>}></Route>
+          <Route path='dashboard/salary' element = {<PinSalary/>}></Route>
           <Route path='inventry' element={<AlfInventry/>}></Route>
           {/* <Route path='attendance' element={<AlfAttendance/>}></Route> */}
           <Route path='Employees' element={<AlfEmployeesList/>}></Route>

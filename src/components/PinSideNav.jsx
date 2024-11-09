@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faListCheck, faScrewdriverWrench, faUsers, faSignOutAlt, faClipboardUser, faHand, faCircleArrowLeft, faCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faListCheck, faScrewdriverWrench, faUsers, faSignOutAlt, faClipboardUser, faHand, faCircleArrowLeft, faCircleLeft, faMoneyBillTransfer } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import '../css/TrySideNav.css';
 
@@ -25,6 +25,7 @@ const PinSideNav = ({ selectedKey }) => {
     requestmaterial: "request material",
     inventory: "Inventory",
     goback: "back to projects",
+    salary:"salary",
     // logout: "Logout",
   }; 
   return (
@@ -57,6 +58,19 @@ const PinSideNav = ({ selectedKey }) => {
             </NavIcon>
             <NavText>Request Material</NavText>
             {hoveredItem === "requestmaterial" && <span className="tooltip">{tooltipText.requestmaterial}</span>}
+          </NavItem>
+
+          <NavItem
+            eventKey="salary"
+            onClick={() => handleNavigate('/projects/dashboard/salary')}
+            onMouseEnter={() => setHoveredItem("salary")}
+            onMouseLeave={() => setHoveredItem(null)}
+          >
+            <NavIcon>
+              <FontAwesomeIcon icon={faMoneyBillTransfer} style={{ fontSize: "1.75em" }} />
+            </NavIcon>
+            <NavText>salary</NavText>
+            {hoveredItem === "salary" && <span className="tooltip">{tooltipText.salary}</span>}
           </NavItem>
 
           <NavItem

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import AlfNavbar from './AlfNavbar'
-import { FormControl, Form, Button, Container, Row, Col } from 'react-bootstrap'
+import { FormControl, Form, Button, Container, Row, Col , Modal} from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../css/AlfAttendance.css'
@@ -16,6 +16,14 @@ const AlfAttendance = () => {
   const [totalSalaryPaid, setTotalSalaryPaid] = useState(0);
   
   const formattedDate = selectedDate.toLocaleDateString('en-GB'); 
+
+  const employeeDetails = [
+    { id: 101, name: 'name 1', designation: 'Labour', salaryPerShift: 700, phoneNumber: '1234567890', totalSalary: 15000, doj:"", workingInSite:false,accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+    { id: 102, name: 'name 2', designation: 'Electrician', salaryPerShift: 800, phoneNumber: '1258796403', totalSalary: 0,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+    { id: 103, name: 'name 3', designation: 'Plumber', salaryPerShift: 750, phoneNumber: '5369785214', totalSalary: 7000,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+    { id: 104, name: 'name 4', designation: 'Supervisor', salaryPerShift: 900, phoneNumber: '7894523654', totalSalary: 0,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+    { id: 105, name: 'name 5', designation: 'Plumber', salaryPerShift: 700, phoneNumber: '7895612348', totalSalary: 10000,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+  ];
 
   const [userAttendanceDetails, setUserAttendanceDetails] = useState([
     {
@@ -48,6 +56,11 @@ const AlfAttendance = () => {
   const handleSearch = () => {
     return userAttendanceDetails.filter((employee) => employee.name.toLowerCase().includes(searchTerm.toLowerCase()));
   };
+
+  //for add employee modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  
 
   return (
     <>
@@ -85,6 +98,7 @@ const AlfAttendance = () => {
               <div className='col-12 text-center mb-3' style={{ display: "flex", gap: "10px" }}>
                 <FormControl type="text" placeholder="Search by name" onChange={(e) => setSearchTerm(e.target.value)} />
                 <Button onClick={handleSearch}>Search</Button>
+                <Button variant="primary" onClick={() => setShow(true)}>Add Employee</Button>
               </div>
 
               {handleSearch().length === 0 ? (
@@ -104,6 +118,28 @@ const AlfAttendance = () => {
                   />
                 ))
               )}
+
+              <div className="col-12">
+
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header>
+                  <Modal.Title>Add Employees Available to this Site</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                          {/* list here all the availabe employees name and salary per shift from "employeeDetails" dataset 
+                          if "employeeDetails.workingInSite" is true then the employee should not be able to select to this site to add the employee
+                          if "employeeDetails.workingInSite" is false then the employee should be able to select to this site to add the employee
+                          at the top of this modal show the filter for "designation" which shows all the available designation from the "employeeDetails" dataset and based on the designation the employee name ans salarypershift should be listed to select
+                          then on clicking add button in the modal will call AlfEachAttendance and create the card to mark the attendance 
+                           */}
+
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>Close</Button>
+                  <Button variant="primary" onClick={handleClose}>Add</Button>
+                </Modal.Footer>
+              </Modal> 
+              </div>
             </div>
           </div>
           </Col> 
