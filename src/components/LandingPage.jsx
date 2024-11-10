@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // import {Button} from "react-bootstrap"
 import {Navbar, Nav, Button} from "react-bootstrap"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faSitemap, faCompassDrafting, faClipboardUser, faCreditCard, faScrewdriverWrench, faWarehouse, faListCheck} from '@fortawesome/free-solid-svg-icons'
 import '../css/LandingPage.css'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 // import NavBar from './NavBar'
 
 const LandingPage = () => {
@@ -12,6 +13,17 @@ const LandingPage = () => {
     const log=()=>{
         navigate("/log-in")
     }
+    useEffect(()=>{
+        (async()=>{
+        const auth = sessionStorage.getItem('auth');
+        axios.get(`${import.meta.env.VITE_SER}ava`,{headers:{auth}}).then(t=>{
+                if(t.data){
+                    navigate("/projects/dashboard")
+                }
+            })
+        }
+        )();
+    },[])
   return (
     <>
     {/* className='d-flex flex-column justify-content-center'  
