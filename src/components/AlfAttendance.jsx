@@ -17,18 +17,21 @@ const AlfAttendance = () => {
   
   const formattedDate = selectedDate.toLocaleDateString('en-GB'); 
 
-  const employeeDetails = [
-    { id: 101, name: 'name 1', designation: 'Labour', salaryPerShift: 700, phoneNumber: '1234567890', totalSalary: 15000, doj:"", workingInSite:false,accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-    { id: 102, name: 'name 2', designation: 'Electrician', salaryPerShift: 800, phoneNumber: '1258796403', totalSalary: 0,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-    { id: 103, name: 'name 3', designation: 'Plumber', salaryPerShift: 750, phoneNumber: '5369785214', totalSalary: 7000,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-    { id: 104, name: 'name 4', designation: 'Supervisor', salaryPerShift: 900, phoneNumber: '7894523654', totalSalary: 0,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-    { id: 105, name: 'name 5', designation: 'Plumber', salaryPerShift: 700, phoneNumber: '7895612348', totalSalary: 10000,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-  ];
+  const employeeDetails = JSON.parse(localStorage.getItem('employeeDetails'));
+  // console.log(employeeDetails);
+  // now employeeDetails will be given below
+   // { id: 101, name: 'name 1', designation: 'Labour', salaryPerShift: 700, phoneNumber: '1234567890', totalSalary: 15000, doj:"", workingInSite:false,accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+  // { id: 102, name: 'name 2', designation: 'Electrician', salaryPerShift: 800, phoneNumber: '1258796403', totalSalary: 0,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+  // { id: 103, name: 'name 3', designation: 'Plumber', salaryPerShift: 750, phoneNumber: '5369785214', totalSalary: 7000,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+  // { id: 104, name: 'name 4', designation: 'Supervisor', salaryPerShift: 900, phoneNumber: '7894523654', totalSalary: 0,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+  // { id: 105, name: 'name 5', designation: 'Plumber', salaryPerShift: 700, phoneNumber: '7895612348', totalSalary: 10000,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+
+  const [siteSalaryDataset, setSiteSalaryDataset] = useState();
 
   const [userAttendanceDetails, setUserAttendanceDetails] = useState([
     {
-      id: 101,
-      name: "Mohammed",
+      id: employeeDetails[0].id,
+      name: employeeDetails[0].name,
       salaryPerShift: 700,
       isPresent: false,
       shiftWorked: 0,
@@ -36,8 +39,8 @@ const AlfAttendance = () => {
       salaryDate: formattedDate,
     },
     {
-      id: 102,
-      name: "Faizal",
+      id: employeeDetails[1].id,
+      name: employeeDetails[1].name,
       salaryPerShift: 700,
       isPresent: false,
       shiftWorked: 0,
@@ -45,6 +48,7 @@ const AlfAttendance = () => {
       salaryDate: formattedDate,
     }
   ]);
+  console.log(userAttendanceDetails);
 
   // Calculate total salary paid whenever attendance details are updated
   useEffect(() => {
@@ -92,7 +96,7 @@ const AlfAttendance = () => {
                   />
                 </div>
                 {/* <h3 className='mb-3'>{formattedDate}</h3> */}
-                <h4 className='mt-3'>Total Salary : ₹{totalSalaryPaid}</h4>
+                {/* <h4 className='mt-3'>Total Salary : ₹{totalSalaryPaid}</h4> */}
               </div>
 
               <div className='col-12 text-center mb-3' style={{ display: "flex", gap: "10px" }}>

@@ -61,7 +61,7 @@ const AlfEachAttendance = ({ id, name, salaryPerShift, isPresent, shiftWorked, t
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title>Edit Salary Per Shift</Modal.Title>
-        </Modal.Header>
+        </Modal.Header> 
         <Modal.Body>
           <input type="number" value={newSalary} onChange={(e) => setNewSalary(Number(e.target.value))} />
         </Modal.Body>
