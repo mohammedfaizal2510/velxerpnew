@@ -19,6 +19,9 @@ const AlfAttendance = () => {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   const employeeDetails = JSON.parse(localStorage.getItem('employeeDetails'));
+  const projectDetails = JSON.parse(localStorage.getItem('projectDetails'));
+  // console.log(projectDetails);
+  
   const formattedDate = selectedDate.toLocaleDateString('en-GB'); 
 
   // Load from localStorage on mount

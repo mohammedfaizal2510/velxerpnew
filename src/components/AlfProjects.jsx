@@ -61,6 +61,7 @@ const AlfProjects = () => {
             projectSupervisor: selectedSupervisor.label,
             clientName: ipClientName,
             isCompleted: false,
+            assignedEmployees: [101,102]
         };
 
         SetProjectCardDetails((prev) => [newProjectCard, ...prev]);
