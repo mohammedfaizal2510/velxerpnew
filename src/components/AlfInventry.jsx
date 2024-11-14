@@ -42,8 +42,8 @@ const AlfInventry = () => {
                 availableInventry.map((eachInventry) => (
                   <div className='col-12 col-sm-6 col-md-4 col-lg-3'>
                     <div className='inventry-catrd text-center'>
-                      <img src='https://res.cloudinary.com/dzysiltcv/image/upload/v1731402024/velx/cement_pxdann.jpg' className='w-100' style={{borderRadius:"10px"}} alt='Loading...'/>
-                      <h3>{eachInventry.inName}</h3>
+                      <img src={eachInventry.inImg} className='w-75 mt-3 mb-3' style={{borderRadius:"50%"}} alt='Loading...'/>
+                      <h3>{eachInventry.inName}</h3> 
                       <h3>{eachInventry.inStock ? (
                         <p>Stock Avaulable</p>
                       ) : (
