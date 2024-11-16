@@ -49,6 +49,7 @@ const AlfEmployeesList = () => {
   const [newDesignation, setNewDesignation] = useState('');
   const [newSalary, setNewSalary] = useState('');
   const [newPhone, setNewPhone] = useState('');
+  const [newPassword, setNewPassword] = useState('');
 
 
   
@@ -103,6 +104,7 @@ const AlfEmployeesList = () => {
     setNewDesignation('');
     setNewSalary('');
     setNewPhone('');
+    setNewPassword('');
     setaccessPrevAttendance(false);
     setaccessAddEmployee(false);
     setaccessEditSalary(false);
@@ -121,6 +123,7 @@ const AlfEmployeesList = () => {
           designation: newDesignation,
           salaryPerShift: Number(newSalary),
           phoneNumber: newPhone,
+          password: newPassword,
           accessPrevAttendance,
           accessAddEmployee,
           accessEditSalary
@@ -136,6 +139,7 @@ const AlfEmployeesList = () => {
         designation: newDesignation,
         salaryPerShift: Number(newSalary),
         phoneNumber: newPhone,
+        password: newPassword,
         totalSalary: 0,
         accessPrevAttendance: accessPrevAttendance,
         accessAddEmployee: accessAddEmployee,
@@ -154,6 +158,7 @@ const AlfEmployeesList = () => {
     setNewDesignation(employee.designation);
     setNewSalary(employee.salaryPerShift);
     setNewPhone(employee.phoneNumber);
+    setNewPassword(employee.password);
     setaccessPrevAttendance(employee.accessPrevAttendance);
     setaccessAddEmployee(employee.accessAddEmployee);
     setaccessEditSalary(employee.accessEditSalary);
@@ -375,6 +380,16 @@ const AlfEmployeesList = () => {
                 placeholder='Enter phone number'
                 value={newPhone}
                 onChange={(e) => setNewPhone(e.target.value.replace(/\D/g, ''))} // Only allows numbers
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type='password'
+                placeholder='Enter password'
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
               />
             </Form.Group>
           </Form>
