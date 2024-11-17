@@ -15,33 +15,16 @@ const AlfEmployeesList = () => {
   const [searchPhone, setSearchPhone] = useState('');
   const [selectedDesignation, setSelectedDesignation] = useState('');
   const [sortOrder, setSortOrder] = useState('');
+  const [uname, setuna] = useState('');
   const [employeeDetails, setEmployeeDetails] = useState([]);
 
-    useEffect(() => {
-    const storedEmployees = JSON.parse(localStorage.getItem('employeeDetails')) || [];
-    // if (storedEmployees) {
-      const sortedEmployees = storedEmployees.sort((a, b) => a.id - b.id);
-      setEmployeeDetails(sortedEmployees);
-    // }
-  // { id: 101, name: 'name 1', designation: 'Labour', salaryPerShift: 700, phoneNumber: '1234567890', totalSalary: 15000, doj:"", workingInSite:false,accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-  // { id: 102, name: 'name 2', designation: 'Electrician', salaryPerShift: 800, phoneNumber: '1258796403', totalSalary: 0,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-  // { id: 103, name: 'name 3', designation: 'Plumber', salaryPerShift: 750, phoneNumber: '5369785214', totalSalary: 7000,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-  // { id: 104, name: 'name 4', designation: 'Supervisor', salaryPerShift: 900, phoneNumber: '7894523654', totalSalary: 0,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
-  // { id: 105, name: 'name 5', designation: 'Plumber', salaryPerShift: 700, phoneNumber: '7895612348', totalSalary: 10000,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
 
-
-
-  // Load employee details from local storage when component mounts
   useEffect(() => {
         axios.get(`${import.meta.env.VITE_SER}emp`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{
+            console.log(t.data)
             setEmployeeDetails(t.data)
         })
   }, []);
-  
-   // Save employee details to local storage whenever it changes
-   useEffect(() => {
-    localStorage.setItem('employeeDetails', JSON.stringify(employeeDetails));
-  }, [employeeDetails]);
 
 
   const [accessPrevAttendance, setaccessPrevAttendance] = useState(false);
@@ -86,7 +69,7 @@ const AlfEmployeesList = () => {
     }
     else{
       const updatedEmployees = employeeDetails.map(emp => 
-        emp.id === selectedEmployee.id ? {...emp, totalSalary: emp.totalSalary - parseInt(payAmount) } : emp
+        emp._id === selectedEmployee._id ? {...emp, totalSalary: emp.totalSalary - parseInt(payAmount) } : emp
       );
       setEmployeeDetails(updatedEmployees);
       handlePayModalClose();
@@ -109,6 +92,7 @@ const AlfEmployeesList = () => {
     setNewSalary('');
     setNewPhone('');
     setNewPassword('');
+        setuna('');
     setaccessPrevAttendance(false);
     setaccessAddEmployee(false);
     setaccessEditSalary(false);
@@ -121,35 +105,33 @@ const AlfEmployeesList = () => {
   // Add new employee to the list
   const handleSave = () => {
     if (isEditing){
-      setEmployeeDetails(employeeDetails.map(emp => 
-        emp.id === editingEmployeeId? {...emp,
-          name: newName,
+            axios.put(`${import.meta.env.VITE_SER}emp`,{name: newName,
           designation: newDesignation,
           salaryPerShift: Number(newSalary),
           phoneNumber: newPhone,
-          password: newPassword,
+          pass: newPassword,
           accessPrevAttendance,
-          accessAddEmployee,
-          accessEditSalary
-        } : emp
-      ));
+          accessAddEmployee,uname,
+          accessEditSalary},{headers:{auth:sessionStorage.getItem('auth'),edit:editingEmployeeId}}).then(t=>{
+                    setEmployeeDetails(p=>p.map(e=>e._id==editingEmployeeId?t.data:e))
+                })
     }
     else{
-      const newId = employeeDetails.length > 0 ? Math.max(...employeeDetails.map(emp => emp.id)) + 1 : 101;
-      // const newId =  Math.max(...employeeDetails.map(emp => emp.id)) + 1;
       const newEmployee = {
-        id: newId,
         name: newName,
         designation: newDesignation,
         salaryPerShift: Number(newSalary),
         phoneNumber: newPhone,
-        password: newPassword,
+        pass: newPassword,
         totalSalary: 0,
+                uname,
         accessPrevAttendance: accessPrevAttendance,
         accessAddEmployee: accessAddEmployee,
         accessEditSalary: accessEditSalary,
       };
-      setEmployeeDetails([...employeeDetails, newEmployee]);
+            axios.post(`${import.meta.env.VITE_SER}emp`,newEmployee,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{
+                t.data == '👍' && setEmployeeDetails([...employeeDetails, newEmployee]);
+            })
     }
     handleClose();
   };
@@ -157,7 +139,7 @@ const AlfEmployeesList = () => {
 
   const handleEdit = (employee) => {
     setIsEditing(true);
-    setEditingEmployeeId(employee.id);
+    setEditingEmployeeId(employee._id);
     setNewName(employee.name);
     setNewDesignation(employee.designation);
     setNewSalary(employee.salaryPerShift);
@@ -266,9 +248,9 @@ const AlfEmployeesList = () => {
               </thead>
               <tbody>
                 {filteredEmployees.map(employee => (
-                  <tr key={employee.id}>
+                  <tr key={employee._id}>
                     <AlfEachEmployeeList
-                      empId={employee.id}
+                      empId={employee._id}
                       empName={employee.name}
                       empDesignation={employee.designation}
                       empSalaryPerShift={employee.salaryPerShift}
@@ -386,6 +368,15 @@ const AlfEmployeesList = () => {
               />
             </Form.Group>
 
+            <Form.Group controlId='formName'>
+              <Form.Label>UserName</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='Enter name'
+                value={uname}
+                onChange={(e) => setuna(e.target.value)}
+              />
+            </Form.Group>
             <Form.Group controlId="formPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
