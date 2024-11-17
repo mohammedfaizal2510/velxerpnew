@@ -7,6 +7,7 @@ import AlfEachEmployeeList from './AlfEachEmployeeList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import TrySideNav from './TrySideNav';
+import axios from 'axios';
 
 const AlfEmployeesList = () => {
   const [show, setShow] = useState(false);
@@ -22,6 +23,19 @@ const AlfEmployeesList = () => {
       const sortedEmployees = storedEmployees.sort((a, b) => a.id - b.id);
       setEmployeeDetails(sortedEmployees);
     // }
+  // { id: 101, name: 'name 1', designation: 'Labour', salaryPerShift: 700, phoneNumber: '1234567890', totalSalary: 15000, doj:"", workingInSite:false,accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+  // { id: 102, name: 'name 2', designation: 'Electrician', salaryPerShift: 800, phoneNumber: '1258796403', totalSalary: 0,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+  // { id: 103, name: 'name 3', designation: 'Plumber', salaryPerShift: 750, phoneNumber: '5369785214', totalSalary: 7000,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+  // { id: 104, name: 'name 4', designation: 'Supervisor', salaryPerShift: 900, phoneNumber: '7894523654', totalSalary: 0,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+  // { id: 105, name: 'name 5', designation: 'Plumber', salaryPerShift: 700, phoneNumber: '7895612348', totalSalary: 10000,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
+
+
+
+  // Load employee details from local storage when component mounts
+  useEffect(() => {
+        axios.get(`${import.meta.env.VITE_SER}emp`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{
+            setEmployeeDetails(t.data)
+        })
   }, []);
   
    // Save employee details to local storage whenever it changes
@@ -39,6 +53,7 @@ const AlfEmployeesList = () => {
   const [newDesignation, setNewDesignation] = useState('');
   const [newSalary, setNewSalary] = useState('');
   const [newPhone, setNewPhone] = useState('');
+  const [newPassword, setNewPassword] = useState('');
 
 
   
@@ -93,6 +108,7 @@ const AlfEmployeesList = () => {
     setNewDesignation('');
     setNewSalary('');
     setNewPhone('');
+    setNewPassword('');
     setaccessPrevAttendance(false);
     setaccessAddEmployee(false);
     setaccessEditSalary(false);
@@ -111,6 +127,7 @@ const AlfEmployeesList = () => {
           designation: newDesignation,
           salaryPerShift: Number(newSalary),
           phoneNumber: newPhone,
+          password: newPassword,
           accessPrevAttendance,
           accessAddEmployee,
           accessEditSalary
@@ -126,6 +143,7 @@ const AlfEmployeesList = () => {
         designation: newDesignation,
         salaryPerShift: Number(newSalary),
         phoneNumber: newPhone,
+        password: newPassword,
         totalSalary: 0,
         accessPrevAttendance: accessPrevAttendance,
         accessAddEmployee: accessAddEmployee,
@@ -144,6 +162,7 @@ const AlfEmployeesList = () => {
     setNewDesignation(employee.designation);
     setNewSalary(employee.salaryPerShift);
     setNewPhone(employee.phoneNumber);
+    setNewPassword(employee.password);
     setaccessPrevAttendance(employee.accessPrevAttendance);
     setaccessAddEmployee(employee.accessAddEmployee);
     setaccessEditSalary(employee.accessEditSalary);
@@ -364,6 +383,16 @@ const AlfEmployeesList = () => {
                 placeholder='Enter phone number'
                 value={newPhone}
                 onChange={(e) => setNewPhone(e.target.value.replace(/\D/g, ''))} // Only allows numbers
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type='password'
+                placeholder='Enter password'
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
               />
             </Form.Group>
           </Form>
