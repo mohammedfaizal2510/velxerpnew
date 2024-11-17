@@ -7,6 +7,7 @@ import AlfEachEmployeeList from './AlfEachEmployeeList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import TrySideNav from './TrySideNav';
+import axios from 'axios';
 
 const AlfEmployeesList = () => {
   const [show, setShow] = useState(false);
@@ -14,9 +15,7 @@ const AlfEmployeesList = () => {
   const [searchPhone, setSearchPhone] = useState('');
   const [selectedDesignation, setSelectedDesignation] = useState('');
   const [sortOrder, setSortOrder] = useState('');
-  const [employeeDetails, setEmployeeDetails] = useState(
-    JSON.parse(localStorage.getItem('employeeDetails')) || {}
-  );
+  const [employeeDetails, setEmployeeDetails] = useState([]);
   // { id: 101, name: 'name 1', designation: 'Labour', salaryPerShift: 700, phoneNumber: '1234567890', totalSalary: 15000, doj:"", workingInSite:false,accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
   // { id: 102, name: 'name 2', designation: 'Electrician', salaryPerShift: 800, phoneNumber: '1258796403', totalSalary: 0,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
   // { id: 103, name: 'name 3', designation: 'Plumber', salaryPerShift: 750, phoneNumber: '5369785214', totalSalary: 7000,doj:"", workingInSite:false, accessPrevAttendance: false, accessAddEmployee: false, accessEditSalary: false },
@@ -27,11 +26,9 @@ const AlfEmployeesList = () => {
 
   // Load employee details from local storage when component mounts
   useEffect(() => {
-    const storedEmployees = JSON.parse(localStorage.getItem('employeeDetails')) || [];
-    // if (storedEmployees) {
-      const sortedEmployees = storedEmployees.sort((a, b) => a.id - b.id);
-      setEmployeeDetails(sortedEmployees);
-    // }
+        axios.get(`${import.meta.env.VITE_SER}emp`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{
+            setEmployeeDetails(t.data)
+        })
   }, []);
   
    // Save employee details to local storage whenever it changes
