@@ -57,7 +57,10 @@ const PinMaterialReques = () => {
     handleClose();
   }
 
-  const [materialRequest, setMaterialRequest] = useState([]);
+  //material request
+  const [materialRequest, setMaterialRequest] = useState([
+    {requestId: Date.now(), isApproved: false, materilId:10001, materialName: "Cement", quantityToRequest:"10 packs"}
+  ]);
   const [selectedMaterial, setSelectedMaterial] = useState(null);
   const [requestModalShow, setRequestModalShow] = useState(false);
   const reqMaterialQuantityIpRef = useRef();
@@ -89,6 +92,27 @@ const PinMaterialReques = () => {
   const requestModalClose = () => {
     setRequestModalShow(false);
   };
+
+  //material in site
+  const [materialInSite, setMaterialInSite] = useState([
+    {_id: Date.now(), name: "Cement", quantity:10, unitStr: "mootai"}
+  ]);
+  const [siteModalShow, setSiteModalShow] = useState(false);
+  const materialInSiteModalClose = () => setSiteModalShow(false);
+  const materialInSiteModalOpen = () => setSiteModalShow(true); 
+  const mNameInSiteRef = useRef();
+
+  const addMaterialInSite = () => {
+    const ipMInSiteName = mNameInSiteRef.current.value.trim();
+    if (ipMInSiteName === "") {
+      return null;
+    }
+    const newMaterialInSite = {
+      _id : Date.now(),
+      name: ipMInSiteName,
+      quantity: 0
+    }
+  }
 
   return (
     <>
@@ -169,6 +193,41 @@ const PinMaterialReques = () => {
                 <div className="col-12">
                   <hr/>
                 </div>
+
+                <div className="col-12">
+                  <h1 className='text-center'>Materials in Site</h1>
+                </div>
+
+                <div className="col-12">
+                  <hr/>
+                </div>
+                
+                <div className="col-9 search-box" style={{ display: "flex" }}>
+                                      <FormControl type="text" placeholder="Search by Material Name" onChange={handleSearch} />
+                </div>
+
+                <div className='col-1'>
+                                      <Button onClick={handleSearch}>Search</Button>
+                </div>
+
+                <div className="col-2">
+                  <Button onClick={materialInSiteModalOpen}>
+                    <FontAwesomeIcon icon={faPlus} />   Add Material
+                  </Button>
+                </div>
+
+                {/* materialInSite = {_id: Date.now(), name: "Cement", quantity:10, unitStr: "moota"} */}
+                <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+                  <div className="inventry-catrd text-center p-3">
+                    <h3>{materialInSite[0].name}</h3>
+                    <div className='d-flex flex-rown justify-content-center'>
+                      <Button className='mr-3 btn btn-danger'>-</Button>
+                      <h3>{materialInSite[0].quantity}</h3>
+                      <Button className='ml-3 btn btn-success'>+</Button>
+                    </div>
+                    <p>Unit : {materialInSite[0].unitStr}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </Col>
@@ -215,6 +274,26 @@ const PinMaterialReques = () => {
           <Modal.Footer>
             <Button variant="secondary" onClick={requestModalClose}>Cancel Request</Button>
             <Button variant="primary" onClick={addRequestCard}>Send Request</Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={siteModalShow} onHide={materialInSiteModalClose}>
+          <Modal.Header>
+            <Modal.Title>Add Materials in Site</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <label>Enter Material Name</label>
+            <input
+              ref={mNameInSiteRef}
+              type="text"
+              placeholder="Enter Name"
+              className="w-100 mb-4"
+            />
+            <label>Enter Quantity</label>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={materialInSiteModalClose}>Cancel</Button>
+            <Button variant="primary" onClick={addMaterialInSite}>Add Material</Button>
           </Modal.Footer>
         </Modal>
       </Container>
