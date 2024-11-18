@@ -8,6 +8,7 @@ import Modal from 'react-bootstrap/Modal';
 import AlfEachProjectCard from './AlfEachProjectCard';
 import AlfNavbar from './AlfNavbar';
 import TrySideNav from './TrySideNav';
+import axios from 'axios';
 // import TrySideNav2 from './TrySideNav2';
 
 const AlfProjects = () => {
@@ -19,7 +20,13 @@ const AlfProjects = () => {
         { label: 'supervisor - 5', value: 'supervisor - 5' },
         { label: 'supervisor - 6', value: 'supervisor - 6' }
     ];
-
+    useEffect(()=>{
+        (async()=>{
+            axios.get(`${import.meta.env.VITE_SER}proj`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{
+                SetProjectCardDetails(t.data)
+            })
+        })();
+    },[])
     const [show, setShow] = useState(false);
     const [selectedSupervisor, setSelectedSupervisor] = useState(null);
     const [selectedCity, setSelectedCity] = useState(null);
@@ -34,14 +41,7 @@ const AlfProjects = () => {
         return `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
     }
 
-    const [projectCardDetails, SetProjectCardDetails] = useState(
-        localStorage.getItem('projectDetails') ? JSON.parse(localStorage.getItem('projectDetails')) : []
-    );
-
-    useEffect(() => {
-        localStorage.setItem('projectDetails', JSON.stringify(projectCardDetails));
-    }, [projectCardDetails]);
-
+    const [projectCardDetails, SetProjectCardDetails] = useState([]);
     const projectNameIpRef = useRef();
     const clientNameIpRef = useRef(); 
 

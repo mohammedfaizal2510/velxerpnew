@@ -13,7 +13,7 @@ const AlfAttendance = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [totalSalaryPaid, setTotalSalaryPaid] = useState(0);
   const [userAttendanceDetails, setUserAttendanceDetails] = useState(
-    JSON.parse(localStorage.getItem('userAttendanceDetails'))
+    JSON.parse(localStorage.getItem('userAttendanceDetails')) || []
   );
   const [show, setShow] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
