@@ -7,18 +7,18 @@ import TrySideNav from './TrySideNav'
 const AlfInventry = () => {
   const [availableInventry, setAvailableInventry] = useState(
     [
-      {inId: 1001, inName: "Cement", inStock:true, inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402024/velx/cement_pxdann.jpg"},
-      {inId: 1002, inName: "M Sand", inStock:true, inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402024/velx/black_sand_g5tzmg.jpg"},
-      {inId: 1003, inName: "P Sand", inStock:true, inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402024/velx/black_sand_g5tzmg.jpg"},
-      {inId: 1004, inName: "River Sand", inStock:true, inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402024/velx/M_Sand_bhyg8o.jpg"},
-      {inId: 1005, inName: "Gravel", inStock:true, inImg:""},
-      {inId: 1006, inName: "Slurry",inStock:true,  inImg:""},
-      {inId: 1007, inName: "Aggregate", inStock:true, inImg:""},
-      {inId: 1008, inName: "Brick", inStock:true, inImg:""},
-      {inId: 1009, inName: "Block", inStock:true, inImg:""},
-      {inId: 1010, inName: "Sheet", inImg:""},
-      {inId: 1011, inName: "Steel Bar", inStock:true, inImg:""},
-      {inId: 1012, inName: "Wire", inStock:true, inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402575/velx/wire_rqqddx.jpg"},
+      {inId: 10001, inName: "Cement", quant:10, unit: '', inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402024/velx/cement_pxdann.jpg"},
+      {inId: 10002, inName: "M Sand", quant:0, unit: '', inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402024/velx/black_sand_g5tzmg.jpg"},
+      {inId: 10003, inName: "P Sand", quant:0, unit: '', inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402024/velx/black_sand_g5tzmg.jpg"},
+      {inId: 10004, inName: "River Sand", quant:0, unit: '', inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402024/velx/M_Sand_bhyg8o.jpg"},
+      {inId: 10005, inName: "Gravel", quant:0, unit: '', inImg:""},
+      {inId: 10006, inName: "Slurry",quant:0, unit: '',  inImg:""},
+      {inId: 10007, inName: "Aggregate", quant:0, unit: '', inImg:""},
+      {inId: 10008, inName: "Brick", quant:0, unit: '', inImg:""},
+      {inId: 10009, inName: "Block", quant:0, unit: '', inImg:""},
+      {inId: 10010, inName: "Sheet", quant:0, unit: '', inImg:""},
+      {inId: 10011, inName: "Steel Bar", quant:0, unit: '', inImg:""},
+      {inId: 10012, inName: "Wire", quant:0, unit: '', inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402575/velx/wire_rqqddx.jpg"},
     ]
   )
   return (
