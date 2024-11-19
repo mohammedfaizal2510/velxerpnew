@@ -174,6 +174,7 @@ const AlfProjects = () => {
                                         <label>Select Supervisor</label>
                                         <Select
                                             options={superVisorNames}
+                                            label={name}
                                             value={selectedSupervisor}
                                             onChange={(option) => setSelectedSupervisor(option)}
                                             placeholder="Select Supervisor"
