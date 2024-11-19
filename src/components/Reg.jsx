@@ -43,12 +43,11 @@ const LogIn = () => {
                     <input type="checkbox" id="remember-me"/>
                     <label for="remember-me">Remember Me</label>
                 </div> */}
-                <Button variant="success" className='p-3 pl-4 pr-4 w-100' style={{borderRadius:"20px"}} onClick={log}>LogIn</Button>
-                <Button variant="success" className='p-3 pl-4 pr-4 w-100 mt-4' style={{borderRadius:"20px"}}>Forgot Password</Button>
+                <Button variant="success" className='p-3 pl-4 pr-4 w-100' style={{borderRadius:"20px"}} onClick={log}>Create</Button>
                 {/* <button type="submit" className="login-btn mb-3">Login</button>
                 <button type="submit" className="login-btn">Forgot Password</button> */}
                 <div className="register">
-                    <p>Don't have an account? <a href="./log-in">Register</a></p>
+                    <p>alredy have account? <a href="./log-in">Register</a></p>
                 </div> 
             </form>
         </div>

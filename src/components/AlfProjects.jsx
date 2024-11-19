@@ -12,20 +12,10 @@ import axios from 'axios';
 // import TrySideNav2 from './TrySideNav2';
 
 const AlfProjects = () => {
-    const superVisorNames = [
-        { label: 'supervisor - 1', value: 'supervisor - 1' },
-        { label: 'supervisor - 2', value: 'supervisor - 2' },
-        { label: 'supervisor - 3', value: 'supervisor - 3' },
-        { label: 'supervisor - 4', value: 'supervisor - 4' },
-        { label: 'supervisor - 5', value: 'supervisor - 5' },
-        { label: 'supervisor - 6', value: 'supervisor - 6' }
-    ];
+    const [superVisorNames,set] = useState([]);
     useEffect(()=>{
-        (async()=>{
-            axios.get(`${import.meta.env.VITE_SER}proj`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{
-                SetProjectCardDetails(t.data)
-            })
-        })();
+            axios.get(`${import.meta.env.VITE_SER}sup`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>t.data).then(set)
+            axios.get(`${import.meta.env.VITE_SER}proj`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{SetProjectCardDetails(t.data)})
     },[])
     const [show, setShow] = useState(false);
     const [selectedSupervisor, setSelectedSupervisor] = useState(null);
