@@ -14,7 +14,7 @@ import axios from 'axios';
 const AlfProjects = () => {
     const [superVisorNames,set] = useState([]);
     useEffect(()=>{
-            axios.get(`${import.meta.env.VITE_SER}sup`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>t.data).then(set)
+            axios.get(`${import.meta.env.VITE_SER}sup`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>t.data.map(v=>({value:v._id ?? v.id,label:v.name}))).then(set)
             axios.get(`${import.meta.env.VITE_SER}proj`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{SetProjectCardDetails(t.data)})
     },[])
     const [show, setShow] = useState(false);
@@ -174,7 +174,6 @@ const AlfProjects = () => {
                                         <label>Select Supervisor</label>
                                         <Select
                                             options={superVisorNames}
-                                            label={name}
                                             value={selectedSupervisor}
                                             onChange={(option) => setSelectedSupervisor(option)}
                                             placeholder="Select Supervisor"
