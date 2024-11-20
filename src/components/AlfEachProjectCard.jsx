@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom'
 
-const AlfEachProjectCard = ({ _id, name, location, projectSupervisor, projectStartDate, status, togggleCardStatus, deleteCard, owner }) => {
+const AlfEachProjectCard = ({ _id, name, location, projectSupervisor, projectStartDate, status, togggleCardStatus, deleteCard, owner,emplyee }) => {
     const navigate = useNavigate();
     return (
         <>
@@ -25,7 +25,7 @@ const AlfEachProjectCard = ({ _id, name, location, projectSupervisor, projectSta
                     <Button className='ml-3' onClick={() => togggleCardStatus(_id)}>
                         {!status ? "Mark UnCompleted" : "Mark Completed"}
                     </Button>
-                    <Button className='ml-3'onClick={() => navigate('/projects/dashboard/attendance')}>Details</Button>
+                    <Button className='ml-3'onClick={() => navigate('/projects/dashboard/attendance',{state:{att:emplyee}})}>Details</Button>
                     <p style={{ display: "inline", fontSize: "1.3em" }} className={`ml-3 ${!status ? "text-success" : "text-danger"}`}>
                         {!status ? "Completed" : "OnGoing"}
                     </p>

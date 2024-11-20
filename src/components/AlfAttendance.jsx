@@ -6,36 +6,34 @@ import 'react-datepicker/dist/react-datepicker.css';
 import AlfEachAttendance from './AlfEachAttendance';
 import PinSideNav from './PinSideNav';
 import PinNavihation from './PinNavihation';
-
+import {useLocation} from 'react-router-dom'
+import axios from 'axios';
 const AlfAttendance = () => {
+    const loc = useLocation();
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [searchTerm, setSearchTerm] = useState("");
   const [totalSalaryPaid, setTotalSalaryPaid] = useState(0);
-  const [userAttendanceDetails, setUserAttendanceDetails] = useState(
-    JSON.parse(localStorage.getItem('userAttendanceDetails')) || []
-  );
+  const [userAttendanceDetails, setUserAttendanceDetails] = useState([]);
   const [show, setShow] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   const employeeDetails = JSON.parse(localStorage.getItem('employeeDetails'));
-  const projectDetails = JSON.parse(localStorage.getItem('projectDetails'));
-  // console.log(projectDetails);
   
   const formattedDate = selectedDate.toLocaleDateString('en-GB'); 
 
   // Load from localStorage on mount
   useEffect(() => {
-    const storedDetails = JSON.parse(localStorage.getItem('userAttendanceDetails'));
-    if (storedDetails) setUserAttendanceDetails(storedDetails);
+        console.log(loc.state.att)
+        axios.get(`${import.meta.env.VITE_SER}emps`,{headers:{auth:loc.state.att}}).then(t=>t.data).then(setUserAttendanceDetails)
   }, []);
 
   // Save to localStorage whenever userAttendanceDetails updates
-  useEffect(() => {
-    localStorage.setItem('userAttendanceDetails', JSON.stringify(userAttendanceDetails));
-    const total = userAttendanceDetails.reduce((sum, employee) => sum + employee.totalPay, 0);
-    setTotalSalaryPaid(total);
-  }, [userAttendanceDetails]);
+  // useEffect(() => {
+  //   localStorage.setItem('userAttendanceDetails', JSON.stringify(userAttendanceDetails));
+  //   const total = userAttendanceDetails.reduce((sum, employee) => sum + employee.totalPay, 0);
+  //   setTotalSalaryPaid(total);
+  // }, [userAttendanceDetails]);
 
   // Function to handle search
   const handleSearch = () => {
