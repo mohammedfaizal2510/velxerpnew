@@ -24,7 +24,6 @@ const AlfAttendance = () => {
 
   // Load from localStorage on mount
   useEffect(() => {
-        console.log(loc.state.att)
         axios.get(`${import.meta.env.VITE_SER}emps`,{headers:{auth:loc.state.att}}).then(t=>t.data).then(setUserAttendanceDetails)
   }, []);
 
