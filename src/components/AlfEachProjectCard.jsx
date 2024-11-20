@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom'
 
-const AlfEachProjectCard = ({ id, projectName, projectCity, projectSupervisor, projectStartDate, isCompleted, togggleCardStatus, deleteCard, clientName }) => {
+const AlfEachProjectCard = ({ _id, name, location, projectSupervisor, projectStartDate, status, togggleCardStatus, deleteCard, owner }) => {
     const navigate = useNavigate();
     return (
         <>
@@ -13,21 +13,21 @@ const AlfEachProjectCard = ({ id, projectName, projectCity, projectSupervisor, p
             <div className='project-card p-4'>
                 <div style={{ display: "flex", gap: "1em" }}>
                     <FontAwesomeIcon icon={faPersonDigging} style={{ fontSize: "3em" }} />
-                    <h1>{projectName}</h1>
+                    <h1>{name}</h1>
                 </div>
-                <p>City: {projectCity}</p>
-                <p>Supervisor: {projectSupervisor}</p> {/* Updated to projectSupervisor */}
+                <p>City: {location}</p>
+                <p>Supervisor: {projectSupervisor?.label}</p> {/* Updated to projectSupervisor */}
                 <p>Start Date: {projectStartDate}</p>
-                <p>Client: {clientName}</p>
+                <p>Client: {owner}</p>
                 <hr />
                 <div>
-                    <Button onClick={() => deleteCard(id)}>Remove</Button>
-                    <Button className='ml-3' onClick={() => togggleCardStatus(id)}>
-                        {isCompleted ? "Mark UnCompleted" : "Mark Completed"}
+                    <Button onClick={() => deleteCard(_id)}>Remove</Button>
+                    <Button className='ml-3' onClick={() => togggleCardStatus(_id)}>
+                        {!status ? "Mark UnCompleted" : "Mark Completed"}
                     </Button>
                     <Button className='ml-3'onClick={() => navigate('/projects/dashboard/attendance')}>Details</Button>
-                    <p style={{ display: "inline", fontSize: "1.3em" }} className={`ml-3 ${isCompleted ? "text-success" : "text-danger"}`}>
-                        {isCompleted ? "Completed" : "OnGoing"}
+                    <p style={{ display: "inline", fontSize: "1.3em" }} className={`ml-3 ${!status ? "text-success" : "text-danger"}`}>
+                        {!status ? "Completed" : "OnGoing"}
                     </p>
                 </div>
             </div>

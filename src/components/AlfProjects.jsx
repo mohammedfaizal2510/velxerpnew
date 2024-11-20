@@ -44,17 +44,15 @@ const AlfProjects = () => {
         }
 
         const newProjectCard = {
-            id: Date.now(),
-            projectName: ipProjectName,
-            projectCity: inputCity, // Use inputCity here
+            name: ipProjectName,
+            location: inputCity, // Use inputCity here
             projectStartDate: getDate(),
-            projectSupervisor: selectedSupervisor.label,
-            clientName: ipClientName,
-            isCompleted: false,
-            assignedEmployees: [101,102]
+            projectSupervisor: selectedSupervisor,
+            owner: ipClientName,
         };
-
-        SetProjectCardDetails((prev) => [newProjectCard, ...prev]);
+        axios.post(`${import.meta.env.VITE_SER}proj`,newProjectCard,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{
+            t=="👍" && SetProjectCardDetails((prev) => [newProjectCard, ...prev]);
+        })
 
         projectNameIpRef.current.value = "";
         clientNameIpRef.current.value = "";
@@ -64,13 +62,15 @@ const AlfProjects = () => {
     };
 
     const togggleCardStatus = (id) => {
-        SetProjectCardDetails((prev) =>
-            prev.map((card) => (card.id === id ? { ...card, isCompleted: !card.isCompleted } : card))
-        );
+        axios.put(`${import.meta.env.VITE_SER}proj`,{status: !projectCardDetails.find(e=>e._id==id).status},{headers:{auth:sessionStorage.getItem('auth'),edit:id}}).then((t)=>{
+            SetProjectCardDetails((prev) =>
+                prev.map((card) => (card._id === id ? t.data : card))
+            );
+        })
     };
 
     const deleteCard = (id) => {
-        SetProjectCardDetails((prev) => prev.filter((card) => card.id !== id));
+        SetProjectCardDetails((prev) => prev.filter((card) => card._id !== id));
     };
 
     const handleSearch = (e) => setSearchQuery(e.target.value.toLowerCase());
@@ -82,9 +82,9 @@ const AlfProjects = () => {
     ];
 
     const filteredProjects = projectCardDetails.filter((project) => {
-        const matchesSearch = project.projectName.toLowerCase().includes(searchQuery);
-        const matchesSupervisor = selectedSupervisor ? project.projectSupervisor === selectedSupervisor.label : true;
-        const matchesCity = selectedCity ? project.projectCity === selectedCity.label : true;
+        const matchesSearch = project.name.toLowerCase().includes(searchQuery);
+        const matchesSupervisor = selectedSupervisor ? project.projectSupervisor === selectedSupervisor.value : true;
+        const matchesCity = selectedCity ? project.location === selectedCity.label : true;
         return matchesSearch && matchesSupervisor && matchesCity;
     });
 
@@ -152,7 +152,7 @@ const AlfProjects = () => {
                                 ) : (
                                     filteredProjects.map((eachCardDetails) => (
                                         <AlfEachProjectCard
-                                            key={eachCardDetails.id}
+                                            key={eachCardDetails._id}
                                             {...eachCardDetails}
                                             togggleCardStatus={togggleCardStatus}
                                             deleteCard={deleteCard}

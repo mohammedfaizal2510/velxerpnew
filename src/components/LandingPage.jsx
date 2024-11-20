@@ -17,7 +17,6 @@ const LandingPage = () => {
         (async()=>{
         const auth = sessionStorage.getItem('auth');
         axios.get(`${import.meta.env.VITE_SER}uck`,{headers:{auth}}).then(t=>{
-                console.log(t.data)
                 if(t.data){
                     navigate("/projects/dashboard")
                 }

@@ -21,7 +21,6 @@ const AlfEmployeesList = () => {
 
   useEffect(() => {
         axios.get(`${import.meta.env.VITE_SER}emp`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{
-            console.log(t.data)
             setEmployeeDetails(t.data)
         })
   }, []);
@@ -129,9 +128,13 @@ const AlfEmployeesList = () => {
         accessAddEmployee: accessAddEmployee,
         accessEditSalary: accessEditSalary,
       };
+            axios.get(`${import.meta.env.VITE_SER}ava`,{headers:{auth:uname}}).then(()=>{
             axios.post(`${import.meta.env.VITE_SER}emp`,newEmployee,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{
                 t.data == '👍' && setEmployeeDetails([...employeeDetails, newEmployee]);
             })
+            }).catch(()=>{
+                    // user name taken
+                })
     }
     handleClose();
   };
