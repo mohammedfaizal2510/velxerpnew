@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import AlfEachAttendance from './AlfEachAttendance';
 import PinSideNav from './PinSideNav';
 import PinNavihation from './PinNavihation';
-import {useLocation} from 'react-router-dom'
+import {useLocation, useSubmit} from 'react-router-dom'
 import axios from 'axios';
 const AlfAttendance = () => {
     const loc = useLocation();
@@ -18,13 +18,19 @@ const AlfAttendance = () => {
   const [show, setShow] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
-  const employeeDetails = JSON.parse(localStorage.getItem('employeeDetails'));
+  const [availableEmployees,set] = useState([]);
+  // const employeeDetails = JSON.parse(localStorage.getItem('employeeDetails'));
   
   const formattedDate = selectedDate.toLocaleDateString('en-GB'); 
 
   // Load from localStorage on mount
   useEffect(() => {
         axios.get(`${import.meta.env.VITE_SER}emps`,{headers:{auth:loc.state.att}}).then(t=>t.data).then(setUserAttendanceDetails)
+        axios.get(`${import.meta.env.VITE_SER}uck`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>t.data.emplyee.filter(v=>loc.state.att?!loc.state.att.includes(v):true)).then(d=>{
+            
+            console.log(d)
+        axios.get(`${import.meta.env.VITE_SER}emps`,{headers:{auth:d}}).then(t=>t.data.filter(v=>v.designation!='Supervisor')).then(set)
+        })
   }, []);
 
   // Save to localStorage whenever userAttendanceDetails updates
@@ -45,13 +51,9 @@ const AlfAttendance = () => {
   const handleShow = () => setShow(true);
 
   // Filter out already added employees
-  const availableEmployees = employeeDetails.filter(
-    (emp) => !userAttendanceDetails.some((attendee) => attendee.id === emp.id)
-  );
-
   const addEmployee = () => {
     if (selectedEmployee) {
-      const employee = employeeDetails.find(emp => emp.id === selectedEmployee);
+      const employee = employeeDetails.find(emp => emp._id == selectedEmployee);
       if (employee) {
         setUserAttendanceDetails(prevDetails => [
           ...prevDetails,
@@ -119,14 +121,14 @@ const AlfAttendance = () => {
                     <Modal.Title>Add Employee to Attendance</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <Dropdown onSelect={(e) => setSelectedEmployee(Number(e))}>
+                    <Dropdown onSelect={(e) => setSelectedEmployee(e)}>
                       <Dropdown.Toggle variant="success" id="dropdown-basic">
                         Select Employee
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
                         {availableEmployees.map((employee) => (
-                          <Dropdown.Item key={employee.id} eventKey={employee.id}>
-                            {employee.name} (ID: {employee.id})
+                          <Dropdown.Item key={employee._id} eventKey={employee._id}>
+                            {employee.name} (ID: {employee._id})
                           </Dropdown.Item>
                         ))}
                       </Dropdown.Menu>
