@@ -6,5 +6,7 @@ export default ()=>{
   plugins: [react()],
  define: {
     'process.env.VITE_SER': JSON.stringify(process.env.VITE_SER),
-  },   
+  },  server: {
+    host: '0.0.0.0', // Allow connections from other devices
+  },  
 })}
