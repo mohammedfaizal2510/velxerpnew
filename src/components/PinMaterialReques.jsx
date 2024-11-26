@@ -1,31 +1,34 @@
-import React, { useReducer, useRef, useState } from 'react'
+import React, { useEffect, useReducer, useRef, useState } from 'react'
 import { Col, Container, Row, FormControl, Button, Modal } from 'react-bootstrap'
 import PinSideNav from './PinSideNav'
 import PinNavihation from './PinNavihation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faL, faMinus, faPenToSquare, faPlus } from '@fortawesome/free-solid-svg-icons'
+import {useLocation, } from 'react-router-dom'
+import axios from 'axios'
 
 const PinMaterialReques = () => {
   
   const handleSearch = (e) => setSearchQuery(e.target.value.toLowerCase());
 
-  const [availableInventry, setAvailableInventry] = useState(
-    [
-      {inId: 10001, inName: "Cement", quant:10, unit: '', inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402024/velx/cement_pxdann.jpg"},
-      {inId: 10002, inName: "M Sand", quant:0, unit: '', inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402024/velx/black_sand_g5tzmg.jpg"},
-      {inId: 10003, inName: "P Sand", quant:0, unit: '', inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402024/velx/black_sand_g5tzmg.jpg"},
-      {inId: 10004, inName: "River Sand", quant:0, unit: '', inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402024/velx/M_Sand_bhyg8o.jpg"},
-      {inId: 10005, inName: "Gravel", quant:0, unit: '', inImg:""},
-      {inId: 10006, inName: "Slurry",quant:0, unit: '',  inImg:""},
-      {inId: 10007, inName: "Aggregate", quant:0, unit: '', inImg:""},
-      {inId: 10008, inName: "Brick", quant:0, unit: '', inImg:""},
-      {inId: 10009, inName: "Block", quant:0, unit: '', inImg:""},
-      {inId: 10010, inName: "Sheet", quant:0, unit: '', inImg:""},
-      {inId: 10011, inName: "Steel Bar", quant:0, unit: '', inImg:""},
-      {inId: 10012, inName: "Wire", quant:0, unit: '', inImg:"https://res.cloudinary.com/dzysiltcv/image/upload/v1731402575/velx/wire_rqqddx.jpg"},
-    ]
-  );
-
+    const loc = useLocation();
+  const [availableInventry, setAvailableInventry] = useState([
+        // name : site name
+        // stock : [
+        //     name: { type: String, required: true },
+        //     quant: { type: Number, required: true },
+        //     unit: { type: String, required: true },
+        //     ]
+        //     
+        //   or 
+        //   
+        // name: { type: String, required: true },
+        // quant: { type: Number, required: true },
+        // unit: { type: String, required: true },
+    ]);
+    useEffect(()=>{
+        axios.get(`${import.meta.env.VITE_SER}${loc.state?.met ? 'stocs' : 'stoc'}`,{headers:{auth:loc.state?.met || sessionStorage.getItem('auth')}}).then(t=>{setAvailableInventry(t.data)})
+    },[])
   //create material
   const materialNameIpRef = useRef();
   const materialImgIpRef = useRef();
@@ -187,9 +190,8 @@ const handleSearchInventory = () => {
 const handleSearchSite = () => {
   setSearchQuerySite(searchQuerySite.toLowerCase());
 };
-
 const filteredInventory = availableInventry.filter(item =>
-  item.inName.toLowerCase().includes(searchQueryInventory)
+  item.name.toLowerCase().includes(searchQueryInventory)
 );
 
 const filteredSiteMaterials = materialInSite.filter(item =>

@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import AlfEachAttendance from './AlfEachAttendance';
 import PinSideNav from './PinSideNav';
 import PinNavihation from './PinNavihation';
-import {useLocation, useSubmit} from 'react-router-dom'
+import {useLocation, } from 'react-router-dom'
 import axios from 'axios';
 const AlfAttendance = () => {
     const loc = useLocation();
