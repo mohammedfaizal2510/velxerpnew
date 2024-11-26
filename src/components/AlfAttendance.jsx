@@ -27,8 +27,6 @@ const AlfAttendance = () => {
   useEffect(() => {
         axios.get(`${import.meta.env.VITE_SER}emps`,{headers:{auth:loc.state.att}}).then(t=>t.data).then(setUserAttendanceDetails)
         axios.get(`${import.meta.env.VITE_SER}uck`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>t.data.emplyee.filter(v=>loc.state.att?!loc.state.att.includes(v):true)).then(d=>{
-            
-            console.log(d)
         axios.get(`${import.meta.env.VITE_SER}emps`,{headers:{auth:d}}).then(t=>t.data.filter(v=>v.designation!='Supervisor')).then(set)
         })
   }, []);
