@@ -4,7 +4,7 @@ import { Button, Dropdown, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faIdCardClip } from '@fortawesome/free-solid-svg-icons';
 
-const AlfEachAttendance = ({ id, name, salaryPerShift, isPresent, shiftWorked, totalPay, salaryDate, setUserAttendanceDetails }) => {
+const AlfEachAttendance = ({ _id, name, salaryPerShift, isPresent, shiftWorked, totalPay, salaryDate, setUserAttendanceDetails }) => {
   // const [isDisabled, setIsDisabled] = useState(isPresent);
   const [isDisabled, setIsDisabled] = useState(false);
   const [show, setShow] = useState(false);
@@ -23,7 +23,7 @@ const AlfEachAttendance = ({ id, name, salaryPerShift, isPresent, shiftWorked, t
 
     setUserAttendanceDetails(prevDetails =>
       prevDetails.map(employee =>
-        employee.id === id
+        employee._id === _id
           ? { ...employee, isPresent: true, totalPay: updatedTotalPay }
           : employee
       )
