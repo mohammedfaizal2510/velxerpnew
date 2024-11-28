@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/AlfProjects.css";
 import { faPersonDigging } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 
@@ -18,6 +18,13 @@ const AlfEachProjectCard = ({
   emplyee,
 }) => {
   const navigate = useNavigate();
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
+
   return (
     <>
       <div className="col-12 col-md-6 mt-3">
@@ -36,7 +43,7 @@ const AlfEachProjectCard = ({
           <p>Client: {owner}</p>
           <hr />
           <div>
-            <Button onClick={() => deleteCard(_id)}>Remove</Button>
+            <Button onClick={handleShow}>Remove</Button>
             <Button className="ml-3" onClick={() => togggleCardStatus(_id)}>
               {!status ? "Mark UnCompleted" : "Mark Completed"}
             </Button>
@@ -58,6 +65,20 @@ const AlfEachProjectCard = ({
               {!status ? "Completed" : "OnGoing"}
             </p>
           </div>
+
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header>
+              <Modal.Title>Are You Sure to Delete a Project</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>Cancel</Button>
+              <Button variant="danger" onClick={() => deleteCard(_id)}>Delete Project</Button>
+
+            </Modal.Footer>
+          </Modal>
         </div>
       </div>
     </>
