@@ -78,6 +78,7 @@ const AlfAttendance = () => {
 
   // Filter out already added employees
   const addEmployee = () => {
+    console.log(selectedEmployee);
     if (selectedEmployee) {
       const employee = employeeDetails.find(
         (emp) => emp._id == selectedEmployee
@@ -100,6 +101,11 @@ const AlfAttendance = () => {
     }
   };
 
+  const [selectedDesignation, setSelectedDesignation] = useState('');
+  const uniqueDesignations = [...new Set(userAttendanceDetails.map(emp => emp.designation))];
+
+
+
   return (
     <>
       <Container fluid>
@@ -112,8 +118,8 @@ const AlfAttendance = () => {
             <div className="container-fluid mt-5">
               <div className="row">
                 <div className="col-12 text-center">
-                  <h1 className="mb-3">Mark Your Attendance Here</h1>
-                  <h3 className="d-inline pr-3">Select The Date :</h3>
+                  <h1 className="mb-3">Attendance</h1>
+                  {/* <h3 className="d-inline pr-3">Date :</h3> */}
                   <div className="date-picker-container d-inline mb-3">
                     <DatePicker
                       selected={selectedDate}
@@ -121,6 +127,7 @@ const AlfAttendance = () => {
                       dateFormat="dd-MM-yyyy"
                       className="date-picker"
                       maxDate={new Date()}
+                      disabled={true}
                     />
                   </div>
                 </div>
@@ -138,6 +145,22 @@ const AlfAttendance = () => {
                   <Button variant="primary" onClick={handleShow}>
                     Add Employee
                   </Button>
+
+                  <Dropdown>
+                    <Dropdown.Toggle variant='primary'>
+                      {selectedDesignation || 'Filter by Designation'}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={() => setSelectedDesignation('')}>All</Dropdown.Item>
+                      {uniqueDesignations.map((designation, index) => (
+                        <Dropdown.Item key={index} onClick={() => setSelectedDesignation(designation)}>
+                          {designation}
+                        </Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+
+                  
                 </div>
 
                 {handleSearch().length === 0 ? (

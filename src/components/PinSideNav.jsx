@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faListCheck, faScrewdriverWrench, faUsers, faSignOutAlt, faClipboardUser, faHand, faCircleArrowLeft, faCircleLeft, faMoneyBillTransfer } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import '../css/TrySideNav.css';
+import axios from "axios";
 
 const PinSideNav = ({ selectedKey }) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -28,6 +29,25 @@ const PinSideNav = ({ selectedKey }) => {
     salary:"salary",
     // logout: "Logout",
   }; 
+
+
+  const [sd, setsd] = useState([]);
+  const [srd, rsd] = useState([]);
+  useEffect(() => {
+    const gd = async () => {
+      axios
+        .get(`${import.meta.env.VITE_SER}siem`, {
+          headers: {
+            siteid: await sessionStorage.getItem("site"),
+          },
+        })
+        .then((res) => {
+          setsd(res.data.emplyee);
+          rsd(res.data.stock);
+        });
+    };
+    gd();
+  }, []);
   return (
     <>
         <div style={{ position: 'fixed', top: 0, left: 0, height: '100vh', zIndex: 1000 }}>
@@ -36,7 +56,9 @@ const PinSideNav = ({ selectedKey }) => {
         <SideNav.Nav defaultSelected={selectedKey}>
           <NavItem
             eventKey="attendance"
-            onClick={() => handleNavigate('/projects/dashboard/attendance')}
+            onClick={() => navigate('/projects/dashboard/attendance',{
+              state: { att: sd },
+            })}
             onMouseEnter={() => setHoveredItem("attendance")}
             onMouseLeave={() => setHoveredItem(null)}
           >
@@ -49,7 +71,9 @@ const PinSideNav = ({ selectedKey }) => {
 
           <NavItem
             eventKey="requestmaterial"
-            onClick={() => handleNavigate('/projects/dashboard/resuestMaterial')}
+            onClick={() => navigate('/projects/dashboard/resuestMaterial', {
+              state: { met: srd },
+            })}
             onMouseEnter={() => setHoveredItem("requestmaterial")}
             onMouseLeave={() => setHoveredItem(null)}
           >
@@ -62,7 +86,7 @@ const PinSideNav = ({ selectedKey }) => {
 
           <NavItem
             eventKey="salary"
-            onClick={() => handleNavigate('/projects/dashboard/salary')}
+            onClick={() => navigate('/projects/dashboard/salary', )}
             onMouseEnter={() => setHoveredItem("salary")}
             onMouseLeave={() => setHoveredItem(null)}
           >

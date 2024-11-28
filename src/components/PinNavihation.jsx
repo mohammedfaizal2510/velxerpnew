@@ -25,7 +25,7 @@ const PinNavihation = () => {
     <>
       <div className="continer-fluid">
         <div className="row text-center mt-5">
-          <div className="col-6">
+          <div className="col-4">
             <Button
               className="w-75"
               onClick={() =>
@@ -38,7 +38,7 @@ const PinNavihation = () => {
             </Button>
           </div>
 
-          <div className="col-6">
+          <div className="col-4">
             <Button
               className="w-75"
               onClick={() =>
@@ -48,6 +48,17 @@ const PinNavihation = () => {
               }
             >
               Materials
+            </Button>
+          </div>
+
+          <div className="col-4">
+            <Button
+              className="w-75"
+              onClick={() => 
+                navigate("/projects/dashboard/salary")
+              }
+            >
+              Salary
             </Button>
           </div>
         </div>
