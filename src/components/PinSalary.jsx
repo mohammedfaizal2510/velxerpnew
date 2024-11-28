@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import PinSideNav from './PinSideNav'
+import PinNavihation from './PinNavihation';
 
 const PinSalary = () => {
 
@@ -14,6 +15,7 @@ const PinSalary = () => {
                 <PinSideNav selectedKey = "salary" />
             </Col>
             <Col xs={11}>
+            <PinNavihation/>
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12 text-center">
