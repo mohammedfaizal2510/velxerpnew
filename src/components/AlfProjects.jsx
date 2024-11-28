@@ -112,21 +112,21 @@ const AlfProjects = () => {
                                     <h1>Projects</h1>
                                 </div>
 
-                                <div className="col-9 search-box" style={{ display: "flex" }}>
+                                <div className="col-9 search-box mt-4" style={{ display: "flex" }}>
                                     <FormControl type="text" placeholder="Search by Project Name" onChange={handleSearch} />
                                 </div>
 
-                                <div className='col-1'>
+                                <div className='col-1 mt-4'>
                                     <Button onClick={handleSearch}>Search</Button>
                                 </div>
 
-                                <div className='col-12 col-lg-2'>
+                                <div className='col-12 col-lg-2 mt-4'>
                                     <Button variant="primary" onClick={handleShow}>
                                         <FontAwesomeIcon icon={faPlus} /> Create New Project
                                     </Button>
                                 </div>
 
-                                <div className="col-6">
+                                <div className="col-6 mt-4">
                                     <Select
                                         options={superVisorNames}
                                         value={selectedSupervisor}
@@ -136,7 +136,7 @@ const AlfProjects = () => {
                                     />
                                     {/* <Button variant="secondary" onClick={clearSupervisorFilter}>Clear Filter</Button> */}
                                 </div>
-                                <div className="col-6">
+                                <div className="col-6 mt-4">
                                     <Select
                                         options={cities}
                                         value={selectedCity}
