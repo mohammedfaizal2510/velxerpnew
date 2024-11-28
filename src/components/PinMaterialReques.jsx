@@ -61,7 +61,7 @@ const PinMaterialReques = () => {
         item.inId === editingMaterial.inId
           ? {
               ...item,
-              inName: ipMaterialName,
+              name: ipMaterialName,
               quant: ipMaterialQuant,
               unit: ipMaterialUnit,
               inImg: ipMaterialImg,
@@ -72,11 +72,8 @@ const PinMaterialReques = () => {
     }
     else {
       // Add new material
-      const newId =
-        availableInventry.length > 0 ? Math.max(...availableInventry.map((inv) => inv.inId)) + 1 : 10001;
       const newInventry = {
-        inId: newId,
-        inName: ipMaterialName,
+        name: ipMaterialName,
         quant: ipMaterialQuant,
         unit: ipMaterialUnit,
         inImg: ipMaterialImg,
@@ -116,7 +113,7 @@ const PinMaterialReques = () => {
       isApproved: false,
       isRejected: false,
       materilId: selectedMaterial.inId,
-      materialName: selectedMaterial.inName,
+      materialName: selectedMaterial.name,
       quantityToRequest: ipReqMaterialQuantity
     };
 
@@ -240,7 +237,7 @@ const filteredSiteMaterials = materialInSite.filter(item =>
                         style={{ borderRadius: "50%" }}
                         alt="Material"
                       />
-                      <h3>{eachInventry.inName}</h3>
+                      <h3>{eachInventry.name}</h3>
                       {eachInventry.quant === 0 ? (
                         <>
                           <p className='text-danger'>Out Of Stock</p>
@@ -354,7 +351,7 @@ const filteredSiteMaterials = materialInSite.filter(item =>
               ref={materialNameIpRef}
               type="text"
               placeholder="Material Name"
-              defaultValue={editingMaterial?.inName || ''}
+              defaultValue={editingMaterial?.name || ''}
               className="w-100 mb-4"
             />
 
