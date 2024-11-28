@@ -86,7 +86,6 @@ const AlfAttendance = () => {
         setUserAttendanceDetails((prevDetails) => [
           ...prevDetails,
           {
-            id: employee.id,
             name: employee.name,
             salaryPerShift: employee.salaryPerShift,
             isPresent: false,
