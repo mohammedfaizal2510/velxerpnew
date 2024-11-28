@@ -78,24 +78,19 @@ const AlfAttendance = () => {
 
   // Filter out already added employees
   const addEmployee = () => {
-    console.log(selectedEmployee);
     if (selectedEmployee) {
-      const employee = employeeDetails.find(
+      const employee = availableEmployees.find(
         (emp) => emp._id == selectedEmployee
       );
+    console.log(employee._id);
       if (employee) {
+            axios.put(`${import.meta.env.VITE_SER}proj`,{'$push':{emplyee:employee._id}},{headers:{edit:sessionStorage.getItem('site')}}).then(t=>{
         setUserAttendanceDetails((prevDetails) => [
           ...prevDetails,
-          {
-            id: employee.id,
-            name: employee.name,
-            salaryPerShift: employee.salaryPerShift,
-            isPresent: false,
-            shiftWorked: 0,
-            totalPay: 0,
-            salaryDate: formattedDate,
-          },
+          t.data,
         ]);
+                    set(p=>p.filter(v=>v._id!=employee._id))
+            })
       }
       setShow(false);
       setSelectedEmployee(null);
