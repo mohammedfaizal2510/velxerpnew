@@ -14,7 +14,7 @@ import axios from 'axios';
 const AlfProjects = () => {
     const [superVisorNames,set] = useState([]);
     useEffect(()=>{
-            axios.get(`${import.meta.env.VITE_SER}sup`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>t.data.map(v=>({value:v._id ?? v.id,label:v.name}))).then(set)
+            sessionStorage.getItem("admin") || axios.get(`${import.meta.env.VITE_SER}sup`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>t.data.map(v=>({value:v._id ?? v.id,label:v.name}))).then(set)
             axios.get(`${import.meta.env.VITE_SER}proj`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{SetProjectCardDetails(t.data)})
     },[])
     const [show, setShow] = useState(false);
@@ -51,7 +51,7 @@ const AlfProjects = () => {
             owner: ipClientName,
         };
         axios.post(`${import.meta.env.VITE_SER}proj`,newProjectCard,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{
-            t=="👍" && SetProjectCardDetails((prev) => [newProjectCard, ...prev]);
+            SetProjectCardDetails((prev) => [t.data, ...prev]);
         })
 
         projectNameIpRef.current.value = "";
@@ -70,7 +70,9 @@ const AlfProjects = () => {
     };
 
     const deleteCard = (id) => {
-        SetProjectCardDetails((prev) => prev.filter((card) => card._id !== id));
+        axios.delete(`${import.meta.env.VITE_SER}proj`,{headers:{edit:id,auth:sessionStorage.getItem("auth")}}).then(t=>{
+        t.data == "👍" &&SetProjectCardDetails((prev) => prev.filter((card) => card._id !== id));
+        })
     };
 
     const handleSearch = (e) => setSearchQuery(e.target.value.toLowerCase());
@@ -78,7 +80,7 @@ const AlfProjects = () => {
     const clearCityFilter = () => setSelectedCity(null);
 
     const cities = [
-        ...new Set(projectCardDetails.map((project) => ({ label: project.projectCity, value: project.projectCity })))
+        ...new Set(projectCardDetails.map((project) => ({ label: project.location, value: project.location })))
     ];
 
     const filteredProjects = projectCardDetails.filter((project) => {
@@ -119,12 +121,13 @@ const AlfProjects = () => {
                                 <div className='col-1 mt-4'>
                                     <Button onClick={handleSearch}>Search</Button>
                                 </div>
-
+                                { sessionStorage.getItem("admin") ||
                                 <div className='col-12 col-lg-2 mt-4'>
                                     <Button variant="primary" onClick={handleShow}>
                                         <FontAwesomeIcon icon={faPlus} /> Create New Project
                                     </Button>
-                                </div>
+                                </div>}
+
 
                                 <div className="col-6 mt-4">
                                     <Select

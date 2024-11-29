@@ -14,6 +14,7 @@ const LogIn = () => {
             console.log(r.data);
             if (r.data) {
                 sessionStorage.setItem('auth',r.data._id)
+                sessionStorage.setItem('admin',r.data._id)
                 navigate("/projects/dashboard")
             }else{
                 // user not create

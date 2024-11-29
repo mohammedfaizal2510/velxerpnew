@@ -16,7 +16,8 @@ const LandingPage = () => {
     useEffect(()=>{
         (async()=>{
         axios.get(`${import.meta.env.VITE_SER}uck`,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{
-                console.log(t.data)
+                console.log(t.data.admin)
+                sessionStorage.setItem('admin',t.data.admin ?? '')
                 if(t.data){
                     navigate("/projects/dashboard")
                 }

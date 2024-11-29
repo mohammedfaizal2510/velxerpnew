@@ -82,12 +82,11 @@ const AlfAttendance = () => {
       const employee = availableEmployees.find(
         (emp) => emp._id == selectedEmployee
       );
-    console.log(employee._id);
       if (employee) {
             axios.put(`${import.meta.env.VITE_SER}proj`,{'$push':{emplyee:employee._id}},{headers:{edit:sessionStorage.getItem('site')}}).then(t=>{
         setUserAttendanceDetails((prevDetails) => [
           ...prevDetails,
-          t.data,
+          employee,
         ]);
                     set(p=>p.filter(v=>v._id!=employee._id))
             })

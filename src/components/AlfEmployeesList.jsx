@@ -258,7 +258,7 @@ const AlfEmployeesList = () => {
                       empDesignation={employee.designation}
                       empSalaryPerShift={employee.salaryPerShift}
                       empPhNo={employee.phoneNumber}
-                      totalSalary = {employee.totalSalary}
+                      totalpay = {employee.totalpay}
                     />
                     <td>
                       <Button className='mr-2' onClick={() => handlePayModalShow(employee)}>pay</Button>

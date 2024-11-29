@@ -3,10 +3,9 @@ import React, { useState } from 'react';
 import { Button, Dropdown, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faIdCardClip } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
-const AlfEachAttendance = ({ _id, name, salaryPerShift, isPresent, shiftWorked, totalPay, salaryDate, setUserAttendanceDetails }) => {
-  // const [isDisabled, setIsDisabled] = useState(isPresent);
-  const [isDisabled, setIsDisabled] = useState(false);
+const AlfEachAttendance = ({ _id, name, salaryPerShift, isPresent, totalpay, setUserAttendanceDetails }) => {
   const [show, setShow] = useState(false);
   const [newSalary, setNewSalary] = useState(salaryPerShift);
   const [selectedShift, setSelectedShift] = useState(0);
@@ -18,36 +17,28 @@ const AlfEachAttendance = ({ _id, name, salaryPerShift, isPresent, shiftWorked, 
     setSelectedShift(shiftValue);
   };
 
-  const handleMarkPresent = () => {
-    const updatedTotalPay = newSalary * selectedShift;
-
-    setUserAttendanceDetails(prevDetails =>
-      prevDetails.map(employee =>
-        employee._id === _id
-          ? { ...employee, isPresent: true, totalPay: updatedTotalPay }
-          : employee
-      )
-    );
-
-    // Update the employee's totalSalary in employeeDetails in localStorage
-    const employeeDetails = JSON.parse(localStorage.getItem('employeeDetails'));
-    const updatedEmployeeDetails = employeeDetails.map(employee =>
-      employee.id === id
-        ? { ...employee, totalSalary: (employee.totalSalary || 0) + updatedTotalPay }
-        : employee
-    );
-    localStorage.setItem('employeeDetails', JSON.stringify(updatedEmployeeDetails));
-
-    setIsDisabled(true);
-  };
+    const handleMarkPresent = () => {
+        const updatedTotalPay = (newSalary * selectedShift) + totalpay;
+        axios.put(`${import.meta.env.VITE_SER}emp`,{ isPresent: true, totalpay: updatedTotalPay },{headers:{edit:_id}}).then(y=>{
+            setUserAttendanceDetails(prevDetails =>
+                prevDetails.map(employee =>
+                    employee._id === _id
+                        ? y.data
+                        : employee
+                )
+            );
+        })
+    };
 
   const handleSalaryUpdate = () => {
+        axios.put(`${import.meta.env.VITE_SER}emp`,{salaryPerShift: newSalary},{headers:{edit:_id}}).then(()=>{
     setUserAttendanceDetails(prevDetails =>
       prevDetails.map(employee =>
-        employee.id === id ? { ...employee, salaryPerShift: newSalary } : employee
+        employee._id === _id ? { ...employee, salaryPerShift: newSalary } : employee
       )
     );
     setShow(false);
+        })
   };
 
   return (
@@ -58,7 +49,7 @@ const AlfEachAttendance = ({ _id, name, salaryPerShift, isPresent, shiftWorked, 
           <div>
             <Dropdown className='d-inline m-2' onSelect={handleShiftSelect}>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Shift
+                {selectedShift? selectedShift + " shift" : 'Shift'}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item eventKey={0.5}>0.5 Shift</Dropdown.Item>
@@ -68,11 +59,11 @@ const AlfEachAttendance = ({ _id, name, salaryPerShift, isPresent, shiftWorked, 
               </Dropdown.Menu>
             </Dropdown>
 
-            <Button className='btn btn-success m-2' onClick={handleMarkPresent} disabled={isDisabled}>
-              {isDisabled ? "Marked" : "Present"}
+            <Button className='btn btn-success m-2' onClick={handleMarkPresent} disabled={isPresent}>
+              {isPresent ? "Marked" : "Present"}
             </Button>
             <Button className='m-2' onClick={handleShow}>Edit Salary</Button>
-            <h4 className='text-success'>Salary Added: ₹{totalPay}</h4>
+            <h4 className='text-success'>Salary Added: ₹{totalpay}</h4>
           </div>
         </div>
       </div>
