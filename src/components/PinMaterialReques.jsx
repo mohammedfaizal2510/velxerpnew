@@ -61,7 +61,7 @@ const PinMaterialReques = () => {
                 quant: ipMaterialQuant,
                 unit: ipMaterialUnit,
                 inImg: ipMaterialImg,
-            },{headers:{edit:editingMaterial._id,auth:sessionStorage.getItem('auth')}}).then(()=>{
+            },{headers:{edit:editingMaterial._id,auth:sessionStorage.getItem('auth'),admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth")}}).then(()=>{
                     const updatedInventory = availableInventry.map((item) =>
                         item._id === editingMaterial._id
                             ? {
@@ -84,7 +84,7 @@ const PinMaterialReques = () => {
                 unit: ipMaterialUnit,
                 inImg: ipMaterialImg,
             };
-            axios.post(`${import.meta.env.VITE_SER}stoc`,newInventry,{headers:{edit:sessionStorage.getItem("site"),auth:sessionStorage.getItem('auth')}}).then(t=>{
+            axios.post(`${import.meta.env.VITE_SER}stoc`,newInventry,{headers:{admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth"),edit:sessionStorage.getItem("site"),auth:sessionStorage.getItem('auth')}}).then(t=>{
                 console.log(t.data)
                 setAvailableInventry([...availableInventry, newInventry]);
             })

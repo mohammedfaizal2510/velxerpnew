@@ -19,7 +19,7 @@ const AlfEachAttendance = ({ _id, name, salaryPerShift, isPresent, totalpay, set
 
     const handleMarkPresent = () => {
         const updatedTotalPay = (newSalary * selectedShift) + totalpay;
-        axios.put(`${import.meta.env.VITE_SER}emp`,{ isPresent: true, totalpay: updatedTotalPay },{headers:{edit:_id}}).then(y=>{
+        axios.put(`${import.meta.env.VITE_SER}emp`,{ isPresent: true, totalpay: updatedTotalPay },{headers:{admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth"),edit:_id,auth:sessionStorage.getItem('auth')}}).then(y=>{
             setUserAttendanceDetails(prevDetails =>
                 prevDetails.map(employee =>
                     employee._id === _id
@@ -31,7 +31,7 @@ const AlfEachAttendance = ({ _id, name, salaryPerShift, isPresent, totalpay, set
     };
 
   const handleSalaryUpdate = () => {
-        axios.put(`${import.meta.env.VITE_SER}emp`,{salaryPerShift: newSalary},{headers:{edit:_id}}).then(()=>{
+        axios.put(`${import.meta.env.VITE_SER}emp`,{salaryPerShift: newSalary},{headers:{admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth"),edit:_id,auth:sessionStorage.getItem('auth')}}).then(()=>{
     setUserAttendanceDetails(prevDetails =>
       prevDetails.map(employee =>
         employee._id === _id ? { ...employee, salaryPerShift: newSalary } : employee

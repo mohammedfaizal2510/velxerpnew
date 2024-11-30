@@ -111,7 +111,7 @@ const AlfEmployeesList = () => {
           pass: newPassword,
           accessPrevAttendance,
           accessAddEmployee,uname,
-          accessEditSalary},{headers:{auth:sessionStorage.getItem('auth'),edit:editingEmployeeId}}).then(t=>{
+          accessEditSalary},{headers:{admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth"),auth:sessionStorage.getItem('auth'),edit:editingEmployeeId}}).then(t=>{
                     setEmployeeDetails(p=>p.map(e=>e._id==editingEmployeeId?t.data:e))
                 })
     }
@@ -129,7 +129,7 @@ const AlfEmployeesList = () => {
         accessEditSalary: accessEditSalary,
       };
             axios.get(`${import.meta.env.VITE_SER}ava`,{headers:{auth:uname}}).then(()=>{
-            axios.post(`${import.meta.env.VITE_SER}emp`,newEmployee,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{
+            axios.post(`${import.meta.env.VITE_SER}emp`,newEmployee,{headers:{admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth"),auth:sessionStorage.getItem('auth')}}).then(t=>{
                 t.data == '👍' && setEmployeeDetails([...employeeDetails, newEmployee]);
             })
             }).catch(()=>{

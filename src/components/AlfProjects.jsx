@@ -50,7 +50,7 @@ const AlfProjects = () => {
             projectSupervisor: selectedSupervisor,
             owner: ipClientName,
         };
-        axios.post(`${import.meta.env.VITE_SER}proj`,newProjectCard,{headers:{auth:sessionStorage.getItem('auth')}}).then(t=>{
+        axios.post(`${import.meta.env.VITE_SER}proj`,newProjectCard,{headers:{admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth"),auth:sessionStorage.getItem('auth')}}).then(t=>{
             SetProjectCardDetails((prev) => [t.data, ...prev]);
         })
 
@@ -62,7 +62,7 @@ const AlfProjects = () => {
     };
 
     const togggleCardStatus = (id) => {
-        axios.put(`${import.meta.env.VITE_SER}proj`,{status: !projectCardDetails.find(e=>e._id==id).status},{headers:{auth:sessionStorage.getItem('auth'),edit:id}}).then((t)=>{
+        axios.put(`${import.meta.env.VITE_SER}proj`,{status: !projectCardDetails.find(e=>e._id==id).status},{headers:{admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth"),auth:sessionStorage.getItem('auth'),edit:id}}).then((t)=>{
             SetProjectCardDetails((prev) =>
                 prev.map((card) => (card._id === id ? t.data : card))
             );
@@ -70,7 +70,7 @@ const AlfProjects = () => {
     };
 
     const deleteCard = (id) => {
-        axios.delete(`${import.meta.env.VITE_SER}proj`,{headers:{edit:id,auth:sessionStorage.getItem("auth")}}).then(t=>{
+        axios.delete(`${import.meta.env.VITE_SER}proj`,{headers:{admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth"),edit:id,auth:sessionStorage.getItem("auth")}}).then(t=>{
         t.data == "👍" &&SetProjectCardDetails((prev) => prev.filter((card) => card._id !== id));
         })
     };

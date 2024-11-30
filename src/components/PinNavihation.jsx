@@ -11,7 +11,7 @@ const PinNavihation = () => {
       await axios
         .get(`${import.meta.env.VITE_SER}siem`, {
           headers: {
-            siteid: await sessionStorage.getItem("site"),
+            siteid: sessionStorage.getItem("site"),
           },
         })
         .then((res) => {

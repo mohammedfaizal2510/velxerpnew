@@ -83,7 +83,7 @@ const AlfAttendance = () => {
         (emp) => emp._id == selectedEmployee
       );
       if (employee) {
-            axios.put(`${import.meta.env.VITE_SER}proj`,{'$push':{emplyee:employee._id}},{headers:{edit:sessionStorage.getItem('site')}}).then(t=>{
+            axios.put(`${import.meta.env.VITE_SER}proj`,{'$push':{emplyee:employee._id}},{headers:{admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth"),edit:sessionStorage.getItem('site'),auth:sessionStorage.getItem('auth')}}).then(_t=>{
         setUserAttendanceDetails((prevDetails) => [
           ...prevDetails,
           employee,
