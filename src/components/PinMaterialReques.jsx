@@ -27,7 +27,8 @@ const PinMaterialReques = () => {
         // unit: { type: String, required: true },
     ]);
     useEffect(()=>{
-        axios.get(`${import.meta.env.VITE_SER}${loc.state?.met ? 'stocs' : 'stoc'}`,{headers:{auth:loc.state?.met || sessionStorage.getItem('auth')}}).then(t=>{setAvailableInventry(t.data)})
+        axios.get(`${import.meta.env.VITE_SER}${'stocs'}`,{headers:{auth:loc.state?.met || sessionStorage.getItem('auth'),edit:sessionStorage.getItem('site')}}).then(t=>{setMaterialInSite(t.data)})
+        axios.get(`${import.meta.env.VITE_SER}${'stoc'}`,{headers:{auth:sessionStorage.getItem('admin') || sessionStorage.getItem('auth')}}).then(t=>{console.log(t.data);return t}).then(t=>{setAvailableInventry(t.data)})
     },[])
     //create material
     const materialNameIpRef = useRef();
@@ -137,7 +138,6 @@ const PinMaterialReques = () => {
 
     //material in site
     const [materialInSite, setMaterialInSite] = useState([
-        {_id: Date.now(), name: "Cement", quantity:10, unitStr: "mootai"},
     ]);
     const [siteModalShow, setSiteModalShow] = useState(false);
     const materialInSiteModalClose = () => setSiteModalShow(false);
