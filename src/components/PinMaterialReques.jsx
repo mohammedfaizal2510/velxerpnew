@@ -12,23 +12,11 @@ const PinMaterialReques = () => {
     const handleSearch = (e) => setSearchQuery(e.target.value.toLowerCase());
 
     const loc = useLocation();
-    const [availableInventry, setAvailableInventry] = useState([
-        // name : site name
-        // stock : [
-        //     name: { type: String, required: true },
-        //     quant: { type: Number, required: true },
-        //     unit: { type: String, required: true },
-        //     ]
-        //     
-        //   or 
-        //   
-        // name: { type: String, required: true },
-        // quant: { type: Number, required: true },
-        // unit: { type: String, required: true },
-    ]);
+    const [availableInventry, setAvailableInventry] = useState([]);
     useEffect(()=>{
-        axios.get(`${import.meta.env.VITE_SER}${'stocs'}`,{headers:{auth:loc.state?.met || sessionStorage.getItem('auth'),edit:sessionStorage.getItem('site')}}).then(t=>{setMaterialInSite(t.data)})
-        axios.get(`${import.meta.env.VITE_SER}${'stoc'}`,{headers:{auth:sessionStorage.getItem('admin') || sessionStorage.getItem('auth')}}).then(t=>{console.log(t.data);return t}).then(t=>{setAvailableInventry(t.data)})
+        axios.get(`${import.meta.env.VITE_SER}stocs`,{headers:{auth:loc.state?.met || sessionStorage.getItem('auth'),edit:sessionStorage.getItem('site')}}).then(t=>{setMaterialInSite(t.data)})
+        axios.get(`${import.meta.env.VITE_SER}stoc`,{headers:{auth:sessionStorage.getItem('admin') || sessionStorage.getItem('auth')}}).then(t=>{setAvailableInventry(t.data); console.log(t.data); return t.data.filter(i=>!i.ship?false:i.ship[sessionStorage.getItem('site')])}).then(m=>m.map(i=>({...i,quant:i.ship[sessionStorage.getItem('site')]}))).then(setMaterialRequest)
+
     },[])
     //create material
     const materialNameIpRef = useRef();
@@ -117,17 +105,15 @@ const PinMaterialReques = () => {
         if (!ipReqMaterialQuantity || !selectedMaterial) {
             return;
         }
+        axios.post(`${import.meta.env.VITE_SER}req/mat`,{site:sessionStorage.getItem('site'),stock:selectedMaterial._id,quant:ipReqMaterialQuantity},{headers:{auth:sessionStorage.getItem('auth'),admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth")}}).then(()=>{
+        setMaterialRequest([...materialRequest, newRequest]);
+        })
 
         const newRequest = {
-            requestId: Date.now(),
-            isApproved: false,
-            isRejected: false,
-            materilId: selectedMaterial.inId,
-            materialName: selectedMaterial.name,
-            quantityToRequest: ipReqMaterialQuantity
+            name: selectedMaterial.name,
+            quant: ipReqMaterialQuantity
         };
 
-        setMaterialRequest([...materialRequest, newRequest]);
         reqMaterialQuantityIpRef.current.value = "";
         setRequestModalShow(false);
     };
@@ -274,10 +260,10 @@ const PinMaterialReques = () => {
                                     <p>No Requests Found</p>
                                 ) : (
                                         materialRequest.map((eachRequest) => (
-                                            <div key={eachRequest.requestId} className="col-12 col-sm-6 col-md-4 col-lg-3">
+                                            <div key={eachRequest._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
                                                 <div className="inventry-catrd text-center p-3">
-                                                    <h3>{eachRequest.materialName}</h3>
-                                                    <p>Quantity Requested: {eachRequest.quantityToRequest}</p>
+                                                    <h3>{eachRequest.name}</h3>
+                                                    <p>Quantity Requested: {eachRequest.quant}</p>
                                                     {eachRequest.isRejected ? (
                                                         <p className='text-danger'>Rejected</p>
                                                     ) : (
@@ -331,12 +317,12 @@ const PinMaterialReques = () => {
                                                         <Button className='mr-3 btn btn-danger' onClick={() => handleDecrement(eachMaterial)}>
                                                             < FontAwesomeIcon icon={faMinus } />
                                                         </Button>
-                                                        <h3>{eachMaterial.quantity}</h3>
+                                                        <h3>{eachMaterial.quant}</h3>
                                                         <Button className='ml-3 btn btn-success' onClick={() => handleIncrement(eachMaterial)}>
                                                             <FontAwesomeIcon icon={faPlus} />
                                                         </Button>
                                                     </div>
-                                                    <p>Unit : {eachMaterial.unitStr}</p>
+                                                    <p>Unit : {eachMaterial.unit}</p>
                                                 </div>
                                             </div>
                                         ))

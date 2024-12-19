@@ -18,6 +18,7 @@ const PinSideNav = ({ selectedKey }) => {
 
   const handleLogout = () => {
     console.log("Logging out...");
+        
     navigate('/log-in');
   };
 
