@@ -4,33 +4,16 @@ import '../css/AlfProjects.css'
 import { Button, Col, Container, Row } from "react-bootstrap";
 import AlfCardInbox from './AlfCardInbox';
 import TrySideNav from './TrySideNav';
+import axios from 'axios';
 // import HoverButton from './HoverButton';
 
 const AlfInbox = () => {
+    useEffect(()=>{
+        axios.get(`${import.meta.env.VITE_SER}req`,{headers:{admin:sessionStorage.getItem('auth')}}).then(t=>{set(t.data)})
+    },[])
     
-    const requestDataset = [
-        {
-            id: 1,
-            subject: 'Attendance Request',
-            from: 'Mohammed',
-            role: 'Supervisor',
-            site: 'Site Name',
-            date: '12/05/2021',
-            isAccepted: false,
-        },
-        {
-            id: 2,
-            subject: 'Add Employee Request',
-            from: 'Faizal',
-            role: 'Supervisor',
-            site: 'Site Name',
-            date: '12/05/2021',
-            isAccepted: false,
-        },
-        
-
-    ]
-  return (
+    const [requestDataset, set]=useState([])
+    return (
     <>
         {/* <AlfNavbar/> */}
         
@@ -54,8 +37,8 @@ const AlfInbox = () => {
                                 requestDataset.map((eachRequest, index) => (
                                     <AlfCardInbox
                                         key={index}
-                                        id={eachRequest.id}
-                                        subject={eachRequest.subject}
+                                        id={eachRequest._id}
+                                        subject={eachRequest.for}
                                         from={eachRequest.from}
                                         role={eachRequest.role}
                                         site={eachRequest.site}
