@@ -78,7 +78,7 @@
   box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.5), 
                10px 10px 20px rgba(94, 104, 121, 0.3);
   cursor: pointer; /* Pointer cursor for interactivity */
-  transition: box-shadow 0.3s ease, transform 0.2s ease; /* Smooth interactions */
+  transition: box-shadow 0s ease, transform 0.2s ease; /* Smooth interactions */
   color:black ;
 }
 
@@ -87,7 +87,12 @@
               10px 10px 30px rgba(94, 104, 121, 0.5);
   transform: scale(1.1); /* Slight zoom effect on hover */
 }
-
+.search-button:active{
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+}
 /* 
 .alfprojects-container {
     display: flex;
@@ -179,10 +184,14 @@
   border: none;
   border-radius: 320px; /* Rounded corners */
   background-color: #dde1e7; /* Light gray background */
-  box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF; /* Neumorphic effect */
+  /* box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF; Neumorphic effect */
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
   font-family: 'Montserrat', sans-serif;
   font-size: 16px; /* Font size */
-  transition: all 0.3s ease-in-out; /* Smoother transition */
+  transition: all 0.2s ease-in-out; /* Smoother transition */
   outline: none;
   z-index: 1;
   position: relative;
@@ -191,5 +200,9 @@
 .email-input:focus {
   transform: scale(1.009); /* Slight zoom effect */
   z-index: 10; /* Bring the focused input field to the foreground */
-  box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF, 0 4px 15px rgba(0, 0, 0, 0.2);
+  /* box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF, 0 4px 15px rgba(0, 0, 0, 0.2); */
+  box-shadow:  -5px -5px 10px rgba(255, 255, 255, 0.5), /* Inner shadows for embossing */
+               5px 5px 10px rgba(94, 104, 121, 0.3),
+              -10px -10px 20px rgba(255, 255, 255, 0.8), /* Outer shadows for depth */
+              10px 10px 20px rgba(94, 104, 121, 0.5); 
 }

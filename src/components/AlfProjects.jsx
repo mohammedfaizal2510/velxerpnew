@@ -9,6 +9,7 @@ import AlfEachProjectCard from './AlfEachProjectCard';
 import AlfNavbar from './AlfNavbar';
 import TrySideNav from './TrySideNav';
 import axios from 'axios';
+import NeumorphicDropdown from './NeumorphicDropdown';
 // import TrySideNav2 from './TrySideNav2';
 
 const AlfProjects = () => {
@@ -132,26 +133,43 @@ const AlfProjects = () => {
                                 </div>}
 
 
-                                <div className="col-6 mt-4">
+                                {/* <div className="col-6 mt-4">
                                     <Select
                                         options={superVisorNames}
                                         value={selectedSupervisor}
                                         onChange={(option) => setSelectedSupervisor(option)}
                                         placeholder="Filter by Supervisor"
                                         isClearable={true}
+                                        
                                         // classNamePrefix="Select"
                                     />
-                                    {/* <Button variant="secondary" onClick={clearSupervisorFilter}>Clear Filter</Button> */}
-                                </div>
-                                <div className="col-6 mt-4">
+                                    <Button variant="secondary" onClick={clearSupervisorFilter}>Clear Filter</Button>
+                                </div> */}
+                                {/* <div className="col-6 mt-4 neumorphic-select-container">
                                     <Select
+                                        className='neumorphic-select'
                                         options={cities}
                                         value={selectedCity}
                                         onChange={(option) => setSelectedCity(option)}
                                         placeholder="Filter by City"
                                         isClearable={true}
                                     />
-                                    {/* <Button variant="secondary" onClick={clearCityFilter}>Clear Filter</Button> */}
+                                </div> */}
+                                <div className="col-6 mt-4">
+                                    <NeumorphicDropdown
+                                    options={superVisorNames}
+                                    value={selectedSupervisor}
+                                    onChange={(option) => setSelectedSupervisor(option)}
+                                    placeholder="Filter by Supervisor"
+                                    />
+                                </div>
+                                <div className="col-6 mt-4">
+                                    <NeumorphicDropdown
+                                    options={cities}
+                                    value={selectedCity}
+                                    onChange={(option) => setSelectedCity(option)}
+                                    placeholder="Filter by City"
+                                    />
                                 </div>
 
                                 {filteredProjects.length === 0 ? (
