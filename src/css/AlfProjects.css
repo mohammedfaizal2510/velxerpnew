@@ -18,22 +18,24 @@
   } */
 
   .project-card {
-  background: #dde1e7;
-  border-radius: 20px;
-  /* margin: 20px; */
-  box-shadow: -10px -10px 18px rgba(255, 255, 255, 0.45), 10px 10px 18px rgba(94, 104, 121, 0.3); /* Outer shadow as default */
-  /* box-shadow: -5px -5px 9px rgba(255, 255, 255, 0.45), 5px 5px 9px rgba(94, 104, 121, 0.3); Outer shadow as default */
-  transition: box-shadow 1s ease; /* Smooth transition for hover effect */
-}
-
-.project-card:hover {
-  box-shadow: inset -10px -10px 18px rgba(255, 255, 255, 0.45), inset 10px 10px 18px rgba(94, 104, 121, 0.3); /* Inset shadow on hover */
-  /* box-shadow: inset -5px -5px 9px rgba(255, 255, 255, 0.45), inset 5px 5px 9px rgba(94, 104, 121, 0.3); Inset shadow on hover */
-}
+    background: #dde1e7;
+    border-radius: 20px;
+    margin: 10px;
+    box-shadow: -10px -10px 18px rgba(255, 255, 255, 0.45), 10px 10px 18px rgba(94, 104, 121, 0.3); /* Outer shadow as default */
+    transition: box-shadow 1s ease, transform 0.3s ease; /* Smooth transition for hover effects */
+    position: relative; /* Needed to control z-index */
+  }
+  
+  .project-card:hover {
+    /* box-shadow: inset -10px -10px 18px rgba(255, 255, 255, 0.45), inset 10px 10px 18px rgba(94, 104, 121, 0.3); Inset shadow on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+    z-index: 10; /* Bring the card to the front */
+  }
+  
 
   
 
-.search-box{
+/* .search-box{
     text-align: center;
   color: #2c3e50;
   width: 100%;
@@ -42,9 +44,49 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+} */
+.search-box input[type="text"] {
+  background: #dde1e7; /* Light background color for the neumorphic effect */
+  border-radius: 20px; /* Rounded corners for a soft appearance */
+  border: none; /* Remove default borders */
+  padding: 10px 20px; /* Inner spacing for a clean look */
+  font-size: 16px; /* Readable font size */
+  box-shadow: inset -5px -5px 10px rgba(255, 255, 255, 0.5), /* Inner shadows for embossing */
+              inset 5px 5px 10px rgba(94, 104, 121, 0.3),
+              -10px -10px 20px rgba(255, 255, 255, 0.8), /* Outer shadows for depth */
+              10px 10px 20px rgba(94, 104, 121, 0.5);
+  outline: none; /* Remove focus outline */
+  width: 100%; /* Full width */
+  transition: box-shadow 0.3s ease, transform 0.2s ease; /* Smooth interaction */
 }
 
+.search-box input[type="text"]:focus {
+  box-shadow: inset -5px -5px 10px rgba(255, 255, 255, 0.5),
+              inset 5px 5px 10px rgba(94, 104, 121, 0.3),
+              -10px -10px 25px rgba(255, 255, 255, 1),
+              10px 10px 25px rgba(94, 104, 121, 0.7);
+  transform: scale(1.02); /* Slight zoom effect on focus */
+}
 
+.search-button {
+  background: #dde1e7; /* Matches the neumorphic theme */
+  border-radius: 50px; /* Fully rounded button */
+  border: none; /* Remove default border */
+  padding: 10px 20px; /* Inner spacing */
+  /* box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.5), 
+              5px 5px 10px rgba(94, 104, 121, 0.3); */
+  box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.5), 
+               10px 10px 20px rgba(94, 104, 121, 0.3);
+  cursor: pointer; /* Pointer cursor for interactivity */
+  transition: box-shadow 0.3s ease, transform 0.2s ease; /* Smooth interactions */
+  color:black ;
+}
+
+.search-button:hover {
+  box-shadow: -10px -10px 30px rgba(255, 255, 255, 0.8),
+              10px 10px 30px rgba(94, 104, 121, 0.5);
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
 
 /* 
 .alfprojects-container {
@@ -89,3 +131,65 @@
     display: block;
   }
   
+
+
+  /*
+  select style
+  */
+/* General styling for react-select */
+
+
+
+/* .email-input-container {
+  width: 100%;
+  margin: 0 auto; 
+}
+
+.email-label {
+  display: block;
+  width: 100%;
+} 
+
+.email-input {
+  width: 100%;
+  padding: 16px; 
+  border: none;
+  border-radius: 320px;
+  background-color: #dde1e7; 
+  box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px; 
+  transition: all 0.2s ease-in-out;
+  outline: none;
+}
+
+.email-input:focus {
+  box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF; 
+} */
+
+.email-input-container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto; /* Center the input field */
+}
+
+.email-input {
+  width: 100%;
+  padding: 16px; /* Base size for spacing */
+  border: none;
+  border-radius: 320px; /* Rounded corners */
+  background-color: #dde1e7; /* Light gray background */
+  box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF; /* Neumorphic effect */
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px; /* Font size */
+  transition: all 0.3s ease-in-out; /* Smoother transition */
+  outline: none;
+  z-index: 1;
+  position: relative;
+}
+
+.email-input:focus {
+  transform: scale(1.009); /* Slight zoom effect */
+  z-index: 10; /* Bring the focused input field to the foreground */
+  box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF, 0 4px 15px rgba(0, 0, 0, 0.2);
+}

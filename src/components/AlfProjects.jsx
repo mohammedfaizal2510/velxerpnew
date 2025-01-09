@@ -117,15 +117,18 @@ const AlfProjects = () => {
                                 <div className="col-9 search-box mt-4" style={{ display: "flex" }}>
                                     <FormControl type="text" placeholder="Search by Project Name" onChange={handleSearch} />
                                 </div>
+                                <div className="col-9 email-input-container mt-4" style={{ display: "flex" }}>
+                                    <FormControl className='email-input' type="text" placeholder="Search by Project Name" onChange={handleSearch} />
+                                </div>
 
                                 <div className='col-1 mt-4'>
-                                    <Button onClick={handleSearch}>Search</Button>
+                                    <button onClick={handleSearch} className='search-button'>Search</button>
                                 </div>
                                 { sessionStorage.getItem("admin") ||
                                 <div className='col-12 col-lg-2 mt-4'>
-                                    <Button variant="primary" onClick={handleShow}>
+                                    <button variant="primary" onClick={handleShow} className='search-button'>
                                         <FontAwesomeIcon icon={faPlus} /> Create New Project
-                                    </Button>
+                                    </button>
                                 </div>}
 
 
@@ -136,6 +139,7 @@ const AlfProjects = () => {
                                         onChange={(option) => setSelectedSupervisor(option)}
                                         placeholder="Filter by Supervisor"
                                         isClearable={true}
+                                        // classNamePrefix="Select"
                                     />
                                     {/* <Button variant="secondary" onClick={clearSupervisorFilter}>Clear Filter</Button> */}
                                 </div>
