@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import TrySideNav from './TrySideNav';
 import axios from 'axios';
+import NeumorphicDropdown from './NeumorphicDropdown';
 
 const AlfEmployeesList = () => {
   const [show, setShow] = useState(false);
@@ -182,12 +183,20 @@ const AlfEmployeesList = () => {
           <Col xs={11}>
           <div className='container-fluid'>
         <div className='row'>
-          <div className='col-12 text-center'>
+          {/* <div className='col-12 text-center'>
             <h1>List of All Employees</h1>
-          </div>
+          </div> */}
+          <div className="col-12">
+          <div class="n-text">Employees</div>
+          
+           </div>
+           <div className='col-12'>
+           <p>Subscriber Name / Employees</p>
+           </div> 
 
-          <div className='col-12 col-md-3'>
+          <div className='col-12 col-md-3 email-input-container'>
             <FormControl
+              className='email-input'
               type='text'
               placeholder='Search by Name'
               value={searchName}
@@ -195,8 +204,9 @@ const AlfEmployeesList = () => {
             />
           </div>
 
-          <div className='col-12 col-md-3'>
+          <div className='col-12 col-md-3 email-input-container'>
             <FormControl
+              className='email-input'
               type='text'
               placeholder='Search by Phone Number'
               value={searchPhone}
@@ -206,10 +216,10 @@ const AlfEmployeesList = () => {
 
           <div className='col-12 col-md-2'>
             <Dropdown>
-              <Dropdown.Toggle variant='primary'>
+              <Dropdown.Toggle variant='primary' className='neumorphic-dropdown'>
                 {selectedDesignation || 'Filter by Designation'}
               </Dropdown.Toggle>
-              <Dropdown.Menu>
+              <Dropdown.Menu className='neumorphic-dropdown-menu'>
                 <Dropdown.Item onClick={() => setSelectedDesignation('')}>All</Dropdown.Item>
                 {uniqueDesignations.map((designation, index) => (
                   <Dropdown.Item key={index} onClick={() => setSelectedDesignation(designation)}>
@@ -218,22 +228,21 @@ const AlfEmployeesList = () => {
                 ))}
               </Dropdown.Menu>
             </Dropdown>
-          </div>
+          </div>          
 
           <div className='col-12 col-md-2'>
             <Dropdown>
-              <Dropdown.Toggle variant='primary'>Sort by Pay</Dropdown.Toggle>
-              <Dropdown.Menu>
+              <Dropdown.Toggle className="neumorphic-dropdown" variant='primary'>Sort by Pay</Dropdown.Toggle>
+              <Dropdown.Menu className="neumorphic-dropdown-menu">
                 <Dropdown.Item onClick={() => setSortOrder('asc')}>Ascending</Dropdown.Item>
                 <Dropdown.Item onClick={() => setSortOrder('desc')}>Descending</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>
-
           <div className='col-12 col-md-2'>
-            <Button variant='primary' onClick={handleShow}>
+            <button className='search-button' variant='primary' onClick={handleShow}>
               <FontAwesomeIcon icon={faPlus} /> Create New Employee
-            </Button>
+            </button>
           </div>
 
           <div className='col-12 employee-card-style-table mt-5 neumorphic-container'>
