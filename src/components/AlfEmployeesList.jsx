@@ -236,8 +236,8 @@ const AlfEmployeesList = () => {
             </Button>
           </div>
 
-          <div className='col-12 employee-card-style-table mt-5'>
-            <table>
+          <div className='col-12 employee-card-style-table mt-5 neumorphic-container'>
+            <table className='neumorphic-table'>
               <thead>
                 <tr>
                   <th>ID</th>
@@ -261,8 +261,8 @@ const AlfEmployeesList = () => {
                       totalpay = {employee.totalpay}
                     />
                     <td>
-                      <Button className='mr-2' onClick={() => handlePayModalShow(employee)}>pay</Button>
-                      <Button onClick={() => handleEdit(employee)}><FontAwesomeIcon icon={faEdit} />Edit</Button>
+                      <button className='mr-2 project-button p-2 pl-3 pr-3' onClick={() => handlePayModalShow(employee)}>pay</button>
+                      <button className="project-button p-2 pl-3 pr-3 " onClick={() => handleEdit(employee)}><FontAwesomeIcon icon={faEdit} />Edit</button>
                     </td>
                   </tr>
                 ))}
