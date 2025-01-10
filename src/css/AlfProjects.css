@@ -1,6 +1,9 @@
 
 .body-bg-color{
     background-color: #dde1e7;
+  /* background-color: #f2f7fd; */
+  /* background-color: #f2f7fd; */
+
 }
 
 
@@ -205,4 +208,62 @@
                5px 5px 10px rgba(94, 104, 121, 0.3),
               -10px -10px 20px rgba(255, 255, 255, 0.8), /* Outer shadows for depth */
               10px 10px 20px rgba(94, 104, 121, 0.5); 
+}
+:root {
+  --nColor: #aaa;
+  --brShadow: -6px 6px 10px rgba(0,0,0,0.5);
+  --tlShadow: 6px -6px 10px rgba(255,255,255,0.5);
+ }
+/* :root {
+  --nColor: #db3d44; 
+  --brShadow: -6px 6px 10px rgba(139, 30, 34, 0.7);
+  --tlShadow: 6px -6px 10px rgba(255, 90, 100, 0.5);
+} */
+
+
+.n-text {
+  color: var(--nColor);
+  text-shadow: var(--brShadow), var(--tlShadow);
+  font-size: 5em;
+  font-weight: bold;
+ }
+
+ .project-button{
+  background-color: #007bff;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  padding: 8px;
+  transition:all 0.3s ease;
+  }
+
+  .project-button:hover{
+    box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.7), 
+              10px 10px 20px rgba(136, 144, 160, 0.5);
+    /* box-shadow: -10px -10px 20px rgba(90, 140, 255, 0.6), 
+    10px 10px 20px rgba(0, 60, 160, 0.5); */
+    /* box-shadow: -10px -10px 30px rgba(255, 255, 255, 0.8),
+    10px 10px 30px rgba(94, 104, 121, 0.5); */
+transform: scale(1.1);  /* Slight zoom effect on hover */
+background-color: #fff;
+color: #007bff;
+}
+
+
+
+.project-button-danger {
+  background-color: #dc3545; /* Red shade */
+  border: none;
+  border-radius: 10px;
+  color: #fff; /* White text for contrast */
+  padding: 8px;
+  transition: all 0.3s ease;
+}
+
+.project-button-danger:hover {
+  box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.7), 
+              10px 10px 20px rgba(136, 144, 160, 0.5);
+  transform: scale(1.1); /* Slight zoom effect on hover */
+  background-color: #fff; /* Lighten background on hover */
+  color: #dc3545; /* Red text on hover */
 }

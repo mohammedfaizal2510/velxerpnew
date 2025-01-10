@@ -43,12 +43,13 @@ const AlfEachProjectCard = ({
           <p>Client: {owner}</p>
           <hr />
           <div>
-            <Button onClick={handleShow}>Remove</Button>
-            <Button className="ml-3" onClick={() => togggleCardStatus(_id)}>
+            <button onClick={handleShow} className="project-button">Remove</button>
+            {!status ? <button className="project-button-danger ml-3" onClick={() => togggleCardStatus(_id)}>Mark UnCompleted</button> : <button className="project-button ml-3" onClick={() => togggleCardStatus(_id)}>Mark Completed</button>}
+            {/* <button className="ml-3 project-button" onClick={() => togggleCardStatus(_id)}>
               {!status ? "Mark UnCompleted" : "Mark Completed"}
-            </Button>
-            <Button
-              className="ml-3"
+            </button> */}
+            <button
+              className="ml-3 project-button"
               onClick={() => {
                 navigate("/projects/dashboard/attendance", {
                   state: { att: emplyee },
@@ -57,7 +58,7 @@ const AlfEachProjectCard = ({
               }}
             >
               Details
-            </Button>
+            </button>
             <p
               style={{ display: "inline", fontSize: "1.3em" }}
               className={`ml-3 ${!status ? "text-success" : "text-danger"}`}

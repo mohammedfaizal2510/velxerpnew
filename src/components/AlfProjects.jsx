@@ -111,16 +111,23 @@ const AlfProjects = () => {
                     <Col xs={11}>
                         <div className='container-fluid body-bg-color'>
                             <div className="row">
-                                <div className="col-12 text-center">
-                                    <h1>Projects</h1>
+                                <div className="col-12">
+                                <div class="n-text">Projects</div>
+                                    
                                 </div>
+                                <div className='col-12'>
+                                    <p>Subscriber Name / Projects</p>
+                                </div>
+                                
+                                
 
-                                <div className="col-9 search-box mt-4" style={{ display: "flex" }}>
+                                {/* <div className="col-9 search-box mt-4" style={{ display: "flex" }}>
                                     <FormControl type="text" placeholder="Search by Project Name" onChange={handleSearch} />
-                                </div>
+                                </div> */}
                                 <div className="col-9 email-input-container mt-4" style={{ display: "flex" }}>
                                     <FormControl className='email-input' type="text" placeholder="Search by Project Name" onChange={handleSearch} />
                                 </div>
+                                
 
                                 <div className='col-1 mt-4'>
                                     <button onClick={handleSearch} className='search-button'>Search</button>
