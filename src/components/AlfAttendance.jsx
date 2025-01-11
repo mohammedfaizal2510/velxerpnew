@@ -128,24 +128,30 @@ const AlfAttendance = () => {
                 </div>
 
                 <div
-                  className="col-12 text-center mb-3"
+                  className="col-10 col-md-7 text-center mb-3"
                   style={{ display: "flex", gap: "10px" }}
                 >
                   <FormControl
+                    className='email-input mt-3'
                     type="text"
                     placeholder="Search by name"
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
-                  <Button onClick={handleSearch}>Search</Button>
-                  <Button variant="primary" onClick={handleShow}>
+                </div>
+                <div className="col-2 col-md-1 mt-2">
+                  <button onClick={handleSearch} className="search-button">Search</button>
+                </div>
+                <div className="col-6 col-md-2 mt-2">
+                    <button variant="primary" onClick={handleShow} className="search-button">
                     Add Employee
-                  </Button>
-
+                  </button>
+                </div>
+                <div className="col-6 col-md-2 mt-2">
                   <Dropdown>
-                    <Dropdown.Toggle variant='primary'>
+                    <Dropdown.Toggle variant='primary' className="neumorphic-dropdown">
                       {selectedDesignation || 'Filter by Designation'}
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Menu className="neumorphic-dropdown-menu">
                       <Dropdown.Item onClick={() => setSelectedDesignation('')}>All</Dropdown.Item>
                       {uniqueDesignations.map((designation, index) => (
                         <Dropdown.Item key={index} onClick={() => setSelectedDesignation(designation)}>
@@ -154,8 +160,6 @@ const AlfAttendance = () => {
                       ))}
                     </Dropdown.Menu>
                   </Dropdown>
-
-                  
                 </div>
 
                 {handleSearch().length === 0 ? (

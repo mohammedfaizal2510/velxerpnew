@@ -118,7 +118,9 @@ const AlfProjects = () => {
                                 <div className='col-12'>
                                     <p>Subscriber Name / Projects</p>
                                 </div>
-                                
+                                <div className='col-12'>
+                                    <hr/>
+                                </div>
                                 
 
                                 {/* <div className="col-9 search-box mt-4" style={{ display: "flex" }}>

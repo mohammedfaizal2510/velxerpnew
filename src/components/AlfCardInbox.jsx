@@ -8,12 +8,16 @@ const AlfCardInbox = ({id, subject, show}) => {
     const reject = ()=>{}
   return (
         <>
-            <div className='col-12 col-sm-6 col-md-4 col-lg-3 project-card p-4'>
+            {/* <div className='col-12 col-sm-6 col-md-4 col-lg-3 project-card p-4 m-4'> */}
+            <div className='col-12 col-sm-6 col-md-4 col-lg-3'>
+            <div className='project-card p-4'>
                 <h4>Subject: {subject}</h4>
                 <pre>{disp}</pre>
-                <Button onClick={accept} className='mr-3'>Accept</Button>
-                <Button onClick={reject} >Reject</Button>
+                <button onClick={accept} className='mr-3 mt-2 project-button'>Accept</button>
+                <button onClick={reject} className='mt-2 project-button-danger'>Reject</button>
             </div>
+            </div>
+            
         </>
   )
 

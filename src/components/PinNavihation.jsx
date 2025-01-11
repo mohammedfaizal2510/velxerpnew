@@ -28,8 +28,8 @@ const PinNavihation = () => {
             <div className="continer-fluid">
                 <div className="row text-center mt-5">
                     <div className="col-4">
-                        <Button
-                            className="w-75"
+                        <button
+                            className="w-75 search-button"
                             onClick={() =>
                                 navigate("/projects/dashboard/attendance", {
                                     state: { att: sd },
@@ -37,12 +37,12 @@ const PinNavihation = () => {
                             }
                         >
                             Attendance
-                        </Button>
+                        </button>
                     </div>
 
                     <div className="col-4">
-                        <Button
-                            className="w-75"
+                        <button
+                            className="w-75 search-button"
                             onClick={() =>
                                 navigate("/projects/dashboard/resuestMaterial", {
                                     state: { met: srd ,req:req},
@@ -50,18 +50,22 @@ const PinNavihation = () => {
                             }
                         >
                             Materials
-                        </Button>
+                        </button>
                     </div>
 
                     <div className="col-4">
-                        <Button
-                            className="w-75"
+                        <button
+                            className="w-75 search-button"
                             onClick={() => 
                                 navigate("/projects/dashboard/salary")
                             }
                         >
                             Salary
-                        </Button>
+                        </button>
+                    </div>
+
+                    <div className="col-12 mt-4">
+                        <hr style={{borderTop:"1px solid"}}/>
                     </div>
                 </div>
             </div>

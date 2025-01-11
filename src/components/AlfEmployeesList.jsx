@@ -193,6 +193,9 @@ const AlfEmployeesList = () => {
            <div className='col-12'>
            <p>Subscriber Name / Employees</p>
            </div> 
+           <div className='col-12'>
+            <hr/>
+          </div>
 
           <div className='col-12 col-md-3 email-input-container'>
             <FormControl

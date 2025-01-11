@@ -44,7 +44,7 @@ const AlfEachAttendance = ({ _id, name, salaryPerShift, isPresent, totalpay, set
   return (
     <>
       <div className='col-12 col-md-6 mt-3'>
-        <div className='employee-card-style p-4'>
+        <div className='project-card p-4'>
           <h3><FontAwesomeIcon icon={faIdCardClip} className='mr-3'/>{name}</h3> 
           <div>
             <Dropdown className='d-inline m-2' onSelect={handleShiftSelect}>
@@ -62,7 +62,7 @@ const AlfEachAttendance = ({ _id, name, salaryPerShift, isPresent, totalpay, set
             <Button className='btn btn-success m-2' onClick={handleMarkPresent} disabled={isPresent}>
               {isPresent ? "Marked" : "Present"}
             </Button>
-            <Button className='m-2' onClick={handleShow}>Edit Salary</Button>
+            <Button className='m-2 project-button' onClick={handleShow}>Edit Salary</Button>
             <h4 className='text-success'>Salary Added: ₹{totalpay}</h4>
           </div>
         </div>

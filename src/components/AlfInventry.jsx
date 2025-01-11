@@ -32,8 +32,14 @@ const AlfInventry = () => {
           <Col xs={11}>
           <div className='container-fluid'>
             <div className='row'>
-              <div className='col-12 text-center'>
-                <h3>Showcase What you have</h3>
+              <div className='col-12'>
+                <h3 className='n-text'>Inventry</h3>
+              </div>
+              <div className='col-12'>
+                <p>Subscriber Name / Inventry</p>
+              </div>
+              <div className='col-12'>
+                <hr/>
               </div>
 
               {availableInventry.length === 0 ? (
@@ -41,7 +47,8 @@ const AlfInventry = () => {
               ) : (
                 availableInventry.map((eachInventry) => (
                   <div className='col-12 col-sm-6 col-md-4 col-lg-3'>
-                    <div className='inventry-catrd text-center'>
+                    {/* <div className='inventry-catrd text-center'> */}
+                    <div className='project-card text-center pb-3'>
                       <img src={eachInventry.inImg} className='w-75 mt-3 mb-3' style={{borderRadius:"50%"}} alt='Loading...'/>
                       <h3>{eachInventry.inName}</h3> 
                       <h3>{eachInventry.inStock ? (

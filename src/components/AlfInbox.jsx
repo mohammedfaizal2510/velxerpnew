@@ -26,8 +26,14 @@ const AlfInbox = () => {
                 
                     <div className='container-fluid'>
                         <div className='row'>
-                            <div className='col-12 text-center'>
-                                <h1>Inbox</h1>
+                            <div className='col-12'>
+                                <h1 className='n-text'>Inbox</h1>
+                            </div>
+                            <div className='col-12'>
+                                <p>Subscriber Name / Inbox</p>
+                            </div>
+                            <div className='col-12'>
+                                <hr/>
                             </div>
                             {/* <HoverButton/> */}
 
