@@ -9,7 +9,6 @@ import axios from 'axios'
 
 const PinMaterialReques = () => {
 
-    const handleSearch = (e) => setSearchQuery(e.target.value.toLowerCase());
 
     const loc = useLocation();
     const [availableInventry, setAvailableInventry] = useState([]);
@@ -63,7 +62,7 @@ const PinMaterialReques = () => {
                             : item
                     );
                     setAvailableInventry(updatedInventory);
-            })
+                })
         }
         else {
             // Add new material
@@ -87,11 +86,7 @@ const PinMaterialReques = () => {
 
 
     //material request
-    const [materialRequest, setMaterialRequest] = useState([
-        {requestId: Date.now(), isApproved: false, isRejected: false, materilId:10001, materialName: "Cement", quantityToRequest:"10 packs"},
-        {requestId: Date.now() + 1, isApproved: true, isRejected: true, materilId:10002, materialName: "M Sand", quantityToRequest:"2 Units"},
-        {requestId: Date.now() + 2, isApproved: true, isRejected: false, materilId:10003, materialName: "P Sand", quantityToRequest:"3 Units"}
-    ]);
+    const [materialRequest, setMaterialRequest] = useState([]);
     const [selectedMaterial, setSelectedMaterial] = useState(null);
     const [requestModalShow, setRequestModalShow] = useState(false);
     const reqMaterialQuantityIpRef = useRef();
@@ -106,7 +101,7 @@ const PinMaterialReques = () => {
             return;
         }
         axios.post(`${import.meta.env.VITE_SER}req/mat`,{site:sessionStorage.getItem('site'),stock:selectedMaterial._id,quant:ipReqMaterialQuantity},{headers:{auth:sessionStorage.getItem('auth'),admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth")}}).then(()=>{
-        setMaterialRequest([...materialRequest, newRequest]);
+            setMaterialRequest([...materialRequest, newRequest]);
         })
 
         const newRequest = {
@@ -263,14 +258,14 @@ const PinMaterialReques = () => {
                                             <div key={eachRequest._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
                                                 <div className="inventry-catrd text-center p-3">
                                                     <h3>{eachRequest.name}</h3>
-                                                    <p>Quantity Requested: {eachRequest.quant}</p>
-                                                    {eachRequest.isRejected ? (
-                                                        <p className='text-danger'>Rejected</p>
-                                                    ) : (
-                                                            <>
-                                                                {eachRequest.isApproved ? <p className='text-success'>Approved</p> : <p className='text-danger'>Not Approved</p>}
-                                                            </>
-                                                        )}
+                                                    <img
+                                                        src={eachRequest.inImg}
+                                                        className="w-75 mt-3 mb-3"
+                                                        style={{ borderRadius: "50%" }}
+                                                        alt="Material"
+                                                    />
+                                                    <p>Quantity Requested: {eachRequest.quant} {eachRequest.unit}</p>
+                                                    <p className='text-success'>Request Sended Successfully</p>
 
                                                 </div>
                                             </div>
@@ -313,6 +308,12 @@ const PinMaterialReques = () => {
                                             <div key={eachMaterial._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
                                                 <div className="inventry-catrd text-center p-3">
                                                     <h3>{eachMaterial.name}</h3>
+                                                    <img
+                                                        src={eachMaterial.inImg}
+                                                        className="w-75 mt-3 mb-3"
+                                                        style={{ borderRadius: "50%" }}
+                                                        alt="Material"
+                                                    />
                                                     <div className='d-flex flex-rown justify-content-center'>
                                                         <Button className='mr-3 btn btn-danger' onClick={() => handleDecrement(eachMaterial)}>
                                                             < FontAwesomeIcon icon={faMinus } />

@@ -27,7 +27,12 @@ const AlfEachProjectCard = ({
 
   return (
     <>
-      <div className="col-12 col-md-6 mt-3">
+      <div className="col-12 col-md-6 mt-3" onClick={() => {
+                navigate("/projects/dashboard/attendance", {
+                  state: { att: emplyee },
+                });
+                sessionStorage.setItem("site",_id)
+              }}>
         <div className="project-card p-4">
           <div style={{ display: "flex", gap: "1em" }}>
             <FontAwesomeIcon
@@ -48,17 +53,6 @@ const AlfEachProjectCard = ({
             {/* <button className="ml-3 project-button" onClick={() => togggleCardStatus(_id)}>
               {!status ? "Mark UnCompleted" : "Mark Completed"}
             </button> */}
-            <button
-              className="ml-3 project-button"
-              onClick={() => {
-                navigate("/projects/dashboard/attendance", {
-                  state: { att: emplyee },
-                });
-                sessionStorage.setItem("site",_id)
-              }}
-            >
-              Details
-            </button>
             <p
               style={{ display: "inline", fontSize: "1.3em" }}
               className={`ml-3 ${!status ? "text-success" : "text-danger"}`}

@@ -39,12 +39,7 @@ const AlfInbox = () => {
                                         key={index}
                                         id={eachRequest._id}
                                         subject={eachRequest.for}
-                                        from={eachRequest.from}
-                                        role={eachRequest.role}
-                                        site={eachRequest.site}
-                                        date={eachRequest.date}
-                                        isAccepted={eachRequest.isAccepted}
-
+                                        {...eachRequest}
                                     />
 
                                 ))

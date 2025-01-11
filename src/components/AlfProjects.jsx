@@ -86,7 +86,7 @@ const AlfProjects = () => {
 
     const filteredProjects = projectCardDetails.filter((project) => {
         const matchesSearch = project.name.toLowerCase().includes(searchQuery);
-        const matchesSupervisor = selectedSupervisor ? project.projectSupervisor === selectedSupervisor.value : true;
+        const matchesSupervisor = selectedSupervisor ? project.projectSupervisor.value === selectedSupervisor.value : true;
         const matchesCity = selectedCity ? project.location === selectedCity.label : true;
         return matchesSearch && matchesSupervisor && matchesCity;
     });
