@@ -13,6 +13,7 @@ import PinInventry from './components/PinInventry';
 import PinMaterialReques from './components/PinMaterialReques';
 import Reg from './components/Reg'
 import PinSalary from './components/PinSalary';
+import AlfReport from './components/AlfReport';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path='inventry' element={<AlfInventry/>}></Route>
           {/* <Route path='attendance' element={<AlfAttendance/>}></Route> */}
           <Route path='Employees' element={<AlfEmployeesList/>}></Route>
+          <Route path='report' element={<AlfReport/>}></Route>
           <Route path='inbox' element={<AlfInbox/>}></Route>
         </Route>
       </Routes>

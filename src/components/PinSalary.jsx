@@ -22,8 +22,13 @@ const PinSalary = () => {
                             <h1 className='n-text'>Salary</h1>
                             <p>Subscriber Name / Project Name / Salary</p>
                         </div>
+
                         <div className="col-12 mt-4">
                             <hr style={{borderTop:"1px solid"}}/>
+                        </div>
+
+                        <div className="col-12">
+                          
                         </div>
                     </div>
                 </div>

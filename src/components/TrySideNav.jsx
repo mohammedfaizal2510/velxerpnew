@@ -26,6 +26,7 @@ const TrySideNav = ({ selectedKey }) => {
     employees: "Employees",
     inventory: "Inventory",
     inbox: "Inbox",
+    report : "report",
     logout: "Logout",
   };
 
@@ -84,6 +85,19 @@ const TrySideNav = ({ selectedKey }) => {
             </NavIcon>
             <NavText>Inbox</NavText>
             {hoveredItem === "inbox" && <span className="tooltip">{tooltipText.inbox}</span>}
+          </NavItem>
+
+          <NavItem
+            eventKey="report"
+            onClick={() => handleNavigate('/projects/report')}
+            onMouseEnter={() => setHoveredItem("report")}
+            onMouseLeave={() => setHoveredItem(null)}
+          >
+            <NavIcon>
+              <FontAwesomeIcon icon={faEnvelope} style={{ fontSize: "1.75em" }} />
+            </NavIcon>
+            <NavText>report</NavText>
+            {hoveredItem === "report" && <span className="tooltip">{tooltipText.report}</span>}
           </NavItem>
 
           <NavItem
