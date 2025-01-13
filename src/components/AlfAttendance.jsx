@@ -112,20 +112,29 @@ const AlfAttendance = () => {
             <PinNavihation />
             <div className="container-fluid mt-5">
               <div className="row">
-                <div className="col-12 text-center">
-                  <h1 className="mb-3">Attendance</h1>
+                <div className="col-12">
+                  <h1 className="mb-3 n-text">Attendance</h1>
                   {/* <h3 className="d-inline pr-3">Date :</h3> */}
-                  <div className="date-picker-container d-inline mb-3">
-                    <DatePicker
-                      selected={selectedDate}
-                      onChange={(date) => setSelectedDate(date)}
-                      dateFormat="dd-MM-yyyy"
-                      className="date-picker"
-                      maxDate={new Date()}
-                      disabled={true}
-                    />
-                  </div>
+                  <p>Subscriber Name / Project Name / Attendance</p>
+                  
                 </div>
+                <div className="col-12 mt-4">
+                  <hr style={{borderTop:"1px solid"}}/>
+                </div>
+
+                <div className="col-12 text-center">
+                  <div className="date-picker-container d-inline mb-3">
+                      <DatePicker
+                        selected={selectedDate}
+                        onChange={(date) => setSelectedDate(date)}
+                        dateFormat="dd-MM-yyyy"
+                        className="date-picker email-input"
+                        maxDate={new Date()}
+                        disabled={true}
+                      />
+                    </div>
+                </div>
+
 
                 <div
                   className="col-10 col-md-7 text-center mb-3"

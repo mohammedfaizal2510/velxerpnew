@@ -64,9 +64,9 @@ const PinNavihation = () => {
                         </button>
                     </div>
 
-                    <div className="col-12 mt-4">
+                    {/* <div className="col-12 mt-4">
                         <hr style={{borderTop:"1px solid"}}/>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>

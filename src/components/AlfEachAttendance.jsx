@@ -48,10 +48,10 @@ const AlfEachAttendance = ({ _id, name, salaryPerShift, isPresent, totalpay, set
           <h3><FontAwesomeIcon icon={faIdCardClip} className='mr-3'/>{name}</h3> 
           <div>
             <Dropdown className='d-inline m-2' onSelect={handleShiftSelect}>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
+              <Dropdown.Toggle variant="success" id="dropdown-basic" className='neumorphic-dropdown'>
                 {selectedShift? selectedShift + " shift" : 'Shift'}
               </Dropdown.Toggle>
-              <Dropdown.Menu>
+              <Dropdown.Menu className='neumorphic-dropdown-menu'>
                 <Dropdown.Item eventKey={0.5}>0.5 Shift</Dropdown.Item>
                 <Dropdown.Item eventKey={1}>1 Shift</Dropdown.Item>
                 <Dropdown.Item eventKey={1.5}>1.5 Shift</Dropdown.Item>
@@ -59,7 +59,7 @@ const AlfEachAttendance = ({ _id, name, salaryPerShift, isPresent, totalpay, set
               </Dropdown.Menu>
             </Dropdown>
 
-            <Button className='btn btn-success m-2' onClick={handleMarkPresent} disabled={isPresent}>
+            <Button className='btn btn-success m-2 search-button' onClick={handleMarkPresent} disabled={isPresent}>
               {isPresent ? "Marked" : "Present"}
             </Button>
             <Button className='m-2 project-button' onClick={handleShow}>Edit Salary</Button>

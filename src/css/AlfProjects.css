@@ -267,3 +267,20 @@ color: #007bff;
   background-color: #fff; /* Lighten background on hover */
   color: #dc3545; /* Red text on hover */
 }
+
+.project-button-success {
+  background-color: #28a745; /* Green shade */
+  border: none;
+  border-radius: 10px;
+  color: #fff; /* White text for contrast */
+  padding: 8px;
+  transition: all 0.3s ease;
+}
+
+.project-button-success:hover {
+  box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.7), 
+              10px 10px 20px rgba(136, 144, 160, 0.5);
+  transform: scale(1.1); /* Slight zoom effect on hover */
+  background-color: #fff; /* Lighten background on hover */
+  color: #28a745; /* Green text on hover */
+}

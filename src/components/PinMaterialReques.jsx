@@ -196,20 +196,31 @@ const PinMaterialReques = () => {
                         <div className="container-fluid mt-5">
                             <div className="row">
 
-                                <div className="col-9 search-box" style={{ display: "flex" }}>
+                                <div className="col-12">
+                                    <p className='n-text'>Material Management</p>
+                                </div>
+                                <div className='col-12'>
+                                    <p>Subscriber Name / Project Name / Material Management</p>
+                                </div>
+                                <div className="col-12 mt-4">
+                                    <hr style={{borderTop:"1px solid"}}/>
+                                </div>
+
+                                <div className="col-md-9 col-10" style={{ display: "flex" }}>
                                     <FormControl type="text"
+                                        className='email-input mt-3'
                                         placeholder="Search by Material Name"
                                         onChange={(e) => setSearchQueryInventory(e.target.value)} />
                                 </div>
 
-                                <div className='col-1'>
-                                    <Button onClick={handleSearchInventory}>Search</Button>
+                                <div className='col-md-1 col-2 mt-2'>
+                                    <button className='search-button' onClick={handleSearchInventory}>Search</button>
                                 </div>
 
-                                <div className="col-2">
-                                    <Button onClick={handleShow}>
+                                <div className="col-md-2 col-12 mt-2">
+                                    <button onClick={handleShow} className='search-button'>
                                         <FontAwesomeIcon icon={faPlus} /> Create Material
-                                    </Button>
+                                    </button>
                                 </div>
 
 
@@ -219,7 +230,8 @@ const PinMaterialReques = () => {
                                 </div>
                                 {filteredInventory.map((eachInventry) => (
                                     <div key={eachInventry.inId} className="col-12 col-sm-6 col-md-4 col-lg-3">
-                                        <div className="inventry-catrd text-center">
+                                        {/* <div className="inventry-catrd text-center"> */}
+                                        <div className='project-card text-center'>
                                             <img
                                                 src={eachInventry.inImg}
                                                 className="w-75 mt-3 mb-3"
@@ -230,15 +242,15 @@ const PinMaterialReques = () => {
                                             {eachInventry.quant === 0 ? (
                                                 <>
                                                     <p className='text-danger'>Out Of Stock</p>
-                                                    <Button className="mb-3" onClick={() => modalReqMaterialShow(eachInventry)}>Force Request</Button>
+                                                    <button className="mb-3 search-button" onClick={() => modalReqMaterialShow(eachInventry)}>Force Request</button>
                                                 </>
                                             ) : (
                                                     <>
                                                         <p className='text-success'>{eachInventry.quant} {eachInventry.unit} Available</p>
-                                                        <Button className="mb-3" onClick={() => modalReqMaterialShow(eachInventry)}>Request</Button>
+                                                        <Button className="mb-3 search-button" onClick={() => modalReqMaterialShow(eachInventry)}>Request</Button>
                                                     </>
                                                 )}
-                                            <button className='mb-4 ml-3' style={{border:"none"}} onClick={() => handleEditClick(eachInventry)}> 
+                                            <button className='mb-4 ml-3 search-button' style={{border:"none"}} onClick={() => handleEditClick(eachInventry)}> 
                                                 <FontAwesomeIcon icon={faPenToSquare} className='text-primary' style={{fontSize:"2em"}}/>
                                             </button>
                                         </div>
@@ -256,7 +268,8 @@ const PinMaterialReques = () => {
                                 ) : (
                                         materialRequest.map((eachRequest) => (
                                             <div key={eachRequest._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-                                                <div className="inventry-catrd text-center p-3">
+                                                <div className="project-card text-center p-3">
+                                                {/* inventry-catrd */}
                                                     <h3>{eachRequest.name}</h3>
                                                     <img
                                                         src={eachRequest.inImg}
@@ -284,20 +297,23 @@ const PinMaterialReques = () => {
                                     <hr/>
                                 </div>
 
-                                <div className="col-9 search-box" style={{ display: "flex" }}>
-                                    <FormControl type="text"
+                                <div className="col-9" style={{ display: "flex" }}>
+                                {/* search-box */}
+                                    <FormControl 
+                                        type="text"
+                                        className='email-input'
                                         placeholder="Search by Material Name"
                                         onChange={(e) => setSearchQuerySite(e.target.value)} />
                                 </div>
 
                                 <div className='col-1'>
-                                    <Button onClick={handleSearchSite}>Search</Button>
+                                    <button className='search-button' onClick={handleSearchSite}>Search</button>
                                 </div>
 
                                 <div className="col-2">
-                                    <Button onClick={materialInSiteModalOpen}>
+                                    <button onClick={materialInSiteModalOpen} className='search-button'>
                                         <FontAwesomeIcon icon={faPlus} />   Add Material
-                                    </Button>
+                                    </button>
                                 </div>
 
                                 {/* materialInSite = {_id: Date.now(), name: "Cement", quantity:10, unitStr: "moota"} */}
@@ -306,7 +322,8 @@ const PinMaterialReques = () => {
                                 ) : (
                                         filteredSiteMaterials.map((eachMaterial) => (
                                             <div key={eachMaterial._id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-                                                <div className="inventry-catrd text-center p-3">
+                                                <div className="project-card text-center p-3">
+                                                {/* inventry-catrd */}
                                                     <h3>{eachMaterial.name}</h3>
                                                     <img
                                                         src={eachMaterial.inImg}
@@ -315,15 +332,15 @@ const PinMaterialReques = () => {
                                                         alt="Material"
                                                     />
                                                     <div className='d-flex flex-rown justify-content-center'>
-                                                        <Button className='mr-3 btn btn-danger' onClick={() => handleDecrement(eachMaterial)}>
+                                                        <button className='mr-3 p-3 project-button-danger' onClick={() => handleDecrement(eachMaterial)}>
                                                             < FontAwesomeIcon icon={faMinus } />
-                                                        </Button>
-                                                        <h3>{eachMaterial.quant}</h3>
-                                                        <Button className='ml-3 btn btn-success' onClick={() => handleIncrement(eachMaterial)}>
+                                                        </button>
+                                                        <h3 className='mt-2'>{eachMaterial.quant}</h3>
+                                                        <button className='ml-3 p-3 project-button-success' onClick={() => handleIncrement(eachMaterial)}>
                                                             <FontAwesomeIcon icon={faPlus} />
-                                                        </Button>
+                                                        </button>
                                                     </div>
-                                                    <p>Unit : {eachMaterial.unit}</p>
+                                                    <p className='mt-2'>Unit : {eachMaterial.unit}</p>
                                                 </div>
                                             </div>
                                         ))

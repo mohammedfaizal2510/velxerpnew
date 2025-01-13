@@ -16,10 +16,14 @@ const PinSalary = () => {
             </Col>
             <Col xs={11}>
             <PinNavihation/>
-                <div className="container-fluid">
+                <div className="container-fluid mt-5">
                     <div className="row">
-                        <div className="col-12 text-center">
-                            <h1>Salary Management</h1>
+                        <div className="col-12">
+                            <h1 className='n-text'>Salary</h1>
+                            <p>Subscriber Name / Project Name / Salary</p>
+                        </div>
+                        <div className="col-12 mt-4">
+                            <hr style={{borderTop:"1px solid"}}/>
                         </div>
                     </div>
                 </div>
