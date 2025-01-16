@@ -249,11 +249,10 @@ const AlfEmployeesList = () => {
             <table className='neumorphic-table'>
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th>Name</th>
                   <th>Designation</th>
-                  <th>Salary Per Shift</th>
                   <th>Salary</th>
+                  <th>Salary to pay</th>
                   <th>Phone Number</th>
                   <th>Actions</th>
                 </tr>
@@ -262,12 +261,11 @@ const AlfEmployeesList = () => {
                 {filteredEmployees.map(employee => (
                   <tr key={employee._id}>
                     <AlfEachEmployeeList
-                      empId={employee._id}
                       empName={employee.name}
                       empDesignation={employee.designation}
                       empSalaryPerShift={employee.salaryPerShift}
                       empPhNo={employee.phoneNumber}
-                      totalpay = {employee.totalpay}
+                      totalpay = {employee.totalSalary}
                     />
                     <td>
                       <button className='mr-2 project-button p-2 pl-3 pr-3' onClick={() => handlePayModalShow(employee)}>pay</button>
