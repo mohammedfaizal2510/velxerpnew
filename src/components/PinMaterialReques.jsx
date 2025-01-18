@@ -331,9 +331,9 @@ const PinMaterialReques = () => {
                                                     <div className='d-flex flex-rown justify-content-center'>
                                                         <button className='mr-3 p-3 project-button-danger' onClick={() => handleDecrement(eachMaterial)}>
                                                             < FontAwesomeIcon icon={faMinus } />
-                                                        </Button>
+                                                        </button>
                                                         <h3>{eachMaterial.quant}</h3>
-                                                        <Button className='ml-3 btn btn-success' onClick={() => handleIncrement(eachMaterial)}>
+                                                        <button className='ml-3 btn btn-success' onClick={() => handleIncrement(eachMaterial)}>
                                                             <FontAwesomeIcon icon={faPlus} />
                                                         </button>
                                                     </div>
