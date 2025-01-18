@@ -14,8 +14,7 @@ const PinMaterialReques = () => {
     const [availableInventry, setAvailableInventry] = useState([]);
     useEffect(()=>{
         axios.get(`${import.meta.env.VITE_SER}stocs`,{headers:{auth:loc.state?.met || sessionStorage.getItem('auth'),edit:sessionStorage.getItem('site')}}).then(t=>{setMaterialInSite(t.data)})
-        axios.get(`${import.meta.env.VITE_SER}stoc`,{headers:{auth:sessionStorage.getItem('admin') || sessionStorage.getItem('auth')}}).then(t=>{setAvailableInventry(t.data); console.log(t.data); return t.data.filter(i=>!i.ship?false:i.ship[sessionStorage.getItem('site')])}).then(m=>m.map(i=>({...i,quant:i.ship[sessionStorage.getItem('site')]}))).then(setMaterialRequest)
-
+        axios.get(`${import.meta.env.VITE_SER}stoc`,{headers:{auth:sessionStorage.getItem('admin') || sessionStorage.getItem('auth')}}).then(t=>{setAvailableInventry(t.data);return t.data.filter(i=>!i.ship?false:i.ship[sessionStorage.getItem('site')])}).then(m=>m.map(i=>({...i,quant:i.ship[sessionStorage.getItem('site')]}))).then(setMaterialRequest)
     },[])
     //create material
     const materialNameIpRef = useRef();
@@ -73,7 +72,6 @@ const PinMaterialReques = () => {
                 inImg: ipMaterialImg,
             };
             axios.post(`${import.meta.env.VITE_SER}stoc`,newInventry,{headers:{admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth"),edit:sessionStorage.getItem("site"),auth:sessionStorage.getItem('auth')}}).then(t=>{
-                console.log(t.data)
                 setAvailableInventry([...availableInventry, newInventry]);
             })
         }
@@ -183,7 +181,6 @@ const PinMaterialReques = () => {
     const filteredSiteMaterials = materialInSite.filter(item =>
         item.name.toLowerCase().includes(searchQuerySite)
     );
-
     return (
         <>
             <Container fluid>
@@ -261,7 +258,7 @@ const PinMaterialReques = () => {
                                 </div>
                                 <div className="col-12">
                                     <h1 className="text-center">Material Requests</h1>
-                                    <hr />
+                                  <hr />
                                 </div>
                                 {materialRequest.length === 0 ? (
                                     <p>No Requests Found</p>
@@ -334,9 +331,9 @@ const PinMaterialReques = () => {
                                                     <div className='d-flex flex-rown justify-content-center'>
                                                         <button className='mr-3 p-3 project-button-danger' onClick={() => handleDecrement(eachMaterial)}>
                                                             < FontAwesomeIcon icon={faMinus } />
-                                                        </button>
-                                                        <h3 className='mt-2'>{eachMaterial.quant}</h3>
-                                                        <button className='ml-3 p-3 project-button-success' onClick={() => handleIncrement(eachMaterial)}>
+                                                        </Button>
+                                                        <h3>{eachMaterial.quant}</h3>
+                                                        <Button className='ml-3 btn btn-success' onClick={() => handleIncrement(eachMaterial)}>
                                                             <FontAwesomeIcon icon={faPlus} />
                                                         </button>
                                                     </div>

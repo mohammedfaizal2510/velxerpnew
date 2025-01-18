@@ -1,10 +1,13 @@
 import React from 'react'
 import {Navbar, Nav, Button} from "react-bootstrap"
 import '../css/AlfProjects.css';
+import axios from 'axios';
 
-const AlfCardInbox = ({id, subject, show}) => {
+const AlfCardInbox = ({_id, subject, show,work}) => {
     const disp = show && Object.entries(show).map(([key,value])=>`${key} : ${value}`).join('\n')
-    const accept = ()=>{}
+    const accept = ()=>{
+        axios.put(`${import.meta.env.VITE_SER}stoc/site`,work,{headers:{req:_id,admin:sessionStorage.getItem("admin") || sessionStorage.getItem("auth")}})
+    }
     const reject = ()=>{}
   return (
         <>
