@@ -332,8 +332,13 @@ const PinMaterialReques = () => {
                                                         <button className='mr-3 p-3 project-button-danger' onClick={() => handleDecrement(eachMaterial)}>
                                                             < FontAwesomeIcon icon={faMinus } />
                                                         </button>
-                                                        <h3>{eachMaterial.quant}</h3>
+                                                        {/* <h3>{eachMaterial.quant}</h3>
                                                         <button className='ml-3 btn btn-success' onClick={() => handleIncrement(eachMaterial)}>
+                                                            <FontAwesomeIcon icon={faPlus} />
+                                                        </button> */}
+
+                                                        <h3>{Object(eachMaterial.ship)[`${sessionStorage.getItem("site")}`]}</h3>
+                                                        <button className='ml-3 p-3 btn project-button-success' onClick={() => handleIncrement(eachMaterial)}>
                                                             <FontAwesomeIcon icon={faPlus} />
                                                         </button>
                                                     </div>
