@@ -210,7 +210,10 @@
               10px 10px 20px rgba(94, 104, 121, 0.5); 
 }
 :root {
-  --nColor: #aaa;
+  /* --nColor: #aaa; */
+  --nColor:#dc3545;
+  /* --nColor:#fbbc05; */
+  /* --nColor:#007bff; */
   --brShadow: -6px 6px 10px rgba(0,0,0,0.5);
   --tlShadow: 6px -6px 10px rgba(255,255,255,0.5);
  }

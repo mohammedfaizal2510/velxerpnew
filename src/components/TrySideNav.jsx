@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import SideNav, { NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faListCheck, faScrewdriverWrench, faUsers, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faListCheck, faScrewdriverWrench, faUsers, faSignOutAlt,faDatabase, faMagnifyingGlassChart} from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import '../css/TrySideNav.css'; // Ensure this file is correctly linked
 
@@ -94,7 +94,7 @@ const TrySideNav = ({ selectedKey }) => {
             onMouseLeave={() => setHoveredItem(null)}
           >
             <NavIcon>
-              <FontAwesomeIcon icon={faEnvelope} style={{ fontSize: "1.75em" }} />
+              <FontAwesomeIcon icon={faMagnifyingGlassChart} style={{ fontSize: "1.75em" }} />
             </NavIcon>
             <NavText>report</NavText>
             {hoveredItem === "report" && <span className="tooltip">{tooltipText.report}</span>}
